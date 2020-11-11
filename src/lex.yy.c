@@ -556,7 +556,7 @@ char *yytext;
     #include "syntax.tab.h"
     #include<stdio.h>
     int error_flag = 0;
-    int first_flag = 1;
+    int first_flag = 0;
 #line 561 "./src/lex.yy.c"
 #line 562 "./src/lex.yy.c"
 
@@ -881,7 +881,7 @@ case 6:
 YY_RULE_SETUP
 #line 59 "./src/lexical.l"
 {
-  if(first_flag==0) {
+  if(first_flag==1) {
     fprintf(stderr,"first_flag %d",first_flag);
     fprintf(stderr,"INT %d at Line %d.\n",atoi(yytext),yylineno);
   }
@@ -891,7 +891,7 @@ case 7:
 YY_RULE_SETUP
 #line 65 "./src/lexical.l"
 {
-  if(first_flag==0) {
+  if(first_flag==1) {
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,8),yylineno);
   }
@@ -901,7 +901,7 @@ case 8:
 YY_RULE_SETUP
 #line 71 "./src/lexical.l"
 {
-  if(first_flag==0) {
+  if(first_flag==1) {
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,16),yylineno);
   }
@@ -911,7 +911,7 @@ case 9:
 YY_RULE_SETUP
 #line 77 "./src/lexical.l"
 {
-    if(first_flag==0) {
+    if(first_flag==1) {
       fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
     }
 }

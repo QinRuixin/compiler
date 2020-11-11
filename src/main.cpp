@@ -19,7 +19,7 @@ int main(int argc, char** argv){
 
     // second time
     if(error_flag==0){
-        first_flag = 0;
+        first_flag = 1;
         yylineno = 1;
         yyin = fopen(argv[1],"r");
             while (yylex()!=0);

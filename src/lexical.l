@@ -3,7 +3,7 @@
     #include "syntax.tab.h"
     #include<stdio.h>
     int error_flag = 0;
-    int first_flag = 1;
+    int first_flag = 0;
 %}
 WS [\n|" "|\t]
 INT_DEC [0]|[1-9][0-9]*
@@ -57,25 +57,25 @@ COMMENT_MUL_RIGHT {
 {WS} {}
 
 {INT_DEC} {
-  if(first_flag==0) {
+  if(first_flag==1) {
     fprintf(stderr,"first_flag %d",first_flag);
     fprintf(stderr,"INT %d at Line %d.\n",atoi(yytext),yylineno);
   }
 }
 {INT_OCT} {
-  if(first_flag==0) {
+  if(first_flag==1) {
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,8),yylineno);
   }
 }
 {INT_HEX} {
-  if(first_flag==0) {
+  if(first_flag==1) {
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,16),yylineno);
   }
 }
 {FLOAT} {
-    if(first_flag==0) {
+    if(first_flag==1) {
       fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
     }
 }
