@@ -36,6 +36,7 @@ RETURN return
 IF if
 ELSE else
 WHILE where
+
 COMMENT_LINE [/]{2}[^\n]*
 COMMENT_MUL [/][\*][.]*[\*][/]
 COMMENT_MUL_LEFT [/][\*]
@@ -43,25 +44,18 @@ COMMENT_MUL_RIGHT  [\*][/]
 
 %%
 
-COMMENT_LINE {
-  if(second_flag==1){
-    // todo comment
-  fprintf(stderr,"-------COMMENT_LINE // [^\\ n]* %d -------\n", yylineno);
-  }
+"//" {
+  char c =input();
+  while(c!='\n') c = input();
 }
-COMMENT_MUL {
-  if(second_flag==1){
-    // todo comment
-  fprintf(stderr,"-------COMMENT_LINE %d -------\n", yylineno);
-  }
-}
+
 "/*" {
     error_flag = 1;
-    fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
+    fprintf(stderr,"Error type A at Line %d: Syntax error\n", yylineno);
 }
 "*/" {
     error_flag = 1;
-    fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
+    fprintf(stderr,"Error type A at Line %d: Syntax error\n", yylineno);
 }
 
 {WS} {}
