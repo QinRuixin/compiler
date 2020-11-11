@@ -1,4 +1,12 @@
+int main() 
+  {
+     // line comment
+     /* 
+       block comment
+     */
+     int i = 1;
+  }
+
 float sub(){
-1shfjaf
     return 10 - 5.5e-3;     
 }
