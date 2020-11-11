@@ -43,6 +43,23 @@ COMMENT_MUL_RIGHT  \*/
 
 %%
 {WS} {}
+
+COMMENT_LINE {
+  
+}
+COMMENT_MUL {
+  
+}
+COMMENT_MUL_LEFT {
+    error_flag = 1;
+    fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
+}
+COMMENT_MUL_RIGHT {
+    error_flag = 1;
+    fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
+}
+
+
 {INT_DEC} {
   if(first_flag) return 0;
     fprintf(stderr,"INT %d at Line %d.\n",atoi(yytext),yylineno);
@@ -161,20 +178,6 @@ COMMENT_MUL_RIGHT  \*/
 {WHILE} {
     if(first_flag) return 0;
     fprintf(stderr,"WHILE %s at Line %d.\n",yytext,yylineno);
-}
-COMMENT_LINE {
-  
-}
-COMMENT_MUL {
-  
-}
-COMMENT_MUL_LEFT {
-    error_flag = 1;
-    fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
-}
-COMMENT_MUL_RIGHT {
-    error_flag = 1;
-    fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
 }
 
 
