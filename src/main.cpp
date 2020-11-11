@@ -2,7 +2,7 @@
 #include<stdlib.h>
 
 extern FILE* yyin;
-extern int yylex();
+extern "C" int yylex();
 
 int main(int argc, char** argv){
     if(argc > 1){
