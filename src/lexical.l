@@ -75,109 +75,135 @@ COMMENT_MUL_RIGHT {
     }
 }
 {FLOAT} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
+  }
 }
 {FLOAT_E} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
+  }
 }
 
 {SEMI} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"SEMI %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {COMMA} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"COMMA %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {ASSIGNOP} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"ASSIGNOP %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {RELOP} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"RELOP %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {PLUS} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"PLUS %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {MINUS} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"MINUS %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {STAR} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"STAR %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {DIV} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"DIV %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {AND} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"AND %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {OR} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"OR %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {DOT} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"DOT %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {NOT} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"NOT %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {TYPE} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"TYPE %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {LP} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"LP %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {RP} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"RP %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {LB} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"LB %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {RB} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"RB %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {LC} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"LC %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {RC} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"RC %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {STRUCT} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"STRUCT %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {RETURN} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"RETURN %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {IF} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"IF %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {ELSE} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"ELSE %s at Line %d.\n",yytext,yylineno);
+  }
 }
 {WHILE} {
-    if(second_flag) return 0;
+    if(second_flag==1){
     fprintf(stderr,"WHILE %s at Line %d.\n",yytext,yylineno);
+  }
 }
 
 
@@ -187,7 +213,6 @@ COMMENT_MUL_RIGHT {
 . {
     error_flag = 1;
     fprintf(stderr,"Error type A at Line %d: Mysterious characters \"%s\"\n", yylineno, yytext);
-    fprintf(stderr,"error_flag %d",error_flag);
 
 }
 %%
