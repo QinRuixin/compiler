@@ -16,13 +16,13 @@ int main(int argc, char** argv){
         }
     }
     while (yylex()!=0);
-    fprintf(stderr,"error_flag %d\n",error_flag);
+    //fprintf(stderr,"error_flag %d\n",error_flag);
     // second time
     if(error_flag==0){
         second_flag = 1;
         yylineno = 1;
         yyin = fopen(argv[1],"r");
-            //while (yylex()!=0);
+            while (yylex()!=0);
     }
 
     return 0;

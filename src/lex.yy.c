@@ -1145,12 +1145,14 @@ case 35:
 YY_RULE_SETUP
 #line 210 "./src/lexical.l"
 {
+    if(second_flag==1){
     fprintf(stderr,"ID %s at Line %d.\n",yytext,yylineno);
+  }
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 213 "./src/lexical.l"
+#line 216 "./src/lexical.l"
 {
     error_flag = 1;
     fprintf(stderr,"Error type A at Line %d: Mysterious characters \"%s\"\n", yylineno, yytext);
@@ -1159,10 +1161,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 218 "./src/lexical.l"
+#line 221 "./src/lexical.l"
 ECHO;
 	YY_BREAK
-#line 1166 "./src/lex.yy.c"
+#line 1168 "./src/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2179,6 +2181,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 218 "./src/lexical.l"
+#line 221 "./src/lexical.l"
 
 

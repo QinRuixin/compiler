@@ -208,8 +208,11 @@ COMMENT_MUL_RIGHT {
 
 
 {ID} {
+    if(second_flag==1){
     fprintf(stderr,"ID %s at Line %d.\n",yytext,yylineno);
+  }
 }
+
 . {
     error_flag = 1;
     fprintf(stderr,"Error type A at Line %d: Mysterious characters \"%s\"\n", yylineno, yytext);
