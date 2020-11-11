@@ -53,9 +53,7 @@ WHILE where
 {FLOAT_E} {
     fprintf(stderr,"FLOAT %f at Line Line %d.\n",atof(yytext),yylineno);
 }
-{ID} {
-    fprintf(stderr,"ID %s at Line Line %d.\n",yytext,yylineno);
-}
+
 {SEMI} {
     fprintf(stderr,"SEMI %s at Line Line %d.\n",yytext,yylineno);
 }
@@ -128,7 +126,9 @@ WHILE where
 {WHILE} {
     fprintf(stderr,"WHILE %s at Line Line %d.\n",yytext,yylineno);
 }
-
+{ID} {
+    fprintf(stderr,"ID %s at Line Line %d.\n",yytext,yylineno);
+}
 . {
     fprintf(stderr,"Error type A at Line %d: Mysterious characters \"%s\"\n", yylineno, yytext);
 }
