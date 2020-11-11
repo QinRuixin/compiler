@@ -1,6 +1,8 @@
 int main() 
   {
-     // line comment
+     // line comment 
+
+
      /* 
        block comment
      */
