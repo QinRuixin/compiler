@@ -43,7 +43,7 @@ COMMENT_MUL_RIGHT  [\*][\/]
 
 %%
 
-[\]{2}[.]*[\n] {
+[/]{2}[.]*[\n] {
   fprintf(stderr,"-------COMMENT_LINE %d -------\n", yylineno);
 }
 COMMENT_MUL {
