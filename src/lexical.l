@@ -36,14 +36,14 @@ RETURN return
 IF if
 ELSE else
 WHILE where
-COMMENT_LINE "//"
-COMMENT_MUL [\/][\*][.]*[\*][\/]
-COMMENT_MUL_LEFT [\/][\*]
-COMMENT_MUL_RIGHT  [\*][\/]
+COMMENT_LINE [/]{2}[^\n]*
+COMMENT_MUL [/][\*][.]*[\*][/]
+COMMENT_MUL_LEFT [/][\*]
+COMMENT_MUL_RIGHT  [\*][/]
 
 %%
 
-[/]{2}[^\n]* {
+COMMENT_LINE {
   if(second_flag==1){
     // todo comment
   fprintf(stderr,"-------COMMENT_LINE // [^\\ n]* %d -------\n", yylineno);
@@ -55,11 +55,11 @@ COMMENT_MUL {
   fprintf(stderr,"-------COMMENT_LINE %d -------\n", yylineno);
   }
 }
-COMMENT_MUL_LEFT {
+"/*" {
     error_flag = 1;
     fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
 }
-COMMENT_MUL_RIGHT {
+"*/" {
     error_flag = 1;
     fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
 }
