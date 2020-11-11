@@ -2,6 +2,7 @@
     #include "syntax.tab.h"
     #include<stdio.h>
 %}
+WS [\n|" "|\t]
 INT_DEC [0]|[1-9][0-9]*
 INT_OCT 0[0-7]+
 INT_HEX 0[X|x][0-9A-Fa-f]+
@@ -32,6 +33,7 @@ IF if
 ELSE else
 WHILE where
 %%
+{WS} {}
 {INT_DEC} {
     fprintf(stderr,"INT %d at Line Line %d.\n",atoi(yytext),yylineno);
 }
