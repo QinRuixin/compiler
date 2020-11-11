@@ -44,10 +44,16 @@ COMMENT_MUL_RIGHT  [\*][\/]
 %%
 
 [/]{2}[^\n]* {
+  if(second_flag==1){
+    // todo comment
   fprintf(stderr,"-------COMMENT_LINE // [^\\ n]* %d -------\n", yylineno);
+  }
 }
 COMMENT_MUL {
+  if(second_flag==1){
+    // todo comment
   fprintf(stderr,"-------COMMENT_LINE %d -------\n", yylineno);
+  }
 }
 COMMENT_MUL_LEFT {
     error_flag = 1;
