@@ -555,8 +555,8 @@ char *yytext;
 #line 3 "./src/lexical.l"
     #include "syntax.tab.h"
     #include<stdio.h>
-    extern int error_flag;
-    extern int first_flag;
+    int error_flag = 0;
+    int first_flag = 1;
 #line 561 "./src/lex.yy.c"
 #line 562 "./src/lex.yy.c"
 

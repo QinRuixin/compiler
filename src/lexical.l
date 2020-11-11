@@ -2,8 +2,8 @@
 %{
     #include "syntax.tab.h"
     #include<stdio.h>
-    extern int error_flag;
-    extern int first_flag;
+    int error_flag = 0;
+    int first_flag = 1;
 %}
 WS [\n|" "|\t]
 INT_DEC [0]|[1-9][0-9]*

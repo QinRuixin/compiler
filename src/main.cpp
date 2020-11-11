@@ -4,8 +4,8 @@
 extern FILE* yyin;
 extern "C" int yylex();
 
-int error_flag = 0;
-int first_flag = 1;
+extern int error_flag;
+extern int first_flag;
 
 int main(int argc, char** argv){
     if(argc > 1){
