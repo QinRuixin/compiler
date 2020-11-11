@@ -43,7 +43,7 @@ COMMENT_MUL_RIGHT  [\*][\/]
 
 %%
 
-COMMENT_LINE {
+"//" {
   fprintf(stderr,"-------COMMENT_LINE %d -------\n", yylineno);
 }
 COMMENT_MUL {
@@ -119,12 +119,12 @@ COMMENT_MUL_RIGHT {
     fprintf(stderr,"MINUS %s at Line %d.\n",yytext,yylineno);
   }
 }
-{STAR} {
+"*" {
     if(second_flag==1){
     fprintf(stderr,"STAR %s at Line %d.\n",yytext,yylineno);
   }
 }
-{DIV} {
+"/" {
     if(second_flag==1){
     fprintf(stderr,"DIV %s at Line %d.\n",yytext,yylineno);
   }
