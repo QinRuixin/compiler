@@ -1,3 +1,4 @@
+%option yylineno
 %{
     #include "syntax.tab.h"
     #include<stdio.h>
