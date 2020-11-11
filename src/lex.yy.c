@@ -830,18 +830,18 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 52 "./src/lexical.l"
-{  
-  int error_flag = 1;
+{
+  int com_error_flag = 1;
   char c =input();
   while(c){
     while(c!='*' && c) c = input();
     c = input();
     if(c=='/'){
-      error_flag = 0;
+      com_error_flag = 0;
       break;
     }
   }
-  if(error_flag){
+  if(com_error_flag){
     error_flag = 1;
     fprintf(stderr,"Error type A at Line %d: Syntax error\n", yylineno);
   }
