@@ -58,6 +58,7 @@ COMMENT_MUL_RIGHT {
 
 {INT_DEC} {
   if(first_flag==0) {
+    fprintf(stderr,"first_flag %d",first_flag);
     fprintf(stderr,"INT %d at Line %d.\n",atoi(yytext),yylineno);
   }
 }
