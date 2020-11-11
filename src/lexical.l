@@ -43,12 +43,8 @@ COMMENT_MUL_RIGHT  [\*][\/]
 
 %%
 
-COMMENT_LINE {
-  return 0;
-}
-COMMENT_MUL {
-  return 0;
-}
+COMMENT_LINE {}
+COMMENT_MUL {}
 COMMENT_MUL_LEFT {
     error_flag = 1;
     fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
@@ -61,18 +57,21 @@ COMMENT_MUL_RIGHT {
 {WS} {}
 
 {INT_DEC} {
-  if(first_flag) return 0;
+  if(first_flag==0) {
     fprintf(stderr,"INT %d at Line %d.\n",atoi(yytext),yylineno);
+  }
 }
 {INT_OCT} {
-  if(first_flag) return 0;
+  if(first_flag==0) {
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,8),yylineno);
+  }
 }
 {INT_HEX} {
-  if(first_flag) return 0;
+  if(first_flag==0) {
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,16),yylineno);
+  }
 }
 {FLOAT} {
     if(first_flag) return 0;
