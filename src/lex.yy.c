@@ -382,16 +382,16 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[101] =
     {   0,
-        0,    0,   38,   36,    1,    1,   22,   36,   24,   25,
+        0,    0,   38,   36,    5,    5,   22,   36,   24,   25,
        17,   15,   12,   16,   21,   18,    6,    6,   11,   14,
        13,   14,   35,   35,   26,   27,   35,   35,   35,   35,
-       35,   35,   28,    1,   29,   14,   19,    0,    0,    7,
+       35,   35,   28,    5,   29,   14,   19,    0,    0,    7,
         0,   10,    0,   10,    6,   35,   35,   35,   35,   32,
        35,   35,   35,   35,   20,    9,   10,   10,    8,    8,
        35,   35,   35,   23,   35,   35,   35,   35,   33,   35,
        35,   35,   35,   35,   35,   35,   34,   35,   31,   30,
-       35,   35,   35,   35,   35,   35,   35,    3,    2,   35,
-       35,   35,   35,   35,   35,   35,    4,   35,    5,    0
+       35,   35,   35,   35,   35,   35,   35,    2,    1,   35,
+       35,   35,   35,   35,   35,   35,    3,   35,    4,    0
 
     } ;
 
@@ -534,7 +534,7 @@ static const flex_int16_t yy_chk[247] =
 /* Table of booleans, true if rule could match eol. */
 static const flex_int32_t yy_rule_can_match_eol[38] =
     {   0,
-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
@@ -777,7 +777,8 @@ YY_DECL
 	{
 #line 44 "./src/lexical.l"
 
-#line 781 "./src/lex.yy.c"
+
+#line 782 "./src/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -845,40 +846,40 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
-/* rule 1 can match eol */
 YY_RULE_SETUP
-#line 45 "./src/lexical.l"
-{}
+#line 46 "./src/lexical.l"
+{
+  return 0;
+}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 47 "./src/lexical.l"
+#line 49 "./src/lexical.l"
 {
   return 0;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 50 "./src/lexical.l"
+#line 52 "./src/lexical.l"
 {
-  return 0;
+    error_flag = 1;
+    fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 53 "./src/lexical.l"
+#line 56 "./src/lexical.l"
 {
     error_flag = 1;
     fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
 }
 	YY_BREAK
 case 5:
+/* rule 5 can match eol */
 YY_RULE_SETUP
-#line 57 "./src/lexical.l"
-{
-    error_flag = 1;
-    fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
-}
+#line 61 "./src/lexical.l"
+{}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
@@ -1134,7 +1135,7 @@ YY_RULE_SETUP
 #line 191 "./src/lexical.l"
 ECHO;
 	YY_BREAK
-#line 1138 "./src/lex.yy.c"
+#line 1139 "./src/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

@@ -42,7 +42,6 @@ COMMENT_MUL_LEFT [/][\*]
 COMMENT_MUL_RIGHT  [\*][/]
 
 %%
-{WS} {}
 
 COMMENT_LINE {
   return 0;
@@ -59,6 +58,7 @@ COMMENT_MUL_RIGHT {
     fprintf(stderr,"Error type B at Line %d: Syntax error\n", yylineno);
 }
 
+{WS} {}
 
 {INT_DEC} {
   if(first_flag) return 0;
