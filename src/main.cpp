@@ -5,7 +5,7 @@ extern FILE* yyin;
 extern "C" int yylex();
 
 extern int error_flag;
-extern int first_flag;
+extern int second_flag;
 extern int yylineno;
 
 int main(int argc, char** argv){
@@ -19,7 +19,7 @@ int main(int argc, char** argv){
 
     // second time
     if(error_flag==0){
-        first_flag = 1;
+        second_flag = 1;
         yylineno = 1;
         yyin = fopen(argv[1],"r");
             while (yylex()!=0);
