@@ -22,6 +22,7 @@ AND "&&"
 OR "||"
 DOT \.
 NOT "!"
+TYPE "int"|"float"
 LP "("
 RP ")"
 LB "["
@@ -90,6 +91,9 @@ WHILE where
 }
 {NOT} {
     fprintf(stderr,"NOT %s at Line Line %d.\n",yytext,yylineno);
+}
+{TYPE} {
+    fprintf(stderr,"TYPE %s at Line Line %d.\n",yytext,yylineno);
 }
 {LP} {
     fprintf(stderr,"LP %s at Line Line %d.\n",yytext,yylineno);
