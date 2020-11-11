@@ -854,14 +854,14 @@ case 2:
 YY_RULE_SETUP
 #line 47 "./src/lexical.l"
 {
-  
+  return 0;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 50 "./src/lexical.l"
 {
-  
+  return 0;
 }
 	YY_BREAK
 case 4:

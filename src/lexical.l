@@ -45,10 +45,10 @@ COMMENT_MUL_RIGHT  \*"/"
 {WS} {}
 
 COMMENT_LINE {
-  
+  return 0;
 }
 COMMENT_MUL {
-  
+  return 0;
 }
 COMMENT_MUL_LEFT {
     error_flag = 1;
