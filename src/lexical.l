@@ -49,9 +49,21 @@ COMMENT_MUL_RIGHT  [\*][/]
   while(c!='\n') c = input();
 }
 
-"/*" {
+"/*" {  
+  int error_flag = 1;
+  char c =input();
+  while(c){
+    while(c!='*' && c) c = input();
+    c = input();
+    if(c=='/'){
+      error_flag = 0;
+      break;
+    }
+  }
+  if(error_flag){
     error_flag = 1;
     fprintf(stderr,"Error type A at Line %d: Syntax error\n", yylineno);
+  }
 }
 "*/" {
     error_flag = 1;
