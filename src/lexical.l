@@ -58,7 +58,6 @@ COMMENT_MUL_RIGHT {
 
 {INT_DEC} {
     if(second_flag) return 0;
-    fprintf(stderr,"second_flag %d",second_flag);
     fprintf(stderr,"INT %d at Line %d.\n",atoi(yytext),yylineno);
   
 }
@@ -187,5 +186,7 @@ COMMENT_MUL_RIGHT {
 . {
     error_flag = 1;
     fprintf(stderr,"Error type A at Line %d: Mysterious characters \"%s\"\n", yylineno, yytext);
+    fprintf(stderr,"error_flag %d",error_flag);
+
 }
 %%
