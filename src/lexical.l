@@ -36,7 +36,7 @@ RETURN return
 IF if
 ELSE else
 WHILE where
-COMMENT_LINE "\\"
+COMMENT_LINE "//"
 COMMENT_MUL [\/][\*][.]*[\*][\/]
 COMMENT_MUL_LEFT [\/][\*]
 COMMENT_MUL_RIGHT  [\*][\/]
