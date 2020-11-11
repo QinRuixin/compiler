@@ -62,12 +62,12 @@ COMMENT_MUL_RIGHT  [\*][/]
   }
   if(com_error_flag){
     error_flag = 1;
-    fprintf(stderr,"Error type A at Line %d: Syntax error\n", yylineno);
+    fprintf(stderr,"Error type A at Line %d: Unterminated comment.\n", yylineno);
   }
 }
 "*/" {
     error_flag = 1;
-    fprintf(stderr,"Error type A at Line %d: Syntax error\n", yylineno);
+    fprintf(stderr,"Error type A at Line %d: Unterminated comment.\n", yylineno);
 }
 
 {WS} {}

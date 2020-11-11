@@ -843,7 +843,7 @@ YY_RULE_SETUP
   }
   if(com_error_flag){
     error_flag = 1;
-    fprintf(stderr,"Error type A at Line %d: Syntax error\n", yylineno);
+    fprintf(stderr,"Error type A at Line %d: Unterminated comment.\n", yylineno);
   }
 }
 	YY_BREAK
@@ -852,7 +852,7 @@ YY_RULE_SETUP
 #line 68 "./src/lexical.l"
 {
     error_flag = 1;
-    fprintf(stderr,"Error type A at Line %d: Syntax error\n", yylineno);
+    fprintf(stderr,"Error type A at Line %d: Unterminated comment.\n", yylineno);
 }
 	YY_BREAK
 case 4:
