@@ -1,14 +1,5 @@
-int main() 
-  {
-     // line comment 
-
-
-     /* 
-       block comment
-     *
-     int i = 1;
+int main(){
+     /* unterminated comment
+      *
+      *
   }
-
-float sub(){
-    return 10 - 5.5e-3;     
-}
