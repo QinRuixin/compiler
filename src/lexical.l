@@ -186,7 +186,7 @@ COMMENT_MUL_RIGHT {
 . {
     error_flag = 1;
     fprintf(stderr,"Error type A at Line %d: Mysterious characters \"%s\"\n", yylineno, yytext);
-    fprintf(stderr,"error_flag %d",error_flag);
+
 
 }
 %%

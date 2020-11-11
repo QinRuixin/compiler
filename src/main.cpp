@@ -16,7 +16,7 @@ int main(int argc, char** argv){
         }
     }
     while (yylex()!=0);
-
+    fprintf(stderr,"error_flag %d\n",error_flag);
     // second time
     if(error_flag==0){
         second_flag = 1;
