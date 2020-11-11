@@ -57,27 +57,26 @@ COMMENT_MUL_RIGHT {
 {WS} {}
 
 {INT_DEC} {
-  if(second_flag==1) {
+    if(second_flag) return 0;
     fprintf(stderr,"second_flag %d",second_flag);
     fprintf(stderr,"INT %d at Line %d.\n",atoi(yytext),yylineno);
-  }
+  
 }
 {INT_OCT} {
-  if(second_flag==1) {
+    if(second_flag) return 0;
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,8),yylineno);
-  }
+  
 }
 {INT_HEX} {
-  if(second_flag==1) {
+    if(second_flag) return 0;
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,16),yylineno);
-  }
+  
 }
 {FLOAT} {
-    if(second_flag==1) {
-      fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
-    }
+    if(second_flag) return 0;
+    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
 }
 {FLOAT_E} {
     if(second_flag) return 0;

@@ -881,44 +881,43 @@ case 6:
 YY_RULE_SETUP
 #line 59 "./src/lexical.l"
 {
-  if(second_flag==1) {
+    if(second_flag) return 0;
     fprintf(stderr,"second_flag %d",second_flag);
     fprintf(stderr,"INT %d at Line %d.\n",atoi(yytext),yylineno);
-  }
+  
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 65 "./src/lexical.l"
 {
-  if(second_flag==1) {
+    if(second_flag) return 0;
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,8),yylineno);
-  }
+  
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 71 "./src/lexical.l"
 {
-  if(second_flag==1) {
+    if(second_flag) return 0;
     char * pEnd;
     fprintf(stderr,"INT %ld at Line %d.\n",strtol(yytext,&pEnd,16),yylineno);
-  }
+  
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 77 "./src/lexical.l"
 {
-    if(second_flag==1) {
-      fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
-    }
+    if(second_flag) return 0;
+    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 82 "./src/lexical.l"
+#line 81 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
@@ -926,7 +925,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 87 "./src/lexical.l"
+#line 86 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"SEMI %s at Line %d.\n",yytext,yylineno);
@@ -934,7 +933,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 91 "./src/lexical.l"
+#line 90 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"COMMA %s at Line %d.\n",yytext,yylineno);
@@ -942,7 +941,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 95 "./src/lexical.l"
+#line 94 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"ASSIGNOP %s at Line %d.\n",yytext,yylineno);
@@ -950,7 +949,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 99 "./src/lexical.l"
+#line 98 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"RELOP %s at Line %d.\n",yytext,yylineno);
@@ -958,7 +957,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 103 "./src/lexical.l"
+#line 102 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"PLUS %s at Line %d.\n",yytext,yylineno);
@@ -966,7 +965,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 107 "./src/lexical.l"
+#line 106 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"MINUS %s at Line %d.\n",yytext,yylineno);
@@ -974,7 +973,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 111 "./src/lexical.l"
+#line 110 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"STAR %s at Line %d.\n",yytext,yylineno);
@@ -982,7 +981,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 115 "./src/lexical.l"
+#line 114 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"DIV %s at Line %d.\n",yytext,yylineno);
@@ -990,7 +989,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 119 "./src/lexical.l"
+#line 118 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"AND %s at Line %d.\n",yytext,yylineno);
@@ -998,7 +997,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 123 "./src/lexical.l"
+#line 122 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"OR %s at Line %d.\n",yytext,yylineno);
@@ -1006,7 +1005,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 127 "./src/lexical.l"
+#line 126 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"DOT %s at Line %d.\n",yytext,yylineno);
@@ -1014,7 +1013,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 131 "./src/lexical.l"
+#line 130 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"NOT %s at Line %d.\n",yytext,yylineno);
@@ -1022,7 +1021,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 135 "./src/lexical.l"
+#line 134 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"TYPE %s at Line %d.\n",yytext,yylineno);
@@ -1030,7 +1029,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 139 "./src/lexical.l"
+#line 138 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"LP %s at Line %d.\n",yytext,yylineno);
@@ -1038,7 +1037,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 143 "./src/lexical.l"
+#line 142 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"RP %s at Line %d.\n",yytext,yylineno);
@@ -1046,7 +1045,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 147 "./src/lexical.l"
+#line 146 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"LB %s at Line %d.\n",yytext,yylineno);
@@ -1054,7 +1053,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 151 "./src/lexical.l"
+#line 150 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"RB %s at Line %d.\n",yytext,yylineno);
@@ -1062,7 +1061,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 155 "./src/lexical.l"
+#line 154 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"LC %s at Line %d.\n",yytext,yylineno);
@@ -1070,7 +1069,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 159 "./src/lexical.l"
+#line 158 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"RC %s at Line %d.\n",yytext,yylineno);
@@ -1078,7 +1077,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 163 "./src/lexical.l"
+#line 162 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"STRUCT %s at Line %d.\n",yytext,yylineno);
@@ -1086,7 +1085,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 167 "./src/lexical.l"
+#line 166 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"RETURN %s at Line %d.\n",yytext,yylineno);
@@ -1094,7 +1093,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 171 "./src/lexical.l"
+#line 170 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"IF %s at Line %d.\n",yytext,yylineno);
@@ -1102,7 +1101,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 175 "./src/lexical.l"
+#line 174 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"ELSE %s at Line %d.\n",yytext,yylineno);
@@ -1110,7 +1109,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 179 "./src/lexical.l"
+#line 178 "./src/lexical.l"
 {
     if(second_flag) return 0;
     fprintf(stderr,"WHILE %s at Line %d.\n",yytext,yylineno);
@@ -1118,14 +1117,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 185 "./src/lexical.l"
+#line 184 "./src/lexical.l"
 {
     fprintf(stderr,"ID %s at Line %d.\n",yytext,yylineno);
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 188 "./src/lexical.l"
+#line 187 "./src/lexical.l"
 {
     error_flag = 1;
     fprintf(stderr,"Error type A at Line %d: Mysterious characters \"%s\"\n", yylineno, yytext);
@@ -1133,10 +1132,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 192 "./src/lexical.l"
+#line 191 "./src/lexical.l"
 ECHO;
 	YY_BREAK
-#line 1140 "./src/lex.yy.c"
+#line 1139 "./src/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2153,6 +2152,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 192 "./src/lexical.l"
+#line 191 "./src/lexical.l"
 
 
