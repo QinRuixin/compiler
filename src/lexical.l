@@ -74,8 +74,9 @@ COMMENT_MUL_RIGHT {
   }
 }
 {FLOAT} {
-    if(first_flag) return 0;
-    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
+    if(first_flag==0) {
+      fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
+    }
 }
 {FLOAT_E} {
     if(first_flag) return 0;

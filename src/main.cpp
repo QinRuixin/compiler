@@ -6,6 +6,7 @@ extern "C" int yylex();
 
 extern int error_flag;
 extern int first_flag;
+extern int yylineno;
 
 int main(int argc, char** argv){
     if(argc > 1){
@@ -19,6 +20,7 @@ int main(int argc, char** argv){
     // second time
     if(error_flag==0){
         first_flag = 0;
+        yylineno = 1;
         yyin = fopen(argv[1],"r");
             while (yylex()!=0);
     }
