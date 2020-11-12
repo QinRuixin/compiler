@@ -1,9 +1,8 @@
-float sub(){
-// hello
-    return 10 - 5.5e-3;     
-}
-/*
-hworjaosd
-*/
-
-/*
+int main() 
+  {
+     // line comment
+     /* 
+       block comment
+     */
+     int i = 1;
+  }
