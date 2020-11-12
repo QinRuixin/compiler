@@ -5,7 +5,7 @@
     int error_flag = 0;
     int second_flag = 0;
 %}
-WS [ \n\t]+
+WS [ \r\n\t]+
 INT_DEC [0]|[1-9][0-9]*
 INT_OCT 0[0-7]+
 INT_HEX 0[X|x][0-9A-Fa-f]+
