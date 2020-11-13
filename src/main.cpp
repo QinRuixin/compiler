@@ -21,8 +21,9 @@ int main(int argc, char** argv){
     while (yylex()!=0);
     // second time
     if(error_flag==0){
-        yyrestart(yyin);
         second_flag = 1;
+        yyrestart(yyin);
+
         //yylineno = 1;
         //yyin = fopen(argv[1],"r");
         while (yylex()!=0);
