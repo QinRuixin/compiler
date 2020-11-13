@@ -3,11 +3,10 @@
 
 extern FILE* yyin;
 extern "C" int yylex();
-extern "C" void yyrestart(FILE*);
 
 int error_flag;
 int second_flag;
-//extern int yylineno;
+extern int yylineno;
 
 int main(int argc, char** argv){
     error_flag = 0;
@@ -22,11 +21,9 @@ int main(int argc, char** argv){
     // second time
     if(error_flag==0){
         second_flag = 1;
-        yyrestart(yyin);
-
-        //yylineno = 1;
-        //yyin = fopen(argv[1],"r");
-        while (yylex()!=0);
+        yylineno = 1;
+        yyin = fopen(argv[1],"r");
+            while (yylex()!=0);
     }
 
     return 0;
