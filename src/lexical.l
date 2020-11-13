@@ -5,12 +5,12 @@
     int error_flag = 0;
     int second_flag = 0;
 %}
-WS [ \r\n\t]+
+WS [ \r\n\t\f\v]+
 INT_DEC [0]|[1-9][0-9]*
 INT_OCT 0[0-7]+
 INT_HEX 0[X|x][0-9A-Fa-f]+
 FLOAT [0-9]+\.[0-9]+
-FLOAT_E ([0-9]*\.?[0-9]+|[0-9]+\.)[E|e][+-]?[0-9]+
+FLOAT_E ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)[E|e][+-]?[0-9]+
 ID [_a-zA-z][_a-zA-z0-9]*
 SEMI ;
 COMMA ,
@@ -43,22 +43,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 
 {COMMENT_LINE} {}
 {COMMENT_MUL} {}
-"/*" {
-  int com_error_flag = 1;
-  char c =input();
-  while(c){
-    while(c!='*' && c) c = input();
-    c = input();
-    if(c=='/'){
-      com_error_flag = 0;
-      break;
-    }
-  }
-  if(com_error_flag){
-    error_flag = 1;
-    fprintf(stderr,"Error type A at Line %d: Unterminated comment.\n", yylineno);
-  }
-}
+
 "*/" {
     error_flag = 1;
     fprintf(stderr,"Error type A at Line %d: Unterminated comment.\n", yylineno);
@@ -80,21 +65,21 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
     }
 }
 
-
-{FLOAT} {
-    if(second_flag==1){
-    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
-  }
-}
 {FLOAT_E} {
     if(second_flag==1){
     fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
   }
 }
+{FLOAT} {
+    if(second_flag==1){
+    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
+  }
+}
+
 
 {INT_DEC} {
     if(second_flag==1){
-      fprintf(stderr,"INT %d at Line %d.\n",atoi(yytext),yylineno);
+      fprintf(stderr,"INT %lld at Line %d.\n",atoll(yytext),yylineno);
     }
 
 }
