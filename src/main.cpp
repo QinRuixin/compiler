@@ -4,11 +4,13 @@
 extern FILE* yyin;
 extern "C" int yylex();
 
-extern int error_flag;
-extern int second_flag;
+int error_flag;
+int second_flag;
 extern int yylineno;
 
 int main(int argc, char** argv){
+    error_flag = 0;
+    second_flag = 0;
     if(argc > 1){
         if(!(yyin = fopen(argv[1],"r"))){
             perror(argv[1]);
@@ -16,7 +18,6 @@ int main(int argc, char** argv){
         }
     }
     while (yylex()!=0);
-    //fprintf(stderr,"error_flag %d\n",error_flag);
     // second time
     if(error_flag==0){
         second_flag = 1;

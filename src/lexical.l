@@ -2,16 +2,16 @@
 %{
     #include "syntax.tab.h"
     #include<stdio.h>
-    int error_flag = 0;
-    int second_flag = 0;
+    extern int error_flag;
+    extern int second_flag;
 %}
 WS [ \r\n\t\f\v]+
-INT_DEC [0]|[1-9][0-9]*
-INT_OCT 0[0-7]+
-INT_HEX 0[X|x][0-9A-Fa-f]+
-FLOAT ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)
+INT_DEC 0|([1-9][0-9]*)
+INT_OCT 0([0-7]+)
+INT_HEX 0[Xx][0-9A-Fa-f]+
+FLOAT [0-9]+\.[0-9]+
 FLOAT_E ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)[E|e][+-]?[0-9]+
-ID [_a-zA-z][_a-zA-z0-9]*
+ID [_a-zA-z]([_a-zA-z0-9]*)
 SEMI ";"
 COMMA ","
 ASSIGNOP "="
@@ -80,22 +80,22 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 
 }
 
-{SEMI} {
+";" {
     if(second_flag==1){
     fprintf(stderr,"SEMI %s at Line %d.\n",yytext,yylineno);
   }
 }
-{COMMA} {
+"," {
     if(second_flag==1){
     fprintf(stderr,"COMMA %s at Line %d.\n",yytext,yylineno);
   }
 }
-{ASSIGNOP} {
+"=" {
     if(second_flag==1){
     fprintf(stderr,"ASSIGNOP %s at Line %d.\n",yytext,yylineno);
   }
 }
-{RELOP} {
+">"|"<"|">="|"<="|"=="|"!=" {
     if(second_flag==1){
     fprintf(stderr,"RELOP %s at Line %d.\n",yytext,yylineno);
   }
@@ -120,57 +120,57 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
     fprintf(stderr,"DIV %s at Line %d.\n",yytext,yylineno);
   }
 }
-{AND} {
+"&&" {
     if(second_flag==1){
     fprintf(stderr,"AND %s at Line %d.\n",yytext,yylineno);
   }
 }
-{OR} {
+"||" {
     if(second_flag==1){
     fprintf(stderr,"OR %s at Line %d.\n",yytext,yylineno);
   }
 }
-{DOT} {
+"." {
     if(second_flag==1){
     fprintf(stderr,"DOT %s at Line %d.\n",yytext,yylineno);
   }
 }
-{NOT} {
+"!" {
     if(second_flag==1){
     fprintf(stderr,"NOT %s at Line %d.\n",yytext,yylineno);
   }
 }
-{TYPE} {
+"int"|"float" {
     if(second_flag==1){
     fprintf(stderr,"TYPE %s at Line %d.\n",yytext,yylineno);
   }
 }
-{LP} {
+"(" {
     if(second_flag==1){
     fprintf(stderr,"LP %s at Line %d.\n",yytext,yylineno);
   }
 }
-{RP} {
+")" {
     if(second_flag==1){
     fprintf(stderr,"RP %s at Line %d.\n",yytext,yylineno);
   }
 }
-{LB} {
+"[" {
     if(second_flag==1){
     fprintf(stderr,"LB %s at Line %d.\n",yytext,yylineno);
   }
 }
-{RB} {
+"]" {
     if(second_flag==1){
     fprintf(stderr,"RB %s at Line %d.\n",yytext,yylineno);
   }
 }
-{LC} {
+"{" {
     if(second_flag==1){
     fprintf(stderr,"LC %s at Line %d.\n",yytext,yylineno);
   }
 }
-{RC} {
+"}" {
     if(second_flag==1){
     fprintf(stderr,"RC %s at Line %d.\n",yytext,yylineno);
   }
