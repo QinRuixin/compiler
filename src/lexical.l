@@ -63,7 +63,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 
 {FLOAT_E} {
     if(second_flag==1){
-    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
+    fprintf(stderr,"FLOAT %lf at Line %d.\n",atolf(yytext),yylineno);
   }
 }
 {FLOAT} {
