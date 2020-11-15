@@ -48,38 +48,6 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 {WS} {}
 
 
-{INT_OCT} {
-    if(second_flag==1){
-    char * pEnd;
-    fprintf(stderr,"INT %lld at Line %d.\n",strtoll(yytext,&pEnd,8),yylineno);
-    }
-}
-{INT_HEX} {
-    if(second_flag==1){
-    char * pEnd;
-    fprintf(stderr,"INT %lld at Line %d.\n",strtoll(yytext,&pEnd,16),yylineno);
-    }
-}
-
-{FLOAT_E} {
-    if(second_flag==1){
-    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
-  }
-}
-{FLOAT} {
-    if(second_flag==1){
-    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
-  }
-}
-
-
-{INT_DEC} {
-    if(second_flag==1){
-      fprintf(stderr,"INT %lld at Line %d.\n",atoll(yytext),yylineno);
-    }
-
-}
-
 ";" {
     if(second_flag==1){
     fprintf(stderr,"SEMI %s at Line %d.\n",yytext,yylineno);
@@ -199,6 +167,38 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
     if(second_flag==1){
     fprintf(stderr,"WHILE %s at Line %d.\n",yytext,yylineno);
   }
+}
+
+{INT_OCT} {
+    if(second_flag==1){
+    char * pEnd;
+    fprintf(stderr,"INT %lld at Line %d.\n",strtoll(yytext,&pEnd,8),yylineno);
+    }
+}
+{INT_HEX} {
+    if(second_flag==1){
+    char * pEnd;
+    fprintf(stderr,"INT %lld at Line %d.\n",strtoll(yytext,&pEnd,16),yylineno);
+    }
+}
+
+{FLOAT_E} {
+    if(second_flag==1){
+    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
+  }
+}
+{FLOAT} {
+    if(second_flag==1){
+    fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
+  }
+}
+
+
+{INT_DEC} {
+    if(second_flag==1){
+      fprintf(stderr,"INT %lld at Line %d.\n",atoll(yytext),yylineno);
+    }
+
 }
 
 
