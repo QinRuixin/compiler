@@ -1,8 +1,19 @@
-int main(){
+int Fibonacci(int n)
+{
+    int t0 = 0, t1 = 1;
     int i = 1;
-/* hello
-*/
-    int j = -i;
-/* world
-*/
-  }
+    while( i < n ){
+        int t2 = t0 + t1;
+        t0 = t1;
+        t1 = t2;
+        i = i + 1;
+    }
+    return t1;
+}
+
+
+int main()
+{
+    int a = Fibonacci(3);
+    return 0;
+}
