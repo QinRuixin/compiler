@@ -35,7 +35,7 @@ STRUCT struct
 RETURN return
 IF if
 ELSE else
-WHILE where
+WHILE while
 COMMENT_LINE "//".*\n
 COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 
