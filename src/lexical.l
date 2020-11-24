@@ -11,7 +11,7 @@ INT_OCT 0([0-7]+)
 INT_HEX 0[Xx][0-9A-Fa-f]+
 FLOAT [0-9]+\.[0-9]+
 FLOAT_E ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)[E|e][+-]?[0-9]+
-ID [_a-zA-z]([_a-zA-z0-9]*)
+ID [_a-zA-Z]([_a-zA-Z0-9]*)
 SEMI ";"
 COMMA ","
 ASSIGNOP "="
@@ -202,7 +202,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 }
 
 
-(_|[a-z]|[A-z])(_|[a-z]|[A-z]|[0-9])* {
+{ID} {
     if(second_flag==1){
     fprintf(stderr,"ID %s at Line %d.\n",yytext,yylineno);
   }
