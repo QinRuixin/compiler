@@ -202,7 +202,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 }
 
 
-{ID} {
+(_|[a-z]|[A-z])(_|[a-z]|[A-z]|[0-9])* {
     if(second_flag==1){
     fprintf(stderr,"ID %s at Line %d.\n",yytext,yylineno);
   }
