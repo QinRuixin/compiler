@@ -6,6 +6,7 @@ extern "C" int yylex();
 
 int error_flag;
 int second_flag;
+int yycolumn;
 extern int yylineno;
 
 int main(int argc, char** argv){

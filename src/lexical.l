@@ -45,8 +45,11 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 {COMMENT_MUL} {}
 
 
-{WS} {}
+\n {
+  yycolumn = 1;
+}
 
+{WS} {}
 
 ";" {
     if(second_flag==1){
