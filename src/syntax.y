@@ -51,7 +51,6 @@ Specifier : TYPE
     ;
 StructSpecifier : STRUCT OptTag LC DefList RC
     | STRUCT Tag
-    | LC error RC
     ;
 OptTag : ID
     | /* Epsl */
@@ -61,7 +60,6 @@ Tag : ID
 
 VarDec : ID
     | VarDec LB INT RB
-    | error RB
     ;
 FunDec : ID LP VarList RP
     | ID LP RP
@@ -74,6 +72,7 @@ ParamDec : Specifier VarDec
     ;
 
 CompSt : LC DefList StmtList RC
+    | LC error RC
     ;
 StmtList : Stmt StmtList
     | /* Epsl */
