@@ -117,7 +117,6 @@ Exp : Exp ASSIGNOP Exp
     | ID
     | INT
     | FLOAT
-    | LP error RP
     | Exp LB error RB
     ;
 Args : Exp COMMA Args
