@@ -51,6 +51,7 @@ Specifier : TYPE
     ;
 StructSpecifier : STRUCT OptTag LC DefList RC
     | STRUCT Tag
+    | LC error RC
     ;
 OptTag : ID
     | /* Epsl */
