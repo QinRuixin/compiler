@@ -1,16 +1,14 @@
 %{
     void yyerror(const char* msg);
     int yyparse(void);
-    extern int yycolumn;
     #include "lex.yy.c"
-    yycolumn=1;
-    #define YY_USER_ACTION yylloc.first_line = yylloc.last_time = yylineno; yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng - 1; yycolumn += yyleng;
+    #define YY_USER_ACTION yylloc.first_line = yylloc.last_time = yylineno;
 %}
 
 /* TYPE */
 %union {
-    int type_int;
-    float type_float;
+    long long int type_int;
+    double type_float;
     double type_double;
 }
 
