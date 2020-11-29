@@ -108,3 +108,8 @@ Exp : Exp ASSIGNOP Exp
 Args : Exp COMMA Args
     | Exp
     ;
+
+%%
+void yyerror(const char* msg){
+    fprintf(stderr, "Error type B at Line %d: %s\n", yylineno, msg);
+}

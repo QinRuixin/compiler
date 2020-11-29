@@ -6,7 +6,7 @@ int Fibonacci(int n)
         int t2 = t0 + t1;
         t0 = t1;
         t1 = t2;
-        i = i + 1;
+        i = i++;
     }
     return t1;
 }
