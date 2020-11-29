@@ -2,7 +2,7 @@
     #include "lex.yy.c"
     #define YY_USER_ACTION yylloc.first_line = yylloc.last_time = yylineno;
 
-    void yyerror(const char* msg);
+    //void yyerror(const char* msg);
     int yyparse(void);
 %}
 
@@ -117,6 +117,8 @@ Args : Exp COMMA Args
     ;
 
 %%
+/*
 void yyerror(const char* msg){
     fprintf(stderr, "Error type B at Line %d: %s\n", yylineno, msg);
 }
+*/
