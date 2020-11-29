@@ -1,8 +1,9 @@
 %{
-    void yyerror(const char* msg);
-    int yyparse(void);
     #include "lex.yy.c"
     #define YY_USER_ACTION yylloc.first_line = yylloc.last_time = yylineno;
+
+    void yyerror(const char* msg);
+    int yyparse(void);
 %}
 
 /* TYPE */
