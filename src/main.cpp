@@ -17,8 +17,8 @@ int main(int argc, char** argv){
             return 1;
         }
     }
-    while (yylex()!=0);
-    // second time
+    //while (yylex()!=0);
+    // second time. first time in lab2.
     if(error_flag==0){
         second_flag = 1;
         yylineno = 1;
