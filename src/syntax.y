@@ -19,9 +19,13 @@
 NOT TYPE LP RP LB RB LC RC STRUCT RETURN IF ELSE WHILE
 
 %right ASSIGNOP
+%left OR
+%left AND
+%left RELOP
 %left PLUS MINUS
 %left STAR DIV
-%left LP RP
+%right NOT
+%left DOT LP RP LB RB
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
 
@@ -29,7 +33,7 @@ NOT TYPE LP RP LB RB LC RC STRUCT RETURN IF ELSE WHILE
 Program : ExtDefList {fprintf(stderr, "Program (%d)",yylineno);}
     ;
 ExtDefList : ExtDef ExtDefList
-    |
+    | /* Epsl */
     ;
 ExtDef : Specifier ExtDefList SEMI
     | Specifier SEMI
@@ -43,9 +47,10 @@ Specifier : TYPE
     | StructSpecifier
     ;
 StructSpecifier : STRUCT OptTag LC DefList RC
+    | STRUCT Tag
     ;
 OptTag : ID
-    |
+    | /* Epsl */
     ;
 Tag : ID
     ;
@@ -65,7 +70,7 @@ ParamDec : Specifier VarDec
 CompSt : LC DefList StmtList RC
     ;
 StmtList : Stmt StmtList
-    |
+    | /* Epsl */
     ;
 Stmt : Exp SEMI
     | CompSt
@@ -76,7 +81,7 @@ Stmt : Exp SEMI
     ;
 
 DefList : Def DefList
-    |
+    | /* Epsl */
     ;
 Def : Specifier DecList SEMI
     ;
