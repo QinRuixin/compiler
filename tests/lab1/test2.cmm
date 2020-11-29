@@ -3,7 +3,7 @@ struct Complex{
 };
 
 int main(){
-    struct Complex x[2];
-    x[1].real = 1.0;
+    struct Complex x[2]
+    x[1].real = 1.0
     return 0;
 }
