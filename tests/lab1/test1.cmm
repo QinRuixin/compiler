@@ -1,5 +1,7 @@
 int Fibonacci(int n)
 {
+    float ii = 1.05e;
+    flout iii = 1.1;
     int t0 = 0, t1 = 1;
     int i = 1;
     while( i < n ){
