@@ -12,30 +12,7 @@ INT_HEX 0[Xx][0-9A-Fa-f]+
 FLOAT_N [0-9]+\.[0-9]+
 FLOAT_E ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)[E|e][+-]?[0-9]+
 ID [_a-zA-Z]([_a-zA-Z0-9]*)
-SEMI ";"
-COMMA ","
-ASSIGNOP "="
-RELOP ">"|"<"|">="|"<="|"=="|"!="
-PLUS "+"
-MINUS "-"
-STAR "*"
-DIV "/"
-AND "&&"
-OR "||"
-DOT \.
-NOT "!"
-TYPE "int"|"float"
-LP "("
-RP ")"
-LB "["
-RB "]"
-LC "{"
-RC "}"
-STRUCT struct
-RETURN return
-IF if
-ELSE else
-WHILE while
+
 COMMENT_LINE "//".*\n
 COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 
