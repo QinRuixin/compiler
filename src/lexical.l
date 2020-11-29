@@ -30,7 +30,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 
 "," {
     if(second_flag==1){
-    //fprintf(stderr,"COMMA %s at Line %d.\n",yytext,yylineno);
+    fprintf(stderr,"COMMA %s at Line %d.\n",yytext,yylineno);
     return COMMA;
   }
 }
