@@ -102,6 +102,7 @@ Exp : Exp ASSIGNOP Exp
     | Exp DIV Exp
     | LP Exp RP
     | MINUS Exp
+    | NOT Exp
     | ID LP Args RP
     | ID LP RP
     | Exp LB Exp RB
