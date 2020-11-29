@@ -26,7 +26,7 @@ NOT TYPE LP RP LB RB LC RC STRUCT RETURN IF ELSE WHILE
 %nonassoc ELSE
 
 %%
-Program : ExtDefList 
+Program : ExtDefList {fprintf(stderr, "Program (%d)",yylineno);}
     ;
 ExtDefList : ExtDef ExtDefList
     |
