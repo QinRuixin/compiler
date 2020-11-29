@@ -6,12 +6,14 @@ extern "C" int yylex();
 extern "C" int yyparse();
 
 int error_flag;
+int syntax_error_flag;
 int second_flag;
 extern int yylineno;
 
 int main(int argc, char** argv){
     error_flag = 0;
     second_flag = 0;
+    syntax_error_flag = 0;
     if(argc > 1){
         if(!(yyin = fopen(argv[1],"r"))){
             perror(argv[1]);
@@ -25,6 +27,9 @@ int main(int argc, char** argv){
         yylineno = 1;
         yyin = fopen(argv[1],"r");
         yyparse();
+    }
+    if(syntax_error_flag == 0){
+        //todo
     }
 
     return 0;

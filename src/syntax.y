@@ -4,6 +4,7 @@
 
     void yyerror(const char* msg);
     int yyparse(void);
+    extern int syntax_error_flag;
 %}
 
 /* TYPE */
@@ -118,5 +119,6 @@ Args : Exp COMMA Args
 
 %%
 void yyerror(const char* msg){
+    syntax_error_flag = 1;
     fprintf(stderr, "Error type B at Line %d: %s\n", yylineno, msg);
 }
