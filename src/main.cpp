@@ -3,6 +3,7 @@
 
 extern FILE* yyin;
 extern "C" int yylex();
+extern "C" int yyparse();
 
 int error_flag;
 int second_flag;
@@ -17,13 +18,13 @@ int main(int argc, char** argv){
             return 1;
         }
     }
-    //while (yylex()!=0);
+    while (yylex()!=0);
     // second time. first time in lab2.
     if(error_flag==0){
         second_flag = 1;
         yylineno = 1;
         yyin = fopen(argv[1],"r");
-            while (yylex()!=0);
+        yyparse();
     }
 
     return 0;
