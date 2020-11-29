@@ -1,21 +1,7 @@
-int Fibonacci(int n)
-{
-    float ii = 1.05e;
-    flout iii = 1.1;
-    int t0 = 0, t1 = 1;
-    int i = 1;
-    while( i < n ){
-        int t2 = t0 + t1;
-        t0 = t1;
-        t1 = t2;
-        i = i++;
-    }
-    return t1;
-}
-
-
 int main()
-{
-    int a = Fibonacci(3);
-    return 0;
-}
+ {
+ float a[10][2];
+ int i;
+ a[5,3] = 1.5;
+ if (a[1][2] == 0) i = 1 else i = 0;
+ }
