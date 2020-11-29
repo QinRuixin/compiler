@@ -9,7 +9,7 @@
 %union {
     long long int type_int;
     double type_float;
-    double type_double;
+    char* s;
 }
 
 /* tokens */

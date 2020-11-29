@@ -191,7 +191,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
     if(second_flag==1){
     char * pEnd;
     //fprintf(stderr,"INT %lld at Line %d.\n",strtoll(yytext,&pEnd,8),yylineno);
-    //yylval = strtoll(yytext,&pEnd,8);
+    yylval.type_int = strtoll(yytext,&pEnd,8);
     return INT;
   }
 }
@@ -199,7 +199,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
     if(second_flag==1){
     char * pEnd;
     //fprintf(stderr,"INT %lld at Line %d.\n",strtoll(yytext,&pEnd,16),yylineno);
-    //yylval = strtoll(yytext,&pEnd,16);
+    yylval.type_int = strtoll(yytext,&pEnd,16);
     return INT;
   }
 }
@@ -207,14 +207,14 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 {FLOAT_E} {
     if(second_flag==1){
     //fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
-    //yylval = atof(yytext);
+    yylval.type_float = atof(yytext);
     return FLOAT;
   }
 }
 {FLOAT_N} {
     if(second_flag==1){
     //fprintf(stderr,"FLOAT %f at Line %d.\n",atof(yytext),yylineno);
-    //yylval = atof(yytext);
+    yylval.type_float = atof(yytext);
     return FLOAT;
   }
 }
@@ -223,7 +223,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 {INT_DEC} {
     if(second_flag==1){
       //fprintf(stderr,"INT %lld at Line %d.\n",atoll(yytext),yylineno);
-      //yylval = atoll(yytext);
+      yylval.type_int = atoll(yytext);
       return INT;
     }
 
