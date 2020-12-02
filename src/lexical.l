@@ -3,6 +3,9 @@
     #include "syntax.tab.h"
     #include<stdio.h>
     #include <stdarg.h>
+    # define SELECTOR_NONE 0
+    # define SELECTOR_INT 1
+    # define SELECTOR_FLOAT 2
     extern int error_flag;
     extern int second_flag;
     int yycolumn = 1;
@@ -65,6 +68,7 @@
 
     tree_node* test_root;
     tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
+    tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,...);
     void traverse(struct tree_node* root,int cur_deep);
 
 %}
@@ -88,7 +92,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 ";" {
     if(second_flag==1){
     //fprintf(stderr,"SEMI %s at Line %d.\n",yytext,yylineno);
-    return SEMI;
+    return create_token_node(ENUM_SEMI,yylineno,0);
   }
 }
 
@@ -322,6 +326,25 @@ tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...){
     va_start(arg_ptr,childnum);   // point to arg after childnum
     for(int i = 0; i< childnum; ++i){
         cur_node->child_node[cur_node->child_num++] = va_arg(arg_ptr, tree_node*);
+    }
+    return cur_node;
+}
+
+tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,...){
+    tree_node* cur_node = (tree_node*)malloc(sizeof(tree_node));  
+    cur_node->node_type = enum_type;
+    cur_node->line_no = lineno;
+    cur_node->child_num = 0;
+    if(val_selector==SELECTOR_INT){
+      va_list arg_ptr;
+      va_start(arg_ptr,val_selector);
+      cur_node->int_val = va_arg(arg_ptr, long long int);
+      cur_node->float_val = 0.0;
+    }else if(val_selector==SELECTOR_FLOAT){
+      va_list arg_ptr;
+      va_start(arg_ptr,val_selector);
+      cur_node->int_val = 0ll;
+      cur_node->float_val = va_arg(arg_ptr, double);
     }
     return cur_node;
 }
