@@ -61,7 +61,6 @@
     } tree_node;
 
     tree_node* test_root;
-    //tree_node* create_node(NODE_TYPE enum_type, int lineno);
     tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
     void traverse(struct tree_node* root,int cur_deep);
 %}
