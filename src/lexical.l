@@ -4,7 +4,11 @@
     #include<stdio.h>
     extern int error_flag;
     extern int second_flag;
+    int yycolumn = 1;
+    #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng -1; yycolumn += yyleng;
+
 %}
+
 WS [ \r\n\t\f\v]+
 INT_DEC 0|([1-9][0-9]*)
 INT_OCT 0([0-7]+)
@@ -17,7 +21,7 @@ COMMENT_LINE "//".*\n
 COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 
 %%
-
+\n {yycolumn=1;}
 {COMMENT_LINE} {}
 {COMMENT_MUL} {}
 {WS} {}
