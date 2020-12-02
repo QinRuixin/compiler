@@ -143,41 +143,41 @@ Stmt : Exp SEMI {$$=create_node(ENUM_Stmt,@$.first_line,2,$1,$2);}
     | error SEMI {$$=create_node(ENUM_Stmt,@$.first_line,0);}
     ;
 
-DefList : Def DefList
-    | /* Epsl */
+DefList : Def DefList {$$=create_node(ENUM_DefList,@1.first_line,2,$1,$2);}
+    | /* Epsl */ {$$=create_node(ENUM_DefList,@$.first_line,0);}
     ;
-Def : Specifier DecList SEMI
-    | error SEMI
+Def : Specifier DecList SEMI {$$=create_node(ENUM_Def,@1.first_line,3,$1,$2,$3);}
+    | error SEMI {$$=create_node(ENUM_Def,@1.first_line,0);}
     ;
-DecList : Dec
-    | Dec COMMA DecList
+DecList : Dec {$$=create_node(ENUM_DecList,@1.first_line,1,$1);}
+    | Dec COMMA DecList {$$=create_node(ENUM_DecList,@1.first_line,3,$1,$2,$3);}
     ;
-Dec : VarDec
-    | VarDec ASSIGNOP Exp
+Dec : VarDec {$$=create_node(ENUM_Dec,@1.first_line,1,$1);}
+    | VarDec ASSIGNOP Exp {$$=create_node(ENUM_Dec,@1.first_line,3,$1,$2,$3);}
     ;
 
-Exp : Exp ASSIGNOP Exp
-    | Exp AND Exp
-    | Exp OR Exp
-    | Exp RELOP Exp
-    | Exp PLUS Exp
-    | Exp MINUS Exp
-    | Exp STAR Exp
-    | Exp DIV Exp
-    | LP Exp RP
-    | MINUS Exp
-    | NOT Exp
-    | ID LP Args RP
-    | ID LP RP
-    | Exp LB Exp RB
-    | Exp DOT ID
-    | ID
-    | INT
-    | FLOAT
-    | Exp LB error RB
+Exp : Exp ASSIGNOP Exp {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | Exp AND Exp {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | Exp OR Exp {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | Exp RELOP Exp {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | Exp PLUS Exp {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | Exp MINUS Exp {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | Exp STAR Exp {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | Exp DIV Exp {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | LP Exp RP {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | MINUS Exp {$$=create_node(ENUM_Exp,@1.first_line,2,$1,$2);}
+    | NOT Exp {$$=create_node(ENUM_Exp,@1.first_line,2,$1,$2);}
+    | ID LP Args RP {$$=create_node(ENUM_Exp,@1.first_line,4,$1,$2,$3,$4);}
+    | ID LP RP {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | Exp LB Exp RB {$$=create_node(ENUM_Exp,@1.first_line,4,$1,$2,$3,$4);}
+    | Exp DOT ID {$$=create_node(ENUM_Exp,@1.first_line,3,$1,$2,$3);}
+    | ID {$$=create_node(ENUM_Exp,@1.first_line,1,$1);}
+    | INT {$$=create_node(ENUM_Exp,@1.first_line,1,$1);}
+    | FLOAT {$$=create_node(ENUM_Exp,@1.first_line,1,$1);}
+    | Exp LB error RB {$$=create_node(ENUM_Exp,@1.first_line,0);}
     ;
-Args : Exp COMMA Args
-    | Exp
+Args : Exp COMMA Args {$$=create_node(ENUM_Args,@1.first_line,3,$1,$2,$3);}
+    | Exp {$$=create_node(ENUM_Args,@1.first_line,1,$1);}
     ;
 
 %%
