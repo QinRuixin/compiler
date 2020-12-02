@@ -33,7 +33,7 @@
 Program : ExtDefList {$$=create_node(ENUM_Program,@$.first_line,1,$1); if(syntax_error_flag == 0){traverse($$,0);} }
     ;
 ExtDefList : ExtDef ExtDefList {$$=create_node(ENUM_ExtDefList,@$.first_line,2,$1,$2);}
-    | /* Epsl */ {$$=create_node(ENUM_ExtDefList,@$.first_line,0);}
+    | /* Epsl */ {$$=NULL;}
     ;
 ExtDef : Specifier ExtDecList SEMI {$$=create_node(ENUM_ExtDef,@$.first_line,3,$1,$2,$3);}
     | Specifier SEMI {$$=create_node(ENUM_ExtDef,@$.first_line,2,$1,$2);}
@@ -51,7 +51,7 @@ StructSpecifier : STRUCT OptTag LC DefList RC {$$=create_node(ENUM_StructSpecifi
     | STRUCT Tag {$$=create_node(ENUM_StructSpecifier,@$.first_line,2,$1,$2);}
     ;
 OptTag : ID {$$=create_node(ENUM_OptTag,@$.first_line,1,$1);}
-    | /* Epsl */ {$$=create_node(ENUM_OptTag,@$.first_line,0);}
+    | /* Epsl */ {$$=NULL;}
     ;
 Tag : ID {$$=create_node(ENUM_Tag,@$.first_line,1,$1);}
     ;
@@ -73,7 +73,7 @@ CompSt : LC DefList StmtList RC {$$=create_node(ENUM_CompSt,@$.first_line,4,$1,$
     | LC error RC {$$=create_node(ENUM_CompSt,@$.first_line,0);}
     ;
 StmtList : Stmt StmtList {$$=create_node(ENUM_StmtList,@$.first_line,2,$1,$2);}
-    | /* Epsl */ {$$=create_node(ENUM_StmtList,@$.first_line,0);}
+    | /* Epsl */ {$$=NULL;}
     ;
 Stmt : Exp SEMI {$$=create_node(ENUM_Stmt,@$.first_line,2,$1,$2);}
     | CompSt {$$=create_node(ENUM_Stmt,@$.first_line,1,$1);}
@@ -85,7 +85,7 @@ Stmt : Exp SEMI {$$=create_node(ENUM_Stmt,@$.first_line,2,$1,$2);}
     ;
 
 DefList : Def DefList {$$=create_node(ENUM_DefList,@$.first_line,2,$1,$2);}
-    | /* Epsl */ {$$=create_node(ENUM_DefList,@$.first_line,0);}
+    | /* Epsl */ {$$=NULL;}
     ;
 Def : Specifier DecList SEMI {$$=create_node(ENUM_Def,@$.first_line,3,$1,$2,$3);}
     | error SEMI {$$=create_node(ENUM_Def,@$.first_line,0);}
