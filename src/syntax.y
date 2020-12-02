@@ -103,16 +103,16 @@ ExtDecList : VarDec {$$=create_node(ENUM_ExtDecList,@$.first_line,1,$1);}
     | VarDec COMMA ExtDecList {$$=create_node(ENUM_ExtDecList,@$.first_line,3,$1,$2,$3);}
     ;
 
-Specifier : TYPE
-    | StructSpecifier
+Specifier : TYPE {$$=create_node(ENUM_Specifier,@$.first_line,1,$1);}
+    | StructSpecifier  {$$=create_node(ENUM_Specifier,@$.first_line,1,$1);}
     ;
-StructSpecifier : STRUCT OptTag LC DefList RC
-    | STRUCT Tag
+StructSpecifier : STRUCT OptTag LC DefList RC {$$=create_node(ENUM_StructSpecifier,@$.first_line,5,$1,$2,$3,$4,$5);}
+    | STRUCT Tag {$$=create_node(ENUM_StructSpecifier,@$.first_line,2,$1,$2);}
     ;
-OptTag : ID
-    | /* Epsl */
+OptTag : ID {$$=create_node(ENUM_OptTag,@$.first_line,1,$1);}
+    | /* Epsl */ {$$=create_node(ENUM_OptTag,@$.first_line,0);}
     ;
-Tag : ID
+Tag : ID {$$=create_node(ENUM_Tag,@$.first_line,1,$1);}
     ;
 
 VarDec : ID
