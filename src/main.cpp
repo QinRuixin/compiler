@@ -2,8 +2,10 @@
 #include<stdlib.h>
 
 extern FILE* yyin;
+struct tree_node;
 extern "C" int yylex();
 extern "C" int yyparse();
+extern "C" void traverse(tree_node* root);
 
 int error_flag;
 int syntax_error_flag;
