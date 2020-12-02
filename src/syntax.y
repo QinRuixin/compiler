@@ -199,11 +199,15 @@ tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...){
     cur_node->child_num = 0;
     cur_node->int_val = 0ll;
     cur_node->float_val = 0.0;
+    if(childnum==0){
+        return cur_node;
+    }
     va_list arg_ptr;             //arg_ptr
     va_start(arg_ptr,childnum);   // point to arg after childnum
     for(int i = 0; i< childnum; ++i){
         cur_node->child_node[cur_node->child_num++] = va_arg(arg_ptr, tree_node*);
     }
+    return cur_node;
 }
 
 void traverse(tree_node* root){
