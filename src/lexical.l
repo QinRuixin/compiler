@@ -92,7 +92,8 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 ";" {
     if(second_flag==1){
     //fprintf(stderr,"SEMI %s at Line %d.\n",yytext,yylineno);
-    return create_token_node(ENUM_SEMI,yylineno,0);
+    yylval.node = create_token_node(ENUM_SEMI,yylineno,0);
+    return SEMI;
   }
 }
 
