@@ -64,7 +64,7 @@
     tree_node* test_root;
     //tree_node* create_node(NODE_TYPE enum_type, int lineno);
     tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
-    void traverse(struct tree_node* root);
+    void traverse(struct tree_node* root,int cur_deep);
 %}
 
 /* TYPE */
@@ -89,7 +89,7 @@
 %type <node> Program ExtDefList ExtDef ExtDecList Specifier StructSpecifier OptTag Tag VarDec FunDec VarList ParamDec CompSt StmtList Stmt DefList Def DecList Dec Exp Args
 
 %%
-Program : ExtDefList {$$=create_node(ENUM_Program,@$.first_line,1,$1); if(syntax_error_flag == 0){traverse($$);} }
+Program : ExtDefList {$$=create_node(ENUM_Program,@$.first_line,1,$1); if(syntax_error_flag == 0){traverse($$,0);} }
     ;
 ExtDefList : ExtDef ExtDefList {$$=create_node(ENUM_ExtDefList,@$.first_line,2,$1,$2);}
     | /* Epsl */ {$$=create_node(ENUM_ExtDefList,@$.first_line,0);}
@@ -210,16 +210,20 @@ tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...){
     return cur_node;
 }
 
-void traverse(tree_node* root){
+void traverse(tree_node* root,int cur_deep){
     // todo INT FLOAT etc
+    for(int d = 0; d< cur_deep;++d){
+        fprintf(stderr, "  ");        
+    }
     fprintf(stderr, "%s(%d)\n", type_name[root->node_type], root->line_no);
     for(int i = 0; i < root->child_num; ++i){
         if(root->child_node[i]!=NULL){
-            fprintf(stderr, "  ");
-            traverse(root->child_node[i]);
+            traverse(root->child_node[i],cur_deep+1);
         }
     }
 }
+
+
 
 void yyerror(const char* msg){
     syntax_error_flag = 1;
