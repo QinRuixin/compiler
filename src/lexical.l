@@ -395,11 +395,27 @@ tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,..
 }
 
 void traverse(tree_node* root,int cur_deep){
-    // todo INT FLOAT etc
+    // todo INT FLOAT TYPE ID
     for(int d = 0; d< cur_deep;++d){
-        fprintf(stderr, "  ");        
+        fprintf(stderr, "  ");
     }
-    fprintf(stderr, "%s(%d)\n", type_name[root->node_type], root->line_no);
+    switch(root->node_type){
+      case ENUM_INT:
+        fprintf(stderr, "%s: %lld)\n", type_name[root->node_type], root->int_val);
+        break;
+      case ENUM_FLOAT:
+        fprintf(stderr, "%s: %lf)\n", type_name[root->node_type], root->float_val);
+        break;
+      case ENUM_ID:
+        fprintf(stderr, "%s: %s)\n", type_name[root->node_type], root->node_name);
+        break;
+      case ENUM_TYPE:
+        fprintf(stderr, "%s: %s)\n", type_name[root->node_type], root->node_name);
+        break;
+      default:
+        fprintf(stderr, "%s(%d)\n", type_name[root->node_type], root->line_no);
+        break;
+    }
     for(int i = 0; i < root->child_num; ++i){
         if(root->child_node[i]!=NULL){
             traverse(root->child_node[i],cur_deep+1);
