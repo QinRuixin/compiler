@@ -89,18 +89,18 @@
 %type <node> Program ExtDefList ExtDef ExtDecList Specifier StructSpecifier OptTag Tag VarDec FunDec VarList ParamDec CompSt StmtList Stmt DefList Def DecList Dec Exp Args
 
 %%
-Program : ExtDefList {$$=create_node(ENUM_Program,@1.first_line,1,$1); if(syntax_error_flag == 0){traverse($$);} }
+Program : ExtDefList {$$=create_node(ENUM_Program,@$.first_line,1,$1); if(syntax_error_flag == 0){traverse($$);} }
     ;
-ExtDefList : ExtDef ExtDefList {$$=create_node(ENUM_ExtDefList,@1.first_line,0);}
-    | /* Epsl */
+ExtDefList : ExtDef ExtDefList {$$=create_node(ENUM_ExtDefList,@$.first_line,2,$1,$2);}
+    | /* Epsl */ {$$=create_node(ENUM_ExtDefList,@$.first_line,0);}
     ;
-ExtDef : Specifier ExtDecList SEMI
-    | Specifier SEMI
-    | Specifier FunDec CompSt
-    | error SEMI
+ExtDef : Specifier ExtDecList SEMI {$$=create_node(ENUM_ExtDef,@$.first_line,3,$1,$2,$3);}
+    | Specifier SEMI {$$=create_node(ENUM_ExtDef,@$.first_line,2,$1,$2);}
+    | Specifier FunDec CompSt {$$=create_node(ENUM_ExtDef,@$.first_line,3,$1,$2,$3);}
+    | error SEMI {$$=create_node(ENUM_ExtDef,@$.first_line,0);}
     ;
-ExtDecList : VarDec
-    | VarDec COMMA ExtDecList
+ExtDecList : VarDec {$$=create_node(ENUM_ExtDecList,@$.first_line,1,$1);}
+    | VarDec COMMA ExtDecList {$$=create_node(ENUM_ExtDecList,@$.first_line,3,$1,$2,$3);}
     ;
 
 Specifier : TYPE
