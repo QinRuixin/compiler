@@ -1,10 +1,10 @@
 %{
     #include "lex.yy.c"
-    #include<stdarg.h>
-
+    #include <stdarg.h>
     void yyerror(const char* msg);
     int yyparse(void);
     extern int syntax_error_flag;
+
 
     typedef enum NT{
         ENUM_INT, ENUM_FLOAT, ENUM_ID, ENUM_SEMI, ENUM_COMMA, 
@@ -180,17 +180,6 @@ Args : Exp COMMA Args {$$=create_node(ENUM_Args,@$.first_line,3,$1,$2,$3);}
     ;
 
 %%
-
-/*
-tree_node* create_node(NODE_TYPE enum_type, int lineno){
-    tree_node* cur_node = (tree_node*)malloc(sizeof(tree_node));
-    cur_node->node_type = enum_type;
-    cur_node->line_no = lineno;
-    cur_node->child_num = 0;
-    cur_node->int_val = 0ll;
-    cur_node->float_val = 0.0;
-}
-*/
 tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...){
     tree_node* cur_node = (tree_node*)malloc(sizeof(tree_node));
     cur_node->node_type = enum_type;
@@ -221,8 +210,6 @@ void traverse(tree_node* root,int cur_deep){
         }
     }
 }
-
-
 
 void yyerror(const char* msg){
     syntax_error_flag = 1;

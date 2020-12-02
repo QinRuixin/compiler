@@ -7,6 +7,8 @@
     int yycolumn = 1;
     #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng -1; yycolumn += yyleng;
 
+    //struct tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
+
 %}
 
 WS [ \r\n\t\f\v]+
@@ -247,3 +249,4 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 
 }
 %%
+
