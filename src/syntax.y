@@ -72,8 +72,7 @@
 }
 
 /* tokens */
-%token INT FLOAT ID SEMI COMMA ASSIGNOP RELOP PLUS MINUS STAR DIV AND OR DOT 
-NOT TYPE LP RP LB RB LC RC STRUCT RETURN IF ELSE WHILE
+%token <node> INT FLOAT ID SEMI COMMA ASSIGNOP RELOP PLUS MINUS STAR DIV AND OR DOT NOT TYPE LP RP LB RB LC RC STRUCT RETURN IF ELSE WHILE
 
 %right ASSIGNOP
 %left OR
@@ -86,8 +85,10 @@ NOT TYPE LP RP LB RB LC RC STRUCT RETURN IF ELSE WHILE
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
 
+%type <node> Epsilon Program ExtDefList ExtDef ExtDecList Specifier StructSpecifier OptTag Tag VarDec FunDec VarList ParamDec CompSt StmtList Stmt DefList Def DecList Dec Exp Args
+
 %%
-Program : ExtDefList{test_root=create_node(ENUM_Program,@1.first_line); printf("Program---test\n");}
+Program : ExtDefList{$$=create_node(ENUM_Program,@1.first_line); if(syntax_error_flag == 0){traverse($$);} }
     ;
 ExtDefList : ExtDef ExtDefList
     | /* Epsl */
@@ -184,11 +185,19 @@ tree_node* create_node(NODE_TYPE enum_type, int lineno){
     tree_node* cur_node = (tree_node*)malloc(sizeof(tree_node));
     cur_node->node_type = enum_type;
     cur_node->line_no = lineno;
+    cur_node->child_num = 0;
+    cur_node->int_val = 0ll;
+    cur_node->float_val = 0.0;
 }
 
 void traverse(tree_node* root){
-    root = test_root; //todo
     fprintf(stderr, "%s(%d)\n", type_name[root->node_type], root->line_no);
+    for(int i = 0; i < root->child_num; ++i){
+        if(root->child_node[i]!=NULL){
+            fprintf(stderr, "  ");
+            traverse(root->child_node[i]);
+        }
+    }
 }
 
 void yyerror(const char* msg){
