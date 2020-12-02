@@ -413,7 +413,11 @@ void traverse(tree_node* root,int cur_deep){
         fprintf(stderr, "%s: %s\n", type_name[root->node_type], root->node_name);
         break;
       default:
-        fprintf(stderr, "%s(%d)\n", type_name[root->node_type], root->line_no);
+        if(root->node_type<ENUM_Epsilon){
+          fprintf(stderr, "%s\n", type_name[root->node_type]);
+        }else{
+          fprintf(stderr, "%s (%d)\n", type_name[root->node_type], root->line_no);
+        }
         break;
     }
     for(int i = 0; i < root->child_num; ++i){
