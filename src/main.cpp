@@ -5,6 +5,7 @@ extern FILE* yyin;
 struct tree_node;
 extern "C" int yylex();
 extern "C" int yyparse();
+extern "C" int yyrestart(FILE* file);
 extern "C" void traverse(tree_node* root);
 
 int error_flag;
@@ -26,8 +27,9 @@ int main(int argc, char** argv){
     // second time. first time in lab2.
     if(error_flag==0){
         second_flag = 1;
-        yylineno = 1;
         yyin = fopen(argv[1],"r");
+        yylineno = 1;
+        yyrestart(yyin);
         yyparse();
     }
     if(syntax_error_flag == 0){
