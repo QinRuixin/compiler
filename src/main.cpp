@@ -23,12 +23,12 @@ int main(int argc, char** argv){
             return 1;
         }
     }
-    //while (yylex()!=0);
-    // support no lex error so first time here in lab2.
+    while (yylex()!=0);
+    // second time. 
     if(error_flag==0){
         second_flag = 1;
-        //yyin = fopen(argv[1],"r");
-        //yylineno = 1;
+        yyin = fopen(argv[1],"r");
+        yylineno = 1;
         //yyrestart(yyin);
         yyparse();
     }
