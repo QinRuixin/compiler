@@ -115,32 +115,32 @@ OptTag : ID {$$=create_node(ENUM_OptTag,@$.first_line,1,$1);}
 Tag : ID {$$=create_node(ENUM_Tag,@$.first_line,1,$1);}
     ;
 
-VarDec : ID
-    | VarDec LB INT RB
+VarDec : ID {$$=create_node(ENUM_VarDec,@$.first_line,1,$1);}
+    | VarDec LB INT RB {$$=create_node(ENUM_VarDec,@$.first_line,4,$1,$2,$3,$4);}
     ;
-FunDec : ID LP VarList RP
-    | ID LP RP
-    | error RP
+FunDec : ID LP VarList RP {$$=create_node(ENUM_FunDec,@$.first_line,4,$1,$2,$3,$4);}
+    | ID LP RP {$$=create_node(ENUM_FunDec,@$.first_line,3,$1,$2,$3);}
+    | error RP {$$=create_node(ENUM_FunDec,@$.first_line,0);}
     ;
-VarList : ParamDec COMMA VarList
-    | ParamDec
+VarList : ParamDec COMMA VarList {$$=create_node(ENUM_VarList,@$.first_line,3,$1,$2,$3);}
+    | ParamDec {$$=create_node(ENUM_VarList,@$.first_line,1,$1);}
     ;
-ParamDec : Specifier VarDec
+ParamDec : Specifier VarDec {$$=create_node(ENUM_ParamDec,@$.first_line,2,$1,$2);}
     ;
 
-CompSt : LC DefList StmtList RC
-    | LC error RC
+CompSt : LC DefList StmtList RC {$$=create_node(ENUM_CompSt,@$.first_line,4,$1,$2,$3,$4);}
+    | LC error RC {$$=create_node(ENUM_CompSt,@$.first_line,0);}
     ;
-StmtList : Stmt StmtList
-    | /* Epsl */
+StmtList : Stmt StmtList {$$=create_node(ENUM_StmtList,@$.first_line,2,$1,$2);}
+    | /* Epsl */ {$$=create_node(ENUM_StmtList,@$.first_line,0);}
     ;
-Stmt : Exp SEMI
-    | CompSt
-    | RETURN Exp SEMI
-    | IF LP Exp RP Stmt %prec LOWER_THAN_ELSE
-    | IF LP Exp RP Stmt ELSE Stmt
-    | WHILE LP Exp RP Stmt
-    | error SEMI
+Stmt : Exp SEMI {$$=create_node(ENUM_Stmt,@$.first_line,2,$1,$2);}
+    | CompSt {$$=create_node(ENUM_Stmt,@$.first_line,1,$1);}
+    | RETURN Exp SEMI {$$=create_node(ENUM_Stmt,@$.first_line,3,$1,$2,$3);}
+    | IF LP Exp RP Stmt %prec LOWER_THAN_ELSE {$$=create_node(ENUM_Stmt,@$.first_line,5,$1,$2,$3,$4,$5);}
+    | IF LP Exp RP Stmt ELSE Stmt {$$=create_node(ENUM_Stmt,@$.first_line,7,$1,$2,$3,$4,$5,$6,$7);}
+    | WHILE LP Exp RP Stmt {$$=create_node(ENUM_Stmt,@$.first_line,5,$1,$2,$3,$4,$5);}
+    | error SEMI {$$=create_node(ENUM_Stmt,@$.first_line,0);}
     ;
 
 DefList : Def DefList
