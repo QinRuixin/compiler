@@ -401,16 +401,16 @@ void traverse(tree_node* root,int cur_deep){
     }
     switch(root->node_type){
       case ENUM_INT:
-        fprintf(stderr, "%s: %lld)\n", type_name[root->node_type], root->int_val);
+        fprintf(stderr, "%s: %lld\n", type_name[root->node_type], root->int_val);
         break;
       case ENUM_FLOAT:
-        fprintf(stderr, "%s: %lf)\n", type_name[root->node_type], root->float_val);
+        fprintf(stderr, "%s: %lf\n", type_name[root->node_type], root->float_val);
         break;
       case ENUM_ID:
-        fprintf(stderr, "%s: %s)\n", type_name[root->node_type], root->node_name);
+        fprintf(stderr, "%s: %s\n", type_name[root->node_type], root->node_name);
         break;
       case ENUM_TYPE:
-        fprintf(stderr, "%s: %s)\n", type_name[root->node_type], root->node_name);
+        fprintf(stderr, "%s: %s\n", type_name[root->node_type], root->node_name);
         break;
       default:
         fprintf(stderr, "%s(%d)\n", type_name[root->node_type], root->line_no);
