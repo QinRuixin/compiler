@@ -87,7 +87,7 @@ NOT TYPE LP RP LB RB LC RC STRUCT RETURN IF ELSE WHILE
 %nonassoc ELSE
 
 %%
-Program : ExtDefList{test_root=create_node(ENUM_Program,yylineno); printf("Program---test\n");}
+Program : ExtDefList{test_root=create_node(ENUM_Program,@1.first_line); printf("Program---test\n");}
     ;
 ExtDefList : ExtDef ExtDefList
     | /* Epsl */
