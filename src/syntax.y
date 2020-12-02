@@ -1,5 +1,6 @@
 %{
     #include "lex.yy.c"
+    #include<stdarg.h>
     #define YY_USER_ACTION yylloc.first_line = yylloc.last_time = yylineno;
 
     void yyerror(const char* msg);
@@ -61,9 +62,9 @@
     } tree_node;
 
     tree_node* test_root;
-    tree_node* create_node(NODE_TYPE enum_type, int lineno);
+    //tree_node* create_node(NODE_TYPE enum_type, int lineno);
+    tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
     void traverse(struct tree_node* root);
-
 %}
 
 /* TYPE */
@@ -85,12 +86,12 @@
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
 
-%type <node> Epsilon Program ExtDefList ExtDef ExtDecList Specifier StructSpecifier OptTag Tag VarDec FunDec VarList ParamDec CompSt StmtList Stmt DefList Def DecList Dec Exp Args
+%type <node> Program ExtDefList ExtDef ExtDecList Specifier StructSpecifier OptTag Tag VarDec FunDec VarList ParamDec CompSt StmtList Stmt DefList Def DecList Dec Exp Args
 
 %%
-Program : ExtDefList{$$=create_node(ENUM_Program,@1.first_line); if(syntax_error_flag == 0){traverse($$);} }
+Program : ExtDefList {$$=create_node(ENUM_Program,@1.first_line,1,$1); if(syntax_error_flag == 0){traverse($$);} }
     ;
-ExtDefList : ExtDef ExtDefList
+ExtDefList : ExtDef ExtDefList {$$=create_node(ENUM_ExtDefList,@1.first_line,0);}
     | /* Epsl */
     ;
 ExtDef : Specifier ExtDecList SEMI
@@ -181,6 +182,7 @@ Args : Exp COMMA Args
 
 %%
 
+/*
 tree_node* create_node(NODE_TYPE enum_type, int lineno){
     tree_node* cur_node = (tree_node*)malloc(sizeof(tree_node));
     cur_node->node_type = enum_type;
@@ -189,8 +191,23 @@ tree_node* create_node(NODE_TYPE enum_type, int lineno){
     cur_node->int_val = 0ll;
     cur_node->float_val = 0.0;
 }
+*/
+tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...){
+    tree_node* cur_node = (tree_node*)malloc(sizeof(tree_node));
+    cur_node->node_type = enum_type;
+    cur_node->line_no = lineno;
+    cur_node->child_num = 0;
+    cur_node->int_val = 0ll;
+    cur_node->float_val = 0.0;
+    va_list arg_ptr;             //arg_ptr
+    va_start(arg_ptr,childnum);   // point to arg after childnum
+    for(int i = 0; i< childnum; ++i){
+        cur_node->child_node[cur_node->child_num++] = va_arg(arg_ptr, tree_node*);
+    }
+}
 
 void traverse(tree_node* root){
+    // todo INT FLOAT etc
     fprintf(stderr, "%s(%d)\n", type_name[root->node_type], root->line_no);
     for(int i = 0; i < root->child_num; ++i){
         if(root->child_node[i]!=NULL){
