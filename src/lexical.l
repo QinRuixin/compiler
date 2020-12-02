@@ -2,12 +2,70 @@
 %{
     #include "syntax.tab.h"
     #include<stdio.h>
+    #include <stdarg.h>
     extern int error_flag;
     extern int second_flag;
     int yycolumn = 1;
     #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng -1; yycolumn += yyleng;
-    //extern tree_node;
-    //extern tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
+
+
+    typedef enum NT{
+        ENUM_INT, ENUM_FLOAT, ENUM_ID, ENUM_SEMI, ENUM_COMMA, 
+        ENUM_ASSIGNOP, ENUM_RELOP, ENUM_PLUS, ENUM_MINUS, ENUM_STAR, ENUM_DIV, 
+        ENUM_AND, ENUM_OR, ENUM_DOT, ENUM_NOT, ENUM_TYPE, 
+        ENUM_LP, ENUM_RP, ENUM_LB, ENUM_RB, ENUM_LC, ENUM_RC, 
+        ENUM_STRUCT, ENUM_RETURN, ENUM_IF, ENUM_ELSE, ENUM_WHILE,
+
+        ENUM_Epsilon,
+
+        ENUM_Program, ENUM_ExtDefList, ENUM_ExtDef, ENUM_ExtDecList,
+
+        ENUM_Specifier, ENUM_StructSpecifier, ENUM_OptTag, ENUM_Tag,
+
+        ENUM_VarDec, ENUM_FunDec, ENUM_VarList, ENUM_ParamDec,
+
+        ENUM_CompSt, ENUM_StmtList, ENUM_Stmt,
+
+        ENUM_DefList, ENUM_Def, ENUM_DecList, ENUM_Dec,
+
+        ENUM_Exp, ENUM_Args
+    } NODE_TYPE;
+
+    const char* type_name[] = {
+        "INT", "FLOAT", "ID", "SEMI", "COMMA", 
+        "ASSIGNOP", "RELOP", "PLUS", "MINUS", "STAR", "DIV",
+        "AND", "OR", "DOT", "NOT", "TYPE",
+        "LP", "RP", "LB", "RB", "LC", "RC",
+        "STRUCT", "RETURN", "IF", "ELSE", "WHILE",
+
+        "Epsilon",
+
+        "Program", "ExtDefList", "ExtDef", "ExtDecList",
+
+        "Specifier", "StructSpecifier", "OptTag", "Tag",
+
+        "VarDec", "FunDec", "VarList", "ParamDec",
+
+        "CompSt", "StmtList", "Stmt",
+
+        "DefList", "Def", "DecList", "Dec",
+
+        "Exp", "Args"
+    };
+    //struct tree_node;
+    typedef struct tree_node{
+        NODE_TYPE node_type;
+        //char node_name[32+1];
+        struct tree_node* child_node[10];
+        int child_num;
+        int line_no;
+        long long int int_val;
+        double float_val;
+    } tree_node;
+
+    tree_node* test_root;
+    tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
+    void traverse(struct tree_node* root,int cur_deep);
 
 %}
 
@@ -250,3 +308,33 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 }
 %%
 
+tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...){
+    tree_node* cur_node = (tree_node*)malloc(sizeof(tree_node));
+    cur_node->node_type = enum_type;
+    cur_node->line_no = lineno;
+    cur_node->child_num = 0;
+    cur_node->int_val = 0ll;
+    cur_node->float_val = 0.0;
+    if(childnum==0){
+        return cur_node;
+    }
+    va_list arg_ptr;             //arg_ptr
+    va_start(arg_ptr,childnum);   // point to arg after childnum
+    for(int i = 0; i< childnum; ++i){
+        cur_node->child_node[cur_node->child_num++] = va_arg(arg_ptr, tree_node*);
+    }
+    return cur_node;
+}
+
+void traverse(tree_node* root,int cur_deep){
+    // todo INT FLOAT etc
+    for(int d = 0; d< cur_deep;++d){
+        fprintf(stderr, "  ");        
+    }
+    fprintf(stderr, "%s(%d)\n", type_name[root->node_type], root->line_no);
+    for(int i = 0; i < root->child_num; ++i){
+        if(root->child_node[i]!=NULL){
+            traverse(root->child_node[i],cur_deep+1);
+        }
+    }
+}
