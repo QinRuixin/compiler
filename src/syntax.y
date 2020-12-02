@@ -122,7 +122,7 @@ Args : Exp COMMA Args {$$=create_node(ENUM_Args,@$.first_line,3,$1,$2,$3);}
     ;
 
 %%
-yyerror(const char* msg){
+void yyerror(const char* msg){
     syntax_error_flag = 1;
     fprintf(stderr,"Error type B at Line %d: %s.\n",yylineno,msg);
 }
