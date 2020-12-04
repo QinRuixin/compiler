@@ -16,6 +16,8 @@
 /* tokens */
 %token <node> INT FLOAT ID SEMI COMMA ASSIGNOP RELOP PLUS MINUS STAR DIV AND OR DOT NOT TYPE LP RP LB RB LC RC STRUCT RETURN IF ELSE WHILE
 
+%nonassoc LOWER_THAN_ELSE
+%nonassoc ELSE
 %right ASSIGNOP
 %left OR
 %left AND
@@ -24,8 +26,6 @@
 %left STAR DIV
 %right NOT
 %left DOT LP RP LB RB
-%nonassoc LOWER_THAN_ELSE
-%nonassoc ELSE
 
 %type <node> Program ExtDefList ExtDef ExtDecList Specifier StructSpecifier OptTag Tag VarDec FunDec VarList ParamDec CompSt StmtList Stmt DefList Def DecList Dec Exp Args
 
