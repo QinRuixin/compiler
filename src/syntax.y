@@ -24,6 +24,7 @@
 %left RELOP
 %left PLUS MINUS
 %left STAR DIV
+%right UMINUS
 %right NOT
 %left DOT LP RP LB RB
 
@@ -106,7 +107,7 @@ Exp : Exp ASSIGNOP Exp {$$=create_node(ENUM_Exp,@$.first_line,3,$1,$2,$3);}
     | Exp STAR Exp {$$=create_node(ENUM_Exp,@$.first_line,3,$1,$2,$3);}
     | Exp DIV Exp {$$=create_node(ENUM_Exp,@$.first_line,3,$1,$2,$3);}
     | LP Exp RP {$$=create_node(ENUM_Exp,@$.first_line,3,$1,$2,$3);}
-    | MINUS Exp {$$=create_node(ENUM_Exp,@$.first_line,2,$1,$2);}
+    | MINUS Exp %prec UMINUS {$$=create_node(ENUM_Exp,@$.first_line,2,$1,$2);}
     | NOT Exp {$$=create_node(ENUM_Exp,@$.first_line,2,$1,$2);}
     | ID LP Args RP {$$=create_node(ENUM_Exp,@$.first_line,4,$1,$2,$3,$4);}
     | ID LP RP {$$=create_node(ENUM_Exp,@$.first_line,3,$1,$2,$3);}
