@@ -1,9 +1,7 @@
-int main()
- {
- int i; =1;
- int j; =2;
- float a[10][2];
- int i;
- a[5][3] = 1.5;
- if (a[1][2] == 0) i = 1; else i = 0;
- }
+int test_for_wrong_dhex_number()
+{
+    int _correct_dhex_number_ = 0xf29C0;
+    int _wrong_dhex_number_ = 0xCd0G;
+    int _correct_dhex_number2_ = 0x000abCD;
+    int _wrong_dhex_number2_ = 0xx346f;
+}
