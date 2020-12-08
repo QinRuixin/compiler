@@ -1,7 +1,15 @@
-int test_for_wrong_dhex_number()
+int main()
 {
-    int _correct_dhex_number_ = 0xf29C0;
-    int _wrong_dhex_number_ = 0xCd0G;
-    int _correct_dhex_number2_ = 0x000abCD;
-    int _wrong_dhex_number2_ = 0xx346f;
+   struct A
+   {
+      int a;
+      float b;
+   };
+   struct A a[100];
+   int i = 0;
+   while (i < 100)
+   {
+      a[i].a = a[i].b = 0;
+      i = i + 1;
+   }
 }
