@@ -89,7 +89,7 @@ DefList : Def DefList {$$=create_node(ENUM_DefList,@$.first_line,2,$1,$2);}
     | /* Epsl */ {$$=NULL;}
     ;
 Def : Specifier DecList SEMI {$$=create_node(ENUM_Def,@$.first_line,3,$1,$2,$3);}
-    | error SEMI {$$=create_node(ENUM_Def,@$.first_line,0);}
+    | Specifier error SEMI {$$=create_node(ENUM_Def,@$.first_line,0);}
     ;
 DecList : Dec {$$=create_node(ENUM_DecList,@$.first_line,1,$1);}
     | Dec COMMA DecList {$$=create_node(ENUM_DecList,@$.first_line,3,$1,$2,$3);}
