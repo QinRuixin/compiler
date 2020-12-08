@@ -71,7 +71,7 @@ ParamDec : Specifier VarDec {$$=create_node(ENUM_ParamDec,@$.first_line,2,$1,$2)
     ;
 
 CompSt : LC DefList StmtList RC {$$=create_node(ENUM_CompSt,@$.first_line,4,$1,$2,$3,$4);}
-    | LC error RC {$$=create_node(ENUM_CompSt,@$.first_line,0);}
+    | LC DefList error RC {$$=create_node(ENUM_CompSt,@$.first_line,0);}
     ;
 StmtList : Stmt StmtList {$$=create_node(ENUM_StmtList,@$.first_line,2,$1,$2);}
     | /* Epsl */ {$$=NULL;}
