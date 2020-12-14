@@ -53,7 +53,7 @@ struct Sysmtable_item{
 
 };
 
-Type global_type;
+Type global_type_ptr;
 std::map<std::string, struct Sysmtable_item> Sysmtable;
 
 void AnalasysForProgram(tree_node* ptr);
@@ -133,16 +133,16 @@ void AnalasysForSpecifier(tree_node* ptr){
     if(ptr==nullptr)
         return;
     if(ptr->child_node[0]->node_type == ENUM_TYPE){
-        global_type->kind = global_type->BASIC;
+        global_type_ptr->kind = global_type_ptr->BASIC;
     }
 /*
         if(strcmp(ptr->child_node[0]->node_name,"int")==0){
-            global_type->u.basic = 0;
+            global_type_ptr->u.basic = 0;
         }else{//  if(strcmp(ptr->node_name,"float")==0)
-            global_type->u.basic = 1;
+            global_type_ptr->u.basic = 1;
         }
     }else{//  if(ptr->child_node[0]->node_type  == ENUM_StructSpecifier)
-        global_type->kind = global_type->STRUCTURE;
+        global_type_ptr->kind = global_type_ptr->STRUCTURE;
         //todo
         AnalasysForStructSpecifier(ptr->child_node[0]);
     }
@@ -243,6 +243,7 @@ int main(int argc, char** argv){
     error_flag = 0;
     second_flag = 0;
     syntax_error_flag = 0;
+    global_type_ptr = new Type_();
     if(argc > 1){
         if(!(yyin = fopen(argv[1],"r"))){
             perror(argv[1]);
