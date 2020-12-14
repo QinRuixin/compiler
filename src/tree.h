@@ -1,4 +1,4 @@
-#ifndef TREE_H_INCLUDED
+# ifndef TREE_H_INCLUDED
 # define TREE_H_INCLUDED
 # define SELECTOR_NONE 0
 # define SELECTOR_INT 1
