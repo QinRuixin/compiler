@@ -134,8 +134,7 @@ void AnalasysForSpecifier(tree_node* ptr){
         return;
     if(ptr->child_node[0]->node_type == ENUM_TYPE){
         global_type_ptr->kind = global_type_ptr->BASIC;
-    }
-/*
+
         if(strcmp(ptr->child_node[0]->node_name,"int")==0){
             global_type_ptr->u.basic = 0;
         }else{//  if(strcmp(ptr->node_name,"float")==0)
@@ -146,7 +145,7 @@ void AnalasysForSpecifier(tree_node* ptr){
         //todo
         AnalasysForStructSpecifier(ptr->child_node[0]);
     }
-    */
+    
 
 }
 
