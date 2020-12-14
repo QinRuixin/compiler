@@ -49,11 +49,11 @@ const char* type_name[] = {
 
     "Exp", "Args"
 };
-//struct tree_node;
-typedef struct tree_node{
+//struct tree_node_st;
+typedef struct tree_node_st{
     NODE_TYPE node_type;
     char node_name[32+1];
-    struct tree_node* child_node[10];
+    struct tree_node_st* child_node[10];
     int child_num;
     int line_no;
     long long int int_val;

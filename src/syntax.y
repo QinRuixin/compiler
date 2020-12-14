@@ -10,7 +10,7 @@
 
 /* TYPE */
 %union {
-    struct tree_node* node;
+    struct tree_node_st* node;
 }
 
 /* tokens */
