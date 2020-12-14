@@ -129,7 +129,7 @@ void AnalasysForExtDef(tree_node* ptr){
 }
 
 void AnalasysForSpecifier(tree_node* ptr){
-    
+    /*
     if(ptr==nullptr)
         return;
     if(ptr->child_node[0]->node_type == ENUM_TYPE){
@@ -145,6 +145,7 @@ void AnalasysForSpecifier(tree_node* ptr){
         //todo
         AnalasysForStructSpecifier(ptr->child_node[0]);
     }
+    */
 
 }
 
