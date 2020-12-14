@@ -1,3 +1,5 @@
+#ifndef TREE_H_INCLUDED
+# define TREE_H_INCLUDED
 # define SELECTOR_NONE 0
 # define SELECTOR_INT 1
 # define SELECTOR_FLOAT 2
@@ -62,3 +64,4 @@ tree_node* test_root;
 tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
 tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,...);
 void traverse(struct tree_node* root,int cur_deep);
+#endif
