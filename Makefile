@@ -19,7 +19,7 @@ YFO = $(YFC:.c=.o)
 
 parser: syntax $(filter-out $(LFO),$(OBJS))
 	$(call git_commit,"make")
-	$(CXX) -o parser $(filter-out $(LFO),$(OBJS)) ./src/tree.o -lfl -ly
+	$(CXX) -o parser $(filter-out $(LFO),$(OBJS)) -lfl -ly
 
 syntax: lexical syntax-c
 	$(CC) -c $(YFC) -o $(YFO)
