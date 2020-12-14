@@ -129,12 +129,13 @@ void AnalasysForExtDef(tree_node* ptr){
 }
 
 void AnalasysForSpecifier(tree_node* ptr){
-    /*
+    
     if(ptr==nullptr)
         return;
     if(ptr->child_node[0]->node_type == ENUM_TYPE){
         global_type->kind = global_type->BASIC;
-
+    }
+/*
         if(strcmp(ptr->child_node[0]->node_name,"int")==0){
             global_type->u.basic = 0;
         }else{//  if(strcmp(ptr->node_name,"float")==0)
