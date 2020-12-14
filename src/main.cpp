@@ -3,15 +3,17 @@
 #include<string.h>
 #include<string>
 #include<map>
-#include "lex.yy.c"
-extern FILE* yyin;
-//extern struct tree_node;
-//extern "C" int yylex();
-//extern "C" int yyparse();
-//extern "C" void traverse(struct tree_node* root,int cur_deep);
-//extern "C" int yyrestart(FILE* file);
-extern tree_node* root;
 
+#include "tree.h"
+//#include"syntax.tab.h"
+//#include "lex.yy.c"
+extern FILE* yyin;
+
+extern "C" int yylex();
+extern "C" int yyparse();
+//extern "C" void traverse(struct tree_node* root,int cur_deep);
+extern "C" int yyrestart(FILE* file);
+extern tree_node* root;
 
 
 int error_flag;
@@ -31,14 +33,14 @@ struct Sysmtable_item{
 
 std::map<std::string, struct Sysmtable_item> Sysmtable;
 
-void AnalasysForExtDefList(struct tree_node* ptr){
+void AnalasysForExtDefList(tree_node* ptr){
     
     if(ptr==nullptr)
         return;
     //Assert(strcmp(ptr->name,"ExtDefList") == 0, "wrong at AnalasysBegins");
 
-    tree_node* extDef = ptr->child_node[0];
-    tree_node* extDefList = ptr->child_node[1];
+    tree_node* extDef_ = ptr->child_node[0];
+    tree_node* extDefList_ = ptr->child_node[1];
 }
 
 
