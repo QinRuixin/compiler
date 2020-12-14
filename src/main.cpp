@@ -3,7 +3,7 @@
 #include<string.h>
 #include<string>
 #include<map>
-
+//extern "C" 
 #include "tree.h"
 //#include"syntax.tab.h"
 //#include "lex.yy.c"

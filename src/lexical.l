@@ -9,7 +9,7 @@
     extern int error_flag;
     extern int second_flag;
     int yycolumn = 1;
-    struct tree_node* root;
+    tree_node* root;
     #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng -1; yycolumn += yyleng;
 
 
