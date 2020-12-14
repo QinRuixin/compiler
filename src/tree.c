@@ -1,5 +1,6 @@
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 #include "tree.h"
 
 tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...){
