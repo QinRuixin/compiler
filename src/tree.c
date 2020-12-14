@@ -53,7 +53,7 @@ tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,..
     return cur_node;
 }
 
-void traverse(tree_node* root,int cur_deep){
+void traverse( tree_node* root,int cur_deep){
     // todo INT FLOAT TYPE ID
     for(int d = 0; d< cur_deep;++d){
         fprintf(stderr, "  ");
