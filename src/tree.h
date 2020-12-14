@@ -50,6 +50,7 @@ const char* type_name[] = {
     "Exp", "Args"
 };
 //struct tree_node_st;
+#pragma pack (1) 
 typedef struct tree_node_st{
     NODE_TYPE node_type;
     char node_name[32+1];
@@ -59,9 +60,18 @@ typedef struct tree_node_st{
     long long int int_val;
     double float_val;
 } tree_node;
+#pragma pack ()
 
 tree_node* test_root;
-tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
-tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,...);
-void traverse(tree_node* root,int cur_deep);
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+    tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
+    tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,...);
+    void traverse(tree_node* root,int cur_deep);
+
+#ifdef __cplusplus
+}
+#endif
 #endif
