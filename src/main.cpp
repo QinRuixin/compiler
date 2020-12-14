@@ -11,7 +11,7 @@ extern FILE* yyin;
 
 extern "C" int yylex();
 extern "C" int yyparse();
-//extern "C" void traverse(struct tree_node* root,int cur_deep);
+//extern "C" void traverse(tree_node* root,int cur_deep);
 extern "C" int yyrestart(FILE* file);
 extern tree_node* root;
 

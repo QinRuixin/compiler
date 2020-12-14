@@ -63,5 +63,5 @@ typedef struct tree_node{
 tree_node* test_root;
 tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
 tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,...);
-void traverse(struct tree_node* root,int cur_deep);
+void traverse(tree_node* root,int cur_deep);
 #endif
