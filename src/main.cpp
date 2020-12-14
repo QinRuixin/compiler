@@ -194,6 +194,23 @@ void AnalasysForVarDec(tree_node* ptr){
     std::cout << ptr->node_name << std::endl;
 
 }
+
+//todo
+void AnalasysForFunDec(tree_node* ptr){
+    
+    if(ptr==nullptr)
+        return;
+    if(ptr->child_num)
+        ;
+}
+
+void AnalasysForSEMI(tree_node* ptr){
+    
+    if(ptr==nullptr)
+        return;
+    if(ptr->child_num)
+        ;
+}
 /*
 void AnalasysFor(tree_node* ptr){
     
