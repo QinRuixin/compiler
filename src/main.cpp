@@ -257,6 +257,7 @@ int main(int argc, char** argv){
     if(syntax_error_flag == 0){
         //todo
         //traverse(root, 0);
+        AnalasysForProgram(root);
     }
 
     return 0;
