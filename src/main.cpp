@@ -3,15 +3,15 @@
 #include<string.h>
 #include<string>
 #include<map>
-
+#include "lex.yy.c"
 extern FILE* yyin;
 //extern struct tree_node;
-extern "C" int yylex();
-extern "C" int yyparse();
-extern "C" int yyrestart(FILE* file);
-extern "C" void traverse(struct tree_node* root,int cur_deep);
+//extern "C" int yylex();
+//extern "C" int yyparse();
+//extern "C" void traverse(struct tree_node* root,int cur_deep);
+//extern "C" int yyrestart(FILE* file);
 extern tree_node* root;
-//extern enum NODE_TYPE;
+
 
 
 int error_flag;
@@ -37,8 +37,8 @@ void AnalasysForExtDefList(struct tree_node* ptr){
         return;
     //Assert(strcmp(ptr->name,"ExtDefList") == 0, "wrong at AnalasysBegins");
 
-    //struct tree_node* extDef = ptr->child_node[0];
-    //struct tree_node* extDef = ptr->child_node[1];
+    tree_node* extDef = ptr->child_node[0];
+    tree_node* extDefList = ptr->child_node[1];
 }
 
 
