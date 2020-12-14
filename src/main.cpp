@@ -194,7 +194,7 @@ void AnalasysForVarDec(tree_node* ptr){
     
     if(ptr==nullptr)
         return;
-    std::cout << ptr->node_name << std::endl;
+    std::cout << ptr->node_type << std::endl;
 
 }
 
