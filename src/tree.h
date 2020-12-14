@@ -28,28 +28,7 @@ typedef enum NT{
     ENUM_Exp, ENUM_Args
 } NODE_TYPE;
 
-//const static char* type_name[] = {
-extern const char* type_name[] = {
-    "INT", "FLOAT", "ID", "SEMI", "COMMA", 
-    "ASSIGNOP", "RELOP", "PLUS", "MINUS", "STAR", "DIV",
-    "AND", "OR", "DOT", "NOT", "TYPE",
-    "LP", "RP", "LB", "RB", "LC", "RC",
-    "STRUCT", "RETURN", "IF", "ELSE", "WHILE",
 
-    "Epsilon",
-
-    "Program", "ExtDefList", "ExtDef", "ExtDecList",
-
-    "Specifier", "StructSpecifier", "OptTag", "Tag",
-
-    "VarDec", "FunDec", "VarList", "ParamDec",
-
-    "CompSt", "StmtList", "Stmt",
-
-    "DefList", "Def", "DecList", "Dec",
-
-    "Exp", "Args"
-};
 //struct tree_node_st;
 #pragma pack (1) 
 typedef struct tree_node_st{
@@ -63,11 +42,9 @@ typedef struct tree_node_st{
 } tree_node;
 #pragma pack ()
 
-tree_node* test_root;
+#endif
 
 tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
 tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,...);
 void traverse(tree_node* root,int cur_deep);
 
-
-#endif

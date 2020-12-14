@@ -4,6 +4,29 @@
 #include <stdlib.h>
 #include "tree.h"
 
+const static char* type_name[] = {
+//extern const char* type_name[] = {
+    "INT", "FLOAT", "ID", "SEMI", "COMMA", 
+    "ASSIGNOP", "RELOP", "PLUS", "MINUS", "STAR", "DIV",
+    "AND", "OR", "DOT", "NOT", "TYPE",
+    "LP", "RP", "LB", "RB", "LC", "RC",
+    "STRUCT", "RETURN", "IF", "ELSE", "WHILE",
+
+    "Epsilon",
+
+    "Program", "ExtDefList", "ExtDef", "ExtDecList",
+
+    "Specifier", "StructSpecifier", "OptTag", "Tag",
+
+    "VarDec", "FunDec", "VarList", "ParamDec",
+
+    "CompSt", "StmtList", "Stmt",
+
+    "DefList", "Def", "DecList", "Dec",
+
+    "Exp", "Args"
+};
+
 tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...){
     tree_node* cur_node = (tree_node*)malloc(sizeof(tree_node));
     cur_node->node_type = enum_type;
