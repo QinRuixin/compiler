@@ -3,6 +3,8 @@
 #include<string.h>
 #include<string>
 #include<map>
+#include <assert.h>
+
 //extern "C" 
 #include "tree.h"
 //#include"syntax.tab.h"
@@ -33,14 +35,21 @@ struct Sysmtable_item{
 
 std::map<std::string, struct Sysmtable_item> Sysmtable;
 
+void AnalasysForExtDef(tree_node* ptr){
+    
+}
+
 void AnalasysForExtDefList(tree_node* ptr){
     
     if(ptr==nullptr)
         return;
-    //Assert(strcmp(ptr->name,"ExtDefList") == 0, "wrong at AnalasysBegins");
+    //assert(strcmp(ptr->name,"ExtDefList") == 0 ); //"wrong at AnalasysBegins"
 
     tree_node* extDef_ = ptr->child_node[0];
     tree_node* extDefList_ = ptr->child_node[1];
+    
+    AnalasysForExtDef(extDef_);
+    AnalasysForExtDefList(extDefList_);
 }
 
 
@@ -65,7 +74,7 @@ int main(int argc, char** argv){
     }
     if(syntax_error_flag == 0){
         //todo
-        traverse(root, 0);
+        //traverse(root, 0);
     }
 
     return 0;

@@ -64,14 +64,9 @@ typedef struct tree_node_st{
 
 tree_node* test_root;
 
-#ifdef __cplusplus
-extern "C"{
-#endif
-    tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
-    tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,...);
-    void traverse(tree_node* root,int cur_deep);
+tree_node* create_node(NODE_TYPE enum_type, int lineno,int childnum,...);
+tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,...);
+void traverse(tree_node* root,int cur_deep);
 
-#ifdef __cplusplus
-}
-#endif
+
 #endif
