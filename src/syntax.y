@@ -4,7 +4,7 @@
     void yyerror(const char* msg);
     int yyparse(void);
     extern int syntax_error_flag;
-
+    extern tree_node* root;
 
 %}
 
@@ -31,7 +31,7 @@
 %type <node> Program ExtDefList ExtDef ExtDecList Specifier StructSpecifier OptTag Tag VarDec FunDec VarList ParamDec CompSt StmtList Stmt DefList Def DecList Dec Exp Args
 
 %%
-Program : ExtDefList {$$=create_node(ENUM_Program,@$.first_line,1,$1); if(syntax_error_flag == 0){traverse($$,0);} }
+Program : ExtDefList {$$=create_node(ENUM_Program,@$.first_line,1,$1); root = $$; }
     ;
 ExtDefList : ExtDef ExtDefList {$$=create_node(ENUM_ExtDefList,@$.first_line,2,$1,$2);}
     | /* Epsl */ {$$=NULL;}

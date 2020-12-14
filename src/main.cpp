@@ -6,7 +6,8 @@ struct tree_node;
 extern "C" int yylex();
 extern "C" int yyparse();
 extern "C" int yyrestart(FILE* file);
-extern "C" void traverse(tree_node* root);
+extern "C" void traverse(struct tree_node* root,int cur_deep);
+extern tree_node* root;
 
 int error_flag;
 int syntax_error_flag;
@@ -34,6 +35,7 @@ int main(int argc, char** argv){
     }
     if(syntax_error_flag == 0){
         //todo
+        traverse(root, 0);
     }
 
     return 0;
