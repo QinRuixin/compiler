@@ -5,7 +5,6 @@
 #include "tree.h"
 
 const static char* type_name[] = {
-//extern const char* type_name[] = {
     "INT", "FLOAT", "ID", "SEMI", "COMMA", 
     "ASSIGNOP", "RELOP", "PLUS", "MINUS", "STAR", "DIV",
     "AND", "OR", "DOT", "NOT", "TYPE",
