@@ -102,6 +102,8 @@ ExtDef : Specifier ExtDecList SEMI
     | Specifier FunDec CompSt 
 */
 void AnalasysForExtDef(tree_node* ptr){
+    if(ptr==nullptr)
+        return;
     if (ptr->child_num==2)
     {
         tree_node*  Specifier_ = ptr->child_node[0];
