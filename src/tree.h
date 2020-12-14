@@ -28,7 +28,7 @@ typedef enum NT{
     ENUM_Exp, ENUM_Args
 } NODE_TYPE;
 
-const char* type_name[] = {
+const static char* type_name[] = {
     "INT", "FLOAT", "ID", "SEMI", "COMMA", 
     "ASSIGNOP", "RELOP", "PLUS", "MINUS", "STAR", "DIV",
     "AND", "OR", "DOT", "NOT", "TYPE",
