@@ -1,12 +1,15 @@
 int main() 
 {
    int i = 0;
-   struct Position pos;
-   j = i + 1;
-   struct Position1 {
+   //struct Position pos;
+   
+   struct Positio
+   {
       float x;
    };
-   struct Position1 {
+   struct Positio
+   {
       int y;
    };  
+   j = i + 1;
 }
