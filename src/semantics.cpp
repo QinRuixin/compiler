@@ -202,8 +202,9 @@ StructSpecifier : STRUCT OptTag LC DefList RC
             } 
         }
         
-        return res;
     }
+    return res;
+
     /*
     switch (ptr->child_num)
     {
@@ -317,6 +318,7 @@ Dec : VarDec
         AnalasysForExp(Exp_);
     }
     //todo ASSIGN
+    return fieldList;
 
 }
 
