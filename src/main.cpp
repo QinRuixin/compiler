@@ -65,12 +65,21 @@ void AnalasysForFunDec(tree_node* ptr);
 void AnalasysForCompSt(tree_node* ptr);
 void AnalasysForVarDec(tree_node* ptr);
 void AnalasysForStructSpecifier(tree_node* ptr);
+void AnalasysForID(tree_node* ptr);
+void AnalasysForVarList(tree_node* ptr);
+void AnalasysForParamDec(tree_node* ptr);
+void AnalasysForDefList(tree_node* ptr);
+void AnalasysForStmtList(tree_node* ptr);
+void AnalasysForStmt(tree_node* ptr);
+void AnalasysForDef(tree_node* ptr);
+void AnalasysForDecList(tree_node* ptr);
+void AnalasysForExp(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
-void AnalasysFor(tree_node* ptr);
+
 void AnalasysForCOMMA(tree_node* ptr);
 void AnalasysForSEMI(tree_node* ptr);
 
@@ -116,7 +125,7 @@ void AnalasysForExtDef(tree_node* ptr){
         tree_node*  second_node = ptr->child_node[1];
         AnalasysForSpecifier(Specifier_);
 //debug 
-std::cout << "ExtDef econd_node->node_type "  << second_node->node_type<< std::endl;
+std::cout << "ExtDef second_node->node_type "  << second_node->node_type<< std::endl;
 
         if(second_node->node_type==ENUM_ExtDecList){
             //debug 
@@ -125,10 +134,10 @@ std::cout << "ExtDef econd_node->node_type "  << second_node->node_type<< std::e
             AnalasysForExtDecList(second_node);
             tree_node*  SEMI_ = ptr->child_node[2];
             AnalasysForSEMI(SEMI_);
-        }else if(second_node->node_type==ENUM_FunDec){
+        }else if(second_node->node_type==ENUM_FunDec){ //ENUM_FunDec
             AnalasysForFunDec(second_node);
             tree_node*  CompSt_ = ptr->child_node[2];
-            AnalasysForSEMI(CompSt_);
+            AnalasysForCompSt(CompSt_);
         }
     }
     
@@ -177,7 +186,95 @@ void AnalasysForStructSpecifier(tree_node* ptr){
 
 }
 
+void AnalasysForCompSt(tree_node* ptr){
+    // CompSt : LC DefList StmtList RC 
+    if(ptr==nullptr)
+        return;
 
+    tree_node*  DefList_ = ptr->child_node[1];
+    tree_node*  StmtList_ = ptr->child_node[2];
+    AnalasysForDefList(DefList_);
+    AnalasysForStmtList(StmtList_);
+
+}
+
+void AnalasysForDefList(tree_node* ptr){
+    /*
+DefList : Def DefList 
+    | // Epsl
+    */
+    if(ptr==nullptr)
+        return;
+
+        tree_node*  Def_ = ptr->child_node[0];
+        tree_node*  DefList_ = ptr->child_node[1];
+        AnalasysForDef(Def_);
+        AnalasysForDefList(DefList_);
+
+
+}
+
+void AnalasysForStmtList(tree_node* ptr){
+    /*
+StmtList : Stmt StmtList 
+    | // Epsl
+    */
+    if(ptr==nullptr)
+        return;
+
+        tree_node*  Stmt_ = ptr->child_node[0];
+        tree_node*  StmtList_ = ptr->child_node[1];
+        AnalasysForStmt(Stmt_);
+        AnalasysForStmtList(StmtList_);
+
+}
+
+void AnalasysForDef(tree_node* ptr){
+    /*
+Def : Specifier DecList SEMI 
+    ;
+    */
+    if(ptr==nullptr)
+        return;
+
+    tree_node*  Specifier_ = ptr->child_node[0];
+    tree_node*  DecList_ = ptr->child_node[1];
+    AnalasysForSpecifier(Specifier_);
+    AnalasysForDecList(DecList_);
+
+}
+
+void AnalasysForStmt(tree_node* ptr){
+/*
+Stmt : Exp SEMI 
+    | CompSt 
+    | RETURN Exp SEMI 
+    | IF LP Exp RP Stmt %prec LOWER_THAN_ELSE 
+    | IF LP Exp RP Stmt ELSE Stmt 
+    | WHILE LP Exp RP Stmt
+
+*/
+    if(ptr==nullptr)
+        return;
+    if (ptr->child_num == 2 ){
+        tree_node*  Exp_ = ptr->child_node[0];
+        tree_node*  SEMI_ = ptr->child_node[1];
+        AnalasysForExp(Exp_);
+        AnalasysForSEMI(SEMI_);
+    }else if(ptr->child_num == 1 ){
+        tree_node*  CompSt_ = ptr->child_node[0];
+        AnalasysForCompSt(CompSt_);
+
+    }else if(ptr->child_num == 3 ){
+
+    }else if(ptr->child_num == 5 ){
+        //todo
+
+    }else if(ptr->child_num == 7 ){
+
+    }
+
+}
 void AnalasysForExtDecList(tree_node* ptr){
     
     if(ptr==nullptr)
@@ -226,11 +323,35 @@ void AnalasysForVarDec(tree_node* ptr){
 
 //todo
 void AnalasysForFunDec(tree_node* ptr){
-    
+    /*
+    FunDec : ID LP VarList RP
+    | ID LP RP
+    */
     if(ptr==nullptr)
         return;
-    if(ptr->child_num)
-        ;
+    //global_type_ptr->kind = global_type_ptr->STRUCTURE;
+    //global_type_ptr->u.basic = 0;
+    std::string name = ptr->node_name;
+    Sysmtable_item cur_item;
+    cur_item.kind = cur_item.FUNCTION;
+    cur_item.name = ptr->node_name;
+    cur_item.row = ptr->line_no;
+    cur_item.type = global_type_ptr;
+    if(Sysmtable.find(name)!=Sysmtable.end() ){
+        //fprintf(stderr,"Error type 3 at Line %d: %s %s.\n",ptr->line_no,"Redifined variable",name);
+    }else{
+        //Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
+    }
+    if(ptr->child_num==4){
+        tree_node*  VarList_ = ptr->child_node[2];
+        AnalasysForVarList(VarList_);
+
+    }else{
+        // ==3
+        // AnalasysForID(); //todo TODO
+
+    }
+
 }
 
 void AnalasysForSEMI(tree_node* ptr){
@@ -240,22 +361,90 @@ void AnalasysForSEMI(tree_node* ptr){
     if(ptr->child_num)
         ;
 }
+
+
+
+void AnalasysForVarList(tree_node* ptr){
+    /*
+VarList : ParamDec COMMA VarList 
+    | ParamDec 
+    */
+    if(ptr==nullptr)
+        return;
+    tree_node*  ParamDec_ = ptr->child_node[0];
+    AnalasysForParamDec(ParamDec_);
+    if (ptr->child_num == 3 ){
+        tree_node*  VarList_ = ptr->child_node[2];
+        AnalasysForVarList(VarList_);
+    }else if(ptr->child_num == 1 ){
+        ;
+    }
+}
+
+void AnalasysForParamDec(tree_node* ptr){
+/*
+ParamDec : Specifier VarDec
+*/
+    if(ptr==nullptr)
+        return;
+    tree_node*  Specifier_ = ptr->child_node[0];
+    tree_node*  VarDec_ = ptr->child_node[1];
+    AnalasysForSpecifier(Specifier_);
+    AnalasysForVarDec(VarDec_);
+
+}
+
+void AnalasysForExp(tree_node* ptr){
+/*
+Exp : Exp ASSIGNOP Exp 
+    | Exp AND Exp 
+    | Exp OR Exp 
+    | Exp RELOP Exp 
+    | Exp PLUS Exp 
+    | Exp MINUS Exp 
+    | Exp STAR Exp 
+    | Exp DIV Exp 
+    | LP Exp RP 
+    | MINUS Exp %prec UMINUS 
+    | NOT Exp 
+    | ID LP Args RP 
+    | ID LP RP 
+    | Exp LB Exp RB 
+    | Exp DOT ID 
+    | ID
+    | INT
+    | FLOAT 
+*/
+    if(ptr==nullptr)
+        return;
+    if (ptr->child_num == 1 ){
+        if(ptr->child_node[0]->node_type==ENUM_ID){
+
+        }else if(ptr->child_node[0]->node_type==ENUM_INT){
+
+        }else if(ptr->child_node[0]->node_type==ENUM_FLOAT){
+
+        }
+//        tree_node*  _ = ptr->child_node[0];
+//        tree_node*  _ = ptr->child_node[1];
+//        AnalasysFor();
+ //       AnalasysFor();
+    }else if(ptr->child_num == 3 ){
+
+    }
+}
 /*
 void AnalasysFor(tree_node* ptr){
     
     if(ptr==nullptr)
         return;
-    switch (ptr->child_num)
-    {
-    case :
+    if (ptr->child_num ==  ){
         tree_node*  _ = ptr->child_node[0];
         tree_node*  _ = ptr->child_node[1];
         AnalasysFor();
         AnalasysFor();
-        break;
-    
-    default:
-        break;
+    }else if(ptr->child_num ==  ){
+
     }
 
 }
