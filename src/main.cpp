@@ -60,22 +60,28 @@ void AnalasysForProgram(tree_node* ptr);
 void AnalasysForExtDefList(tree_node* ptr);
 void AnalasysForExtDef(tree_node* ptr);
 void AnalasysForExtDecList(tree_node* ptr);
+
 void AnalasysForSpecifier(tree_node* ptr);
-void AnalasysForFunDec(tree_node* ptr);
-void AnalasysForCompSt(tree_node* ptr);
-void AnalasysForVarDec(tree_node* ptr);
 void AnalasysForStructSpecifier(tree_node* ptr);
-void AnalasysForID(tree_node* ptr);
+void AnalasysForOptTag(tree_node* ptr);
+void AnalasysForTag(tree_node* ptr);
+
+void AnalasysForVarDec(tree_node* ptr);
+void AnalasysForFunDec(tree_node* ptr);
 void AnalasysForVarList(tree_node* ptr);
 void AnalasysForParamDec(tree_node* ptr);
-void AnalasysForDefList(tree_node* ptr);
+
+void AnalasysForCompSt(tree_node* ptr);
 void AnalasysForStmtList(tree_node* ptr);
 void AnalasysForStmt(tree_node* ptr);
+
+void AnalasysForDefList(tree_node* ptr);
 void AnalasysForDef(tree_node* ptr);
 void AnalasysForDecList(tree_node* ptr);
 void AnalasysForDec(tree_node* ptr);
+
 void AnalasysForExp(tree_node* ptr);
-void AnalasysFor(tree_node* ptr);
+void AnalasysForID(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
@@ -94,7 +100,7 @@ void AnalasysForProgram(tree_node* ptr){
 }
 
 void AnalasysForExtDefList(tree_node* ptr){
-    
+//ExtDefList : ExtDef ExtDefList 
     if(ptr==nullptr)
         return;
     //assert(1 - strcmp(ptr->name,"ExtDefList") ); //"wrong at AnalasysBegins"
@@ -105,12 +111,13 @@ void AnalasysForExtDefList(tree_node* ptr){
     AnalasysForExtDef(extDef_);
     AnalasysForExtDefList(extDefList_);
 }
+
+void AnalasysForExtDef(tree_node* ptr){
 /*
 ExtDef : Specifier ExtDecList SEMI 
     | Specifier SEMI
     | Specifier FunDec CompSt 
 */
-void AnalasysForExtDef(tree_node* ptr){
     if(ptr==nullptr)
         return;
     if (ptr->child_num==2)
@@ -138,7 +145,7 @@ void AnalasysForExtDef(tree_node* ptr){
             //debug 
             //std::cout << "ENUM_FunDec" << std::endl;
 
-             AnalasysForFunDec(second_node);
+            AnalasysForFunDec(second_node);
             tree_node*  CompSt_ = ptr->child_node[2];
             AnalasysForCompSt(CompSt_);
         }
@@ -146,8 +153,37 @@ void AnalasysForExtDef(tree_node* ptr){
     
 }
 
-void AnalasysForSpecifier(tree_node* ptr){
+
+void AnalasysForExtDecList(tree_node* ptr){
     
+    if(ptr==nullptr)
+        return;
+    if (ptr->child_num == 1 )
+    {
+//debug 
+//std::cout << "ENUM_VarDec 1 " << std::endl;
+
+        tree_node*  VarDec_ = ptr->child_node[0];
+        AnalasysForVarDec(VarDec_);
+    }else if (ptr->child_num == 3 )
+    {
+        tree_node*  VarDec_ = ptr->child_node[0];
+        tree_node*  COMMA_ = ptr->child_node[1];
+        tree_node*  ExtDecList_ = ptr->child_node[2];
+//debug 
+//std::cout << "ENUM_VarDec 3 " << std::endl;
+
+        AnalasysForVarDec(VarDec_);
+        AnalasysForExtDecList(ExtDecList_);
+    }
+    
+}
+
+void AnalasysForSpecifier(tree_node* ptr){
+/*
+Specifier : TYPE 
+    | StructSpecifier
+*/
     if(ptr==nullptr)
         return;
 
@@ -173,9 +209,14 @@ void AnalasysForSpecifier(tree_node* ptr){
 }
 
 void AnalasysForStructSpecifier(tree_node* ptr){
-    
+/*
+StructSpecifier : STRUCT OptTag LC DefList RC 
+    | STRUCT Tag 
+*/
     if(ptr==nullptr)
         return;
+
+        //to do from here
     /*
     switch (ptr->child_num)
     {
@@ -220,6 +261,7 @@ DefList : Def DefList
 
 
 }
+
 
 void AnalasysForStmtList(tree_node* ptr){
     /*
@@ -318,30 +360,7 @@ Stmt : Exp SEMI
     }
 
 }
-void AnalasysForExtDecList(tree_node* ptr){
-    
-    if(ptr==nullptr)
-        return;
-    if (ptr->child_num == 1 )
-    {
-//debug 
-//std::cout << "ENUM_VarDec 1 " << std::endl;
 
-        tree_node*  VarDec_ = ptr->child_node[0];
-        AnalasysForVarDec(VarDec_);
-    }else if (ptr->child_num == 3 )
-    {
-        tree_node*  VarDec_ = ptr->child_node[0];
-        tree_node*  COMMA_ = ptr->child_node[1];
-        tree_node*  ExtDecList_ = ptr->child_node[2];
-//debug 
-//std::cout << "ENUM_VarDec 3 " << std::endl;
-
-        AnalasysForVarDec(VarDec_);
-        AnalasysForExtDecList(ExtDecList_);
-    }
-    
-}
 
 void AnalasysForVarDec(tree_node* ptr){
 /*
