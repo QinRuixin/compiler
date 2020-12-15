@@ -224,11 +224,11 @@ StructSpecifier : STRUCT OptTag LC DefList RC
     if(ptr->child_num == 2 ){
         tree_node*  Tag_ = ptr->child_node[1];
 //debug
-        //std::cout << Tag_->node_name << std::endl;
+//std::cout << Tag_->node_name << std::endl;
         // AnalasysForID(); 
         tree_node*  ID_ = Tag_->child_node[0];
 //debug
-        //std::cout << ID_->node_name << std::endl;
+//std::cout << ID_->node_name << std::endl;
         if(Sysmtable.find(ID_->node_name)==Sysmtable.end() ){
             fprintf(stderr,"Error type 17 at Line %d: %s %s.\n",ID_->line_no,"Undifined structure",ID_->node_name);
         }else{
@@ -299,10 +299,10 @@ DefList : Def DefList
     if(ptr==nullptr)
         return;
 
-        tree_node*  Def_ = ptr->child_node[0];
-        tree_node*  DefList_ = ptr->child_node[1];
-        AnalasysForDef(Def_);
-        AnalasysForDefList(DefList_);
+    tree_node*  Def_ = ptr->child_node[0];
+    tree_node*  DefList_ = ptr->child_node[1];
+    AnalasysForDef(Def_);
+    AnalasysForDefList(DefList_);
 
 
 }
@@ -316,10 +316,10 @@ StmtList : Stmt StmtList
     if(ptr==nullptr)
         return;
 
-        tree_node*  Stmt_ = ptr->child_node[0];
-        tree_node*  StmtList_ = ptr->child_node[1];
-        AnalasysForStmt(Stmt_);
-        AnalasysForStmtList(StmtList_);
+    tree_node*  Stmt_ = ptr->child_node[0];
+    tree_node*  StmtList_ = ptr->child_node[1];
+    AnalasysForStmt(Stmt_);
+    AnalasysForStmtList(StmtList_);
 
 }
 
@@ -438,6 +438,10 @@ VarDec : ID
         tree_node* INT_ = ptr->child_node[2];
          //todo
          AnalasysForVarDec(VarDec_);
+         // change into ARRAY
+         //Type_ temp = global_type_ptr->kind;
+         //global_type_ptr->u.array.elem = global_type_ptr->kind;
+         //global_type_ptr->kind = global_type_ptr->ARRAY;
     }
 
     
@@ -453,14 +457,15 @@ void AnalasysForFunDec(tree_node* ptr){
         return;
     //global_type_ptr->kind = global_type_ptr->STRUCTURE;
     //global_type_ptr->u.basic = 0;
-    std::string name = ptr->node_name;
+    tree_node* ID_ = ptr->child_node[0];
+    std::string name = ID_->node_name;
     Sysmtable_item cur_item;
     cur_item.kind = cur_item.FUNCTION;
-    cur_item.name = ptr->node_name;
-    cur_item.row = ptr->line_no;
+    cur_item.name = ID_->node_name;
+    cur_item.row = ID_->line_no;
     cur_item.type = global_type_ptr;
     if(Sysmtable.find(name)!=Sysmtable.end() ){
-        //fprintf(stderr,"Error type 3 at Line %d: %s %s.\n",ptr->line_no,"Redifined variable",name);
+        fprintf(stderr,"Error type 4 at Line %d: %s %s.\n",ID_->line_no,"Redifined variable",name);
     }else{
         //Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
     }
@@ -541,19 +546,40 @@ Exp : Exp ASSIGNOP Exp
         return;
     if (ptr->child_num == 1 ){
         if(ptr->child_node[0]->node_type==ENUM_ID){
+            tree_node* ID_ = ptr->child_node[0];
+            if(Sysmtable.find(ID_->node_name) == Sysmtable.end() ){
+                 fprintf(stderr,"Error type 1 at Line %d: %s %s.\n",ID_->line_no,"Undifined variable",ID_->node_name);
+            }else{
+                //todo
+                //1 Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
 
+            }
+            
         }else if(ptr->child_node[0]->node_type==ENUM_INT){
 
         }else if(ptr->child_node[0]->node_type==ENUM_FLOAT){
 
         }
+
+    }else if(ptr->child_node[0]->node_type==ENUM_ID){
+        // function call
+        tree_node* ID_ = ptr->child_node[0];
+        if(Sysmtable.find(ID_->node_name) == Sysmtable.end() ){
+                fprintf(stderr,"Error type 2 at Line %d: %s %s.\n",ID_->line_no,"Undifined function",ID_->node_name);
+        }else{
+            //todo
+            //1 Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
+
+        }
+
+    }else if(ptr->child_num == 3){
+
+    }
+
 //        tree_node*  _ = ptr->child_node[0];
 //        tree_node*  _ = ptr->child_node[1];
 //        AnalasysFor();
  //       AnalasysFor();
-    }else if(ptr->child_num == 3 ){
-
-    }
 }
 /*
 void AnalasysFor(tree_node* ptr){
