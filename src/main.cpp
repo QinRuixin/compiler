@@ -73,8 +73,8 @@ void AnalasysForStmtList(tree_node* ptr);
 void AnalasysForStmt(tree_node* ptr);
 void AnalasysForDef(tree_node* ptr);
 void AnalasysForDecList(tree_node* ptr);
+void AnalasysForDec(tree_node* ptr);
 void AnalasysForExp(tree_node* ptr);
-void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
@@ -241,6 +241,40 @@ Def : Specifier DecList SEMI
     tree_node*  DecList_ = ptr->child_node[1];
     AnalasysForSpecifier(Specifier_);
     AnalasysForDecList(DecList_);
+
+}
+
+void AnalasysForDecList(tree_node* ptr){
+    /*
+DecList : Dec 
+    | Dec COMMA DecList
+    */
+    if(ptr==nullptr)
+        return;
+
+    tree_node*  Dec_ = ptr->child_node[0];
+    tree_node*  DecList_ = ptr->child_node[1];
+    AnalasysForDec(Dec_);
+    AnalasysForDecList(DecList_);
+
+}
+
+void AnalasysForDec(tree_node* ptr){
+    /*
+Dec : VarDec 
+    | VarDec ASSIGNOP Exp 
+    ;
+    */
+    if(ptr==nullptr)
+        return;
+
+    tree_node*  VarDec_ = ptr->child_node[0];
+    AnalasysForVarDec(VarDec_);
+    if(ptr->child_num == 3){
+        tree_node*  Exp_ = ptr->child_node[2];
+        AnalasysForExp(Exp_);
+    }
+
 
 }
 
