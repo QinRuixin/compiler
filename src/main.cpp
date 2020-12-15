@@ -353,8 +353,8 @@ void AnalasysForVarDec(tree_node* ptr){
     }else{
         Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
     }
-    std::cout << ptr->node_name << std::endl;
-    std::cout << ptr->node_type << std::endl;
+    //std::cout << ptr->node_name << std::endl;
+    //std::cout << ptr->node_type << std::endl;
     
 }
 
