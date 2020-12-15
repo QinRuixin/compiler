@@ -88,7 +88,7 @@ void AnalasysForExtDefList(tree_node* ptr){
     
     if(ptr==nullptr)
         return;
-    //assert(strcmp(ptr->name,"ExtDefList") == 0 ); //"wrong at AnalasysBegins"
+    //assert(1 - strcmp(ptr->name,"ExtDefList") ); //"wrong at AnalasysBegins"
 
     tree_node* extDef_ = ptr->child_node[0];
     tree_node* extDefList_ = ptr->child_node[1];
@@ -113,8 +113,11 @@ void AnalasysForExtDef(tree_node* ptr){
     }else if(ptr->child_num==3)
     {
         tree_node*  Specifier_ = ptr->child_node[0];
-        AnalasysForSpecifier(Specifier_);
         tree_node*  second_node = ptr->child_node[1];
+        AnalasysForSpecifier(Specifier_);
+//debug 
+std::cout << "ExtDef econd_node->node_type "  << second_node->node_type<< std::endl;
+
         if(second_node->node_type==ENUM_ExtDecList){
             //debug 
             std::cout << "ENUM_ExtDecList" << std::endl;
