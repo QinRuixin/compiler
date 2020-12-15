@@ -228,8 +228,8 @@ StructSpecifier : STRUCT OptTag LC DefList RC
         // AnalasysForID(); 
         tree_node*  ID_ = Tag_->child_node[0];
 //debug
-        std::cout << ID_->node_name << std::endl;
-        if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
+        //std::cout << ID_->node_name << std::endl;
+        if(Sysmtable.find(ID_->node_name)==Sysmtable.end() ){
             fprintf(stderr,"Error type 17 at Line %d: %s %s.\n",ID_->line_no,"Undifined structure",ID_->node_name);
         }else{
             Sysmtable_item cur_item;
