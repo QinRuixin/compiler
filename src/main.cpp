@@ -217,6 +217,26 @@ StructSpecifier : STRUCT OptTag LC DefList RC
         return;
 
         //to do from here
+    tree_node*  STRUCT_ = ptr->child_node[0];
+    global_type_ptr->kind = global_type_ptr->STRUCTURE;
+    
+    if(ptr->child_num == 2 ){
+        tree_node*  Tag_ = ptr->child_node[1];
+//debug
+        std::cout << Tag_->node_name << std::endl;
+
+        if(Sysmtable.find(Tag_->node_name)!=Sysmtable.end() ){
+            fprintf(stderr,"Error type 17 at Line %d: %s %s.\n",Tag_->line_no,"Undifined structure",Tag_->node_name);
+        }else{
+            Sysmtable_item cur_item;
+            cur_item.kind = cur_item.VARIABLE;
+            cur_item.name = ptr->node_name;
+            cur_item.row = ptr->line_no;
+            cur_item.type = global_type_ptr;
+            Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
+
+        }
+    }
     /*
     switch (ptr->child_num)
     {
