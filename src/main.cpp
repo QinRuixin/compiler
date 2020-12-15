@@ -195,7 +195,19 @@ void AnalasysForVarDec(tree_node* ptr){
     
     if(ptr==nullptr)
         return;
-    std::cout << ptr->node_type << std::endl;
+//std::map<std::string, struct Sysmtable_item> Sysmtable;
+    std::string name = ptr->node_name;
+    Sysmtable_item cur_item;
+    cur_item.kind = cur_item.VARIABLE;
+    cur_item.name = ptr->node_name;
+    cur_item.row = ptr->line_no;
+    cur_item.type = global_type_ptr;
+    if(Sysmtable.find(name)!=Sysmtable.end() ){
+        fprintf(stderr,"Error type 3 at Line %d: %s %s.\n",ptr->line_no,"Redifined variable",name);
+    }else{
+        Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
+    }
+    //std::cout << ptr->node_name << std::endl;
 
 }
 

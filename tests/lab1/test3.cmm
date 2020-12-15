@@ -2,10 +2,12 @@ int main()
   {
     float f = 1.0;
 	int a = 2;
-	int aaa;
+	int a = 3;
      // line comment
      /* 
        block comment
      */
      int i = 1;
+     int i = 2;
+     float f;
   }
