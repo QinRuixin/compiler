@@ -188,7 +188,8 @@ Specifier : TYPE
         return;
 
 //debug
-//std::cout <<"AnalasysForSpecifier node_name"<< ptr->child_node[0]->node_name << std::endl;
+std::cout <<"AnalasysForSpecifier node_name"<< ptr->child_node[0]->node_name << std::endl;
+std::cout <<"AnalasysForSpecifier node_name"<< ptr->child_node[0]->node_type << std::endl;
 
     if(ptr->child_node[0]->node_type == ENUM_TYPE){
         global_type_ptr->kind = global_type_ptr->BASIC;
