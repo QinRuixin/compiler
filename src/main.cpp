@@ -135,7 +135,10 @@ std::cout << "ExtDef second_node->node_type "  << second_node->node_type<< std::
             tree_node*  SEMI_ = ptr->child_node[2];
             AnalasysForSEMI(SEMI_);
         }else if(second_node->node_type==ENUM_FunDec){ //ENUM_FunDec
-            AnalasysForFunDec(second_node);
+            //debug 
+            std::cout << "ENUM_FunDec" << std::endl;
+
+             AnalasysForFunDec(second_node);
             tree_node*  CompSt_ = ptr->child_node[2];
             AnalasysForCompSt(CompSt_);
         }
@@ -346,7 +349,7 @@ void AnalasysForVarDec(tree_node* ptr){
     cur_item.row = ptr->line_no;
     cur_item.type = global_type_ptr;
     if(Sysmtable.find(name)!=Sysmtable.end() ){
-        fprintf(stderr,"Error type 3 at Line %d: %s %s.\n",ptr->line_no,"Redifined variable",name);
+        fprintf(stderr,"Error type 3 at Line %d: %s %s.\n",ptr->line_no,"Redifined variable",ptr->node_name);
     }else{
         Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
     }
