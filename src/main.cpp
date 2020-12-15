@@ -25,7 +25,7 @@ int syntax_error_flag;
 int second_flag;
 extern int yylineno;
 
-
+extern Type global_type_ptr;
 
 
 int main(int argc, char** argv){

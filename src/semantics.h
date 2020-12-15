@@ -35,9 +35,6 @@ struct Sysmtable_item{
 };
 
 #endif
-Type global_type_ptr;
-std::map<std::string, struct Sysmtable_item> Sysmtable;
-
 
 void AnalasysForProgram(tree_node* ptr);
 void AnalasysForExtDefList(tree_node* ptr);

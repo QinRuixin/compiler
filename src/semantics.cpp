@@ -7,6 +7,11 @@
 #include <assert.h>
 #include<iostream>
 
+
+Type global_type_ptr;
+std::map<std::string, struct Sysmtable_item> Sysmtable;
+
+
 void AnalasysForProgram(tree_node* ptr){
     if(ptr==nullptr){
         return;
