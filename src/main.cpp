@@ -116,6 +116,9 @@ void AnalasysForExtDef(tree_node* ptr){
         AnalasysForSpecifier(Specifier_);
         tree_node*  second_node = ptr->child_node[1];
         if(second_node->node_type==ENUM_ExtDecList){
+            //debug 
+            std::cout << "ENUM_ExtDecList" << std::endl;
+
             AnalasysForExtDecList(second_node);
             tree_node*  SEMI_ = ptr->child_node[2];
             AnalasysForSEMI(SEMI_);
@@ -178,6 +181,9 @@ void AnalasysForExtDecList(tree_node* ptr){
         return;
     if (ptr->child_num == 1 )
     {
+//debug 
+std::cout << "ENUM_VarDec 1 " << std::endl;
+
         tree_node*  VarDec_ = ptr->child_node[0];
         AnalasysForVarDec(VarDec_);
     }else if (ptr->child_num == 3 )
@@ -185,6 +191,9 @@ void AnalasysForExtDecList(tree_node* ptr){
         tree_node*  VarDec_ = ptr->child_node[0];
         tree_node*  COMMA_ = ptr->child_node[1];
         tree_node*  ExtDecList_ = ptr->child_node[2];
+//debug 
+std::cout << "ENUM_VarDec 3 " << std::endl;
+
         AnalasysForVarDec(VarDec_);
         AnalasysForExtDecList(ExtDecList_);
     }
