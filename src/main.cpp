@@ -140,11 +140,11 @@ void AnalasysForSpecifier(tree_node* ptr){
         }else{//  if(strcmp(ptr->node_name,"float")==0)
             global_type_ptr->u.basic = 1;
         }
-        AnalasysForVarDec(ptr->child_node[0]);
+        //AnalasysForVarDec(ptr->child_node[0]);
     }else{//  if(ptr->child_node[0]->node_type  == ENUM_StructSpecifier)
         global_type_ptr->kind = global_type_ptr->STRUCTURE;
         //todo
-        AnalasysForStructSpecifier(ptr->child_node[0]);
+        AnalasysForStructSpecifier(ptr->child_node[1]);
     }
     
 
@@ -208,7 +208,8 @@ void AnalasysForVarDec(tree_node* ptr){
         Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
     }
     std::cout << ptr->node_name << std::endl;
-
+    std::cout << ptr->node_type << std::endl;
+    
 }
 
 //todo
