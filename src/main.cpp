@@ -224,19 +224,42 @@ StructSpecifier : STRUCT OptTag LC DefList RC
     if(ptr->child_num == 2 ){
         tree_node*  Tag_ = ptr->child_node[1];
 //debug
-        std::cout << Tag_->node_name << std::endl;
+        //std::cout << Tag_->node_name << std::endl;
+        // AnalasysForID(); 
+        tree_node*  ID_ = Tag_->child_node[0];
 
-        if(Sysmtable.find(Tag_->node_name)!=Sysmtable.end() ){
-            fprintf(stderr,"Error type 17 at Line %d: %s %s.\n",Tag_->line_no,"Undifined structure",Tag_->node_name);
+        if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
+            fprintf(stderr,"Error type 17 at Line %d: %s %s.\n",ID_->line_no,"Undifined structure",ID_->node_name);
         }else{
             Sysmtable_item cur_item;
             cur_item.kind = cur_item.VARIABLE;
-            cur_item.name = ptr->node_name;
-            cur_item.row = ptr->line_no;
+            cur_item.name = ID_->node_name;
+            cur_item.row = ID_->line_no;
             cur_item.type = global_type_ptr;
             Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
 
         }
+    }else{
+        //OptTag DefList 1 3
+        tree_node*  OptTag_ = ptr->child_node[1];
+        tree_node*  DefList_ = ptr->child_node[3];
+        if(OptTag_->child_node[0]!=nullptr){
+            tree_node*  ID_ = OptTag_->child_node[0];
+
+            if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
+                fprintf(stderr,"Error type 16 at Line %d: %s %s.\n",ID_->line_no,"Duplicated name",ID_->node_name);
+            }else{
+                Sysmtable_item cur_item;
+                cur_item.kind = cur_item.VARIABLE;
+                cur_item.name = ID_->node_name;
+                cur_item.row = ID_->line_no;
+                cur_item.type = global_type_ptr;
+                Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
+
+            } 
+        }
+        AnalasysForDefList(DefList_);
+
     }
     /*
     switch (ptr->child_num)
