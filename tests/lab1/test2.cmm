@@ -1,9 +1,5 @@
-struct Complex{
-    float real, image;
-};
-
-int main(){
-    struct Complex x[2]
-    x[1].real = 1.0
-    return 0;
+int main() 
+{
+   int i = 0;
+   inc(i);
 }
