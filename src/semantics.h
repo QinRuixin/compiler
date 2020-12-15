@@ -4,6 +4,8 @@
 #include "tree.h"
 #include<iostream>
 #include<map>
+#define BASIC_INT 0
+#define BASIC_FLOAT 1
 
 typedef struct Type_* Type;
 typedef struct FieldList_* FieldList;
@@ -39,28 +41,28 @@ struct Sysmtable_item{
 void AnalasysForProgram(tree_node* ptr);
 void AnalasysForExtDefList(tree_node* ptr);
 void AnalasysForExtDef(tree_node* ptr);
-void AnalasysForExtDecList(tree_node* ptr);
+void AnalasysForExtDecList(tree_node* ptr, Type type);
 
-void AnalasysForSpecifier(tree_node* ptr);
-void AnalasysForStructSpecifier(tree_node* ptr);
+Type AnalasysForSpecifier(tree_node* ptr);
+Type AnalasysForStructSpecifier(tree_node* ptr);
 void AnalasysForOptTag(tree_node* ptr);
 void AnalasysForTag(tree_node* ptr);
 
-void AnalasysForVarDec(tree_node* ptr);
+FieldList AnalasysForVarDec(tree_node* ptr, Type type);
 void AnalasysForFunDec(tree_node* ptr);
 void AnalasysForVarList(tree_node* ptr);
 void AnalasysForParamDec(tree_node* ptr);
 
-void AnalasysForCompSt(tree_node* ptr);
-void AnalasysForStmtList(tree_node* ptr);
-void AnalasysForStmt(tree_node* ptr);
+void AnalasysForCompSt(tree_node* ptr,Type returnType);
+void AnalasysForStmtList(tree_node* ptr,Type returnType);
+void AnalasysForStmt(tree_node* ptr,Type returnType);
 
-void AnalasysForDefList(tree_node* ptr);
-void AnalasysForDef(tree_node* ptr);
-void AnalasysForDecList(tree_node* ptr);
-void AnalasysForDec(tree_node* ptr);
+FieldList AnalasysForDefList(tree_node* ptr);
+FieldList AnalasysForDef(tree_node* ptr);
+FieldList AnalasysForDecList(tree_node* ptr, Type type);
+FieldList AnalasysForDec(tree_node* ptr, Type type);
 
-void AnalasysForExp(tree_node* ptr);
+Type AnalasysForExp(tree_node* ptr);
 void AnalasysForID(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
 void AnalasysFor(tree_node* ptr);
