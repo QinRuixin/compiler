@@ -19,6 +19,7 @@ typedef enum NT{
 
     ENUM_Specifier, ENUM_StructSpecifier, ENUM_OptTag, ENUM_Tag,
 
+// 36
     ENUM_VarDec, ENUM_FunDec, ENUM_VarList, ENUM_ParamDec,
 
     ENUM_CompSt, ENUM_StmtList, ENUM_Stmt,

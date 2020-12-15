@@ -150,6 +150,10 @@ void AnalasysForSpecifier(tree_node* ptr){
     
     if(ptr==nullptr)
         return;
+
+//debug
+std::cout <<"AnalasysForSpecifier node_name"<< ptr->child_node[0]->node_name << std::endl;
+
     if(ptr->child_node[0]->node_type == ENUM_TYPE){
         global_type_ptr->kind = global_type_ptr->BASIC;
 
@@ -256,9 +260,11 @@ DecList : Dec
         return;
 
     tree_node*  Dec_ = ptr->child_node[0];
-    tree_node*  DecList_ = ptr->child_node[1];
     AnalasysForDec(Dec_);
-    AnalasysForDecList(DecList_);
+    if(ptr->child_num!=1){
+        tree_node*  DecList_ = ptr->child_node[2];
+        AnalasysForDecList(DecList_);
+    }
 
 }
 
@@ -277,7 +283,7 @@ Dec : VarDec
         tree_node*  Exp_ = ptr->child_node[2];
         AnalasysForExp(Exp_);
     }
-
+    //todo ASSIGN
 
 }
 
@@ -338,23 +344,38 @@ std::cout << "ENUM_VarDec 3 " << std::endl;
 }
 
 void AnalasysForVarDec(tree_node* ptr){
-    
+/*
+VarDec : ID 
+    | VarDec LB INT RB
+*/
     if(ptr==nullptr)
         return;
-//std::map<std::string, struct Sysmtable_item> Sysmtable;
-    std::string name = ptr->node_name;
-    Sysmtable_item cur_item;
-    cur_item.kind = cur_item.VARIABLE;
-    cur_item.name = ptr->node_name;
-    cur_item.row = ptr->line_no;
-    cur_item.type = global_type_ptr;
-    if(Sysmtable.find(name)!=Sysmtable.end() ){
-        fprintf(stderr,"Error type 3 at Line %d: %s %s.\n",ptr->line_no,"Redifined variable",ptr->node_name);
+    if(ptr->child_num==1){
+        tree_node* ID_ = ptr->child_node[0];
+        //AnalasysForID(ID_);
+        //todo
+        //std::map<std::string, struct Sysmtable_item> Sysmtable;
+        std::string name = ID_->node_name;
+        Sysmtable_item cur_item;
+        cur_item.kind = cur_item.VARIABLE;
+        cur_item.name = ID_->node_name;
+        cur_item.row = ID_->line_no;
+        cur_item.type = global_type_ptr;
+        if(Sysmtable.find(name)!=Sysmtable.end() ){
+            fprintf(stderr,"Error type 3 at Line %d: %s %s.\n",ID_->line_no,"Redifined variable",ID_->node_name);
+        }else{
+            Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
+
+        }
+        //std::cout << ptr->node_name << std::endl;
+        //std::cout << ptr->node_type << std::endl;
     }else{
-        Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
+        tree_node* VarDec_ = ptr->child_node[0];
+        tree_node* INT_ = ptr->child_node[2];
+         //todo
+         AnalasysForVarDec(VarDec_);
     }
-    //std::cout << ptr->node_name << std::endl;
-    //std::cout << ptr->node_type << std::endl;
+
     
 }
 
