@@ -11,6 +11,13 @@
 Type global_type_ptr;
 std::map<std::string, struct Sysmtable_item> Sysmtable;
 
+int isINT(Type child_type){
+    return child_type->kind==child_type->BASIC && child_type->u.basic==BASIC_INT;
+}
+
+int notINT(Type child_type){
+    return child_type->kind!=child_type->BASIC || (child_type->kind==child_type->BASIC && child_type->u.basic!=BASIC_INT);
+}
 
 void AnalasysForProgram(tree_node* ptr){
     if(ptr==nullptr){
@@ -562,7 +569,7 @@ Exp : Exp ASSIGNOP Exp
 
         }else{ //ptr->child_node[0]->node_type==ENUM_NOT  
             // only INT can participate logic calculation 
-            if(child_type->kind!=child_type->BASIC || (child_type->kind==child_type->BASIC && child_type->u.basic!=BASIC_INT)){
+            if( notINT(child_type) ){
                 fprintf(stderr,"Error type 7 at Line %d: %s %s.\n",Exp_->line_no,"NOT not INT",Exp_->node_name);
                 return nullptr;
 
@@ -574,6 +581,7 @@ Exp : Exp ASSIGNOP Exp
     }else{ // start with Exp
         //     | Exp LB Exp RB | Exp DOT ID 
         tree_node* Exp_0  = ptr->child_node[0];
+        Type main_type = AnalasysForExp( Exp_0 );
         if( AnalasysForExp( Exp_0 ) == nullptr){
             //todo  qwiuhdasdjhk[1.5]  qwiuhdasdjhk doesn't exist
 
@@ -582,14 +590,13 @@ Exp : Exp ASSIGNOP Exp
         if(ptr->child_node[1]->node_type==ENUM_LB){ // Exp LB Exp RB 
             tree_node* Exp_2  = ptr->child_node[2];
             // Exp_0 should be ARRAY
-            Type main_type = AnalasysForExp( Exp_0 );
             if(main_type->kind!=main_type->ARRAY){
                 fprintf(stderr,"Error type 10 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"is not an array");
                 return nullptr;
             }
 
             Type child_type = AnalasysForExp( Exp_2 );
-            if(child_type->kind!=child_type->BASIC || (child_type->kind==child_type->BASIC && child_type->u.basic!=BASIC_INT)){
+            if(notINT(child_type)){
                 fprintf(stderr,"Error type 12 at Line %d: %s %s.\n",Exp_2->line_no,Exp_2->node_name,"is not INT");
                 return nullptr;
             }
@@ -605,20 +612,33 @@ Exp : Exp ASSIGNOP Exp
             //todo  what's the type of a.u
 
         }else{
-    /*  todo
-    Exp ASSIGNOP Exp 
-    | Exp AND Exp 
-    | Exp OR Exp 
-    | Exp RELOP Exp 
-    | Exp PLUS Exp 
-    | Exp MINUS Exp 
-    | Exp STAR Exp 
-    | Exp DIV Exp 
-    */
-   return nullptr;
+            tree_node* Exp_2  = ptr->child_node[2];
+            Type child_type = AnalasysForExp( Exp_2 );
+            //5 
+            tree_node* Operator  = ptr->child_node[1];
+            if(Operator->node_type==ENUM_ASSIGNOP && main_type->kind!=child_type->kind){
+    //Exp ASSIGNOP Exp 
+                fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for assignment");
+                return nullptr;
+            }else if(Operator->node_type== ENUM_AND || Operator->node_type== ENUM_OR){
+    //| Exp AND Exp | Exp OR Exp 
+                if(notINT(main_type) || notINT(child_type)){
+                fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for Logic calculation");
+                return nullptr;
+                }
+            }else{
+    //| Exp RELOP Exp | Exp PLUS Exp | Exp MINUS Exp | Exp STAR Exp | Exp DIV Exp 
+                if(main_type->kind != child_type->kind){
+                    fprintf(stderr,"Error type 7 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for Operands");
+                    return nullptr;
+                }else{
+                    res->kind = main_type->kind;
+                    res->u = main_type->u;
+                }
+            }
+            
+        //return nullptr;
         }
-        
-
     }
     return res;
 
