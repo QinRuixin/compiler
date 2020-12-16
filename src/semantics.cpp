@@ -620,16 +620,16 @@ Exp : Exp ASSIGNOP Exp
                     fprintf(stderr,"Error type 6 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"R value in the left");
                     return nullptr;    
                 }
-                if( notTYPEbasicEq(main_type,child_type) ){ //todo basic
+                if( main_type!=nullptr && notTYPEbasicEq(main_type,child_type) ){ //todo basic
                     fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for assignment");
                     return nullptr;                    
                 }
 
             }else if(Operator->node_type== ENUM_AND || Operator->node_type== ENUM_OR){
     //| Exp AND Exp | Exp OR Exp 
-                if(notINT(main_type) || notINT(child_type)){
-                fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for Logic calculation");
-                return nullptr;
+                if(main_type!=nullptr && (notINT(main_type) || notINT(child_type))){
+                    fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for Logic calculation");
+                    return nullptr;
                 }
             }else{
     //| Exp RELOP Exp | Exp PLUS Exp | Exp MINUS Exp | Exp STAR Exp | Exp DIV Exp 
