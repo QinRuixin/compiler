@@ -12,18 +12,35 @@ Type global_type_ptr;
 std::map<std::string, struct Sysmtable_item> Sysmtable;
 
 int isINT(Type child_type){
+    if (child_type==nullptr )
+    {
+        return 0;
+    }
     return child_type->kind==child_type->BASIC && child_type->u.basic==BASIC_INT;
 }
 
 int notINT(Type child_type){
+    if (child_type==nullptr )
+    {
+        return 1;
+    }
     return child_type->kind!=child_type->BASIC || (child_type->kind==child_type->BASIC && child_type->u.basic!=BASIC_INT);
 }
 
 int notTYPEbasicEq(Type main_type,Type child_type){
-    return main_type->kind != main_type->BASIC || child_type->kind != main_type->BASIC || (main_type->u.basic != child_type->u.basic );
+    if (main_type==nullptr || child_type==nullptr )
+    {
+        return 1;
+    }
+    
+    return main_type->kind != main_type->BASIC || child_type->kind != child_type->BASIC || (main_type->u.basic != child_type->u.basic );
 }
 
 int TypeEq(Type main_type,Type child_type){
+    if (main_type==nullptr || child_type==nullptr )
+    {
+        return 0;
+    }
     if(main_type->kind!=child_type->kind){
         return 0;
     }
