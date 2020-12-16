@@ -7,6 +7,9 @@
 #define BASIC_INT 0
 #define BASIC_FLOAT 1
 
+#define L_ 0
+#define R_ 1
+
 typedef struct Type_* Type;
 typedef struct FieldList_* FieldList;
 
@@ -17,6 +20,7 @@ struct Type_{
         struct {Type elem; int size; } array;
         FieldList structure;
     }u;
+    int LR_value;
 };
 
 struct FieldList_{

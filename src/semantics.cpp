@@ -121,16 +121,14 @@ Specifier : TYPE
     Type res = new Type_();
     if(ptr->child_node[0]->node_type == ENUM_TYPE){
         res->kind = res->BASIC;
-
         global_type_ptr->kind = global_type_ptr->BASIC;
 
         if(strcmp(ptr->child_node[0]->node_name,"int")==0){
             res->u.basic = BASIC_INT;
-
+            //res->LR_value = R_;
             global_type_ptr->u.basic = BASIC_INT;
         }else{//  if(strcmp(ptr->node_name,"float")==0)
             res->u.basic = BASIC_FLOAT;
-
             global_type_ptr->u.basic = BASIC_FLOAT;
         }
         //AnalasysForVarDec(ptr->child_node[0]);
@@ -519,23 +517,19 @@ Exp : Exp ASSIGNOP Exp
                  fprintf(stderr,"Error type 1 at Line %d: %s %s.\n",ID_->line_no,"Undifined variable",ID_->node_name);
                 return nullptr;
             }else{
-                //todo
-                //1 Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
                 Sysmtable_item ID_item =  Sysmtable.find(ID_->node_name)->second;
-//debug
-//std::cout << Sysmtable.find(ID_->node_name)->second.type->kind <<std::endl;
-                return ID_item.type;
+                res = ID_item.type;
             }
             
         }else if(ptr->child_node[0]->node_type==ENUM_INT){
             res->kind = res->BASIC;
             res->u.basic = BASIC_INT;
-            //todo value meaning?
-            //res->u.
+            res->LR_value = R_;
 
         }else if(ptr->child_node[0]->node_type==ENUM_FLOAT){
             res->kind = res->BASIC;
             res->u.basic = BASIC_FLOAT;
+            res->LR_value = R_;
         }
         return res;
     }else if(ptr->child_node[0]->node_type==ENUM_ID){ // | ID LP Args RP | ID LP RP 
@@ -615,10 +609,17 @@ Exp : Exp ASSIGNOP Exp
             Type child_type = AnalasysForExp( Exp_2 );
             //5 
             tree_node* Operator  = ptr->child_node[1];
-            if(Operator->node_type==ENUM_ASSIGNOP && main_type->kind!=child_type->kind){
+            if(Operator->node_type==ENUM_ASSIGNOP ){
     //Exp ASSIGNOP Exp 
-                fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for assignment");
-                return nullptr;
+                if(main_type->LR_value==R_){
+                    fprintf(stderr,"Error type 6 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"R value in the left");
+                    return nullptr;    
+                }
+                if( main_type->kind!=child_type->kind){
+                    fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for assignment");
+                    return nullptr;                    
+                }
+
             }else if(Operator->node_type== ENUM_AND || Operator->node_type== ENUM_OR){
     //| Exp AND Exp | Exp OR Exp 
                 if(notINT(main_type) || notINT(child_type)){
