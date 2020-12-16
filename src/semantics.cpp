@@ -582,7 +582,7 @@ Exp : Exp ASSIGNOP Exp
         //     | Exp LB Exp RB | Exp DOT ID 
         tree_node* Exp_0  = ptr->child_node[0];
         Type main_type = AnalasysForExp( Exp_0 );
-        if( AnalasysForExp( Exp_0 ) == nullptr){
+        if( main_type == nullptr){
             //todo  qwiuhdasdjhk[1.5]  qwiuhdasdjhk doesn't exist
 
             return nullptr;
