@@ -23,6 +23,21 @@ int notTYPEbasicEq(Type main_type,Type child_type){
     return main_type->kind != main_type->BASIC || child_type->kind != main_type->BASIC || (main_type->u.basic != child_type->u.basic );
 }
 
+int TypeEq(Type main_type,Type child_type){
+    if(main_type->kind!=child_type->kind){
+        return 0;
+    }
+    if(main_type->kind == main_type->BASIC){
+        return main_type->u.basic == child_type->u.basic;
+    }else if(main_type->kind == main_type->ARRAY){
+        return (main_type->u.array.size == child_type->u.array.size) &&
+            TypeEq(main_type->u.array.elem, child_type->u.array.elem);
+    }else if(main_type->kind == main_type->STRUCTURE){
+        //todo? struct name equ??
+        return main_type->u.structure->name == child_type->u.structure->name;
+    }
+    return 1;
+}
 
 void AnalasysForProgram(tree_node* ptr){
     if(ptr==nullptr){
@@ -56,12 +71,7 @@ ExtDef : Specifier ExtDecList SEMI
     
     tree_node*  Specifier_ = ptr->child_node[0];
     Type specifier_type = AnalasysForSpecifier(Specifier_);
-    if (ptr->child_num==2)
-    {
-        tree_node*  SEMI_ = ptr->child_node[1];
-        //AnalasysForSEMI(SEMI_);
-    }else if(ptr->child_num==3)
-    {
+    if(ptr->child_num==3){
         tree_node*  second_node = ptr->child_node[1];
 //debug 
 //std::cout << "ExtDef second_node->node_type "  << second_node->node_type<< std::endl;
@@ -71,13 +81,12 @@ ExtDef : Specifier ExtDecList SEMI
             //std::cout << "ENUM_ExtDecList" << std::endl;
 
             AnalasysForExtDecList(second_node, specifier_type);
-            tree_node*  SEMI_ = ptr->child_node[2];
-            AnalasysForSEMI(SEMI_);
+            
         }else if(second_node->node_type==ENUM_FunDec){ //ENUM_FunDec
             //debug 
             //std::cout << "ENUM_FunDec" << std::endl;
 
-            AnalasysForFunDec(second_node);
+            AnalasysForFunDec(second_node,specifier_type);
             tree_node*  CompSt_ = ptr->child_node[2];
             AnalasysForCompSt(CompSt_, specifier_type);
         }
@@ -157,78 +166,51 @@ StructSpecifier : STRUCT OptTag LC DefList RC
     Type res = new Type_();
         //to do from here
     tree_node*  STRUCT_ = ptr->child_node[0];
-    global_type_ptr->kind = global_type_ptr->STRUCTURE;
+    //global_type_ptr->kind = global_type_ptr->STRUCTURE;
     res->kind = res->STRUCTURE;
-    if(ptr->child_num == 2 ){
+    if(ptr->child_num == 2 ){ // STRUCT Tag 
         tree_node*  Tag_ = ptr->child_node[1];
-//debug
-//std::cout << Tag_->node_name << std::endl;
-        // AnalasysForID(); 
         tree_node*  ID_ = Tag_->child_node[0];
-//debug
-//std::cout << ID_->node_name << std::endl;
         auto it = Sysmtable.find(ID_->node_name);
         if(it ==Sysmtable.end() || it->second.type->kind != it->second.type->STRUCTURE){
             fprintf(stderr,"Error type 17 at Line %d: %s %s.\n",ID_->line_no,"Undifined structure",ID_->node_name);
-        }else{
-            Sysmtable_item item = it->second;
-            res = item.type;
-        /*
-            Sysmtable_item cur_item;
-            cur_item.kind = cur_item.VARIABLE;
-            cur_item.name = ID_->node_name;
-            cur_item.row = ID_->line_no;
-            cur_item.type = global_type_ptr;
-            Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
-        */
-
+            return nullptr;
         }
+        return it->second.type;
+
     }else{
-        //OptTag DefList 1 3
+        // STRUCT OptTag LC DefList RC 
         tree_node*  OptTag_ = ptr->child_node[1];
         tree_node*  DefList_ = ptr->child_node[3];
+        Structure cur_struct = new Structure_();
+        cur_struct->domain = AnalasysForDefList(DefList_);
+        res->kind = res->STRUCTURE;
+        res->u.structure = cur_struct;
         if(OptTag_->child_node[0]!=nullptr){
             tree_node*  ID_ = OptTag_->child_node[0];
 
             if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
                 fprintf(stderr,"Error type 16 at Line %d: %s %s.\n",ID_->line_no,"Duplicated name",ID_->node_name);
+                return nullptr;
             }else{
-            //    FieldList fieldList_stru = new FieldList_();
-            //todo 
-            //    fieldList_stru->name = ID_->node_name;
-            //    fieldList_stru->type = fieldList_stru;
-            //    fieldList_stru->tail = nullptr;
-                // from Struct
-                res->u.structure = AnalasysForDefList(DefList_);
-
+                
+                cur_struct->name = ID_->node_name;
                 Sysmtable_item cur_item;
-                cur_item.kind = cur_item.CONST;
+                cur_item.kind = cur_item.STRUCTURE;
                 cur_item.name = ID_->node_name;
                 cur_item.row = ID_->line_no;
                 cur_item.type = res;
-                
                 Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
 
             } 
         }
+//        else{
+//            //todo?
+//            AnalasysForDefList(DefList_);
+//        }
         
     }
     return res;
-
-    /*
-    switch (ptr->child_num)
-    {
-    case :
-        tree_node*  _ = ptr->child_node[0];
-        tree_node*  _ = ptr->child_node[1];
-        AnalasysFor();
-        AnalasysFor();
-        break;
-    
-    default:
-        break;
-    }   
-    */
 
 }
 
@@ -325,13 +307,16 @@ Dec : VarDec
     fieldList = AnalasysForVarDec(VarDec_,type);
     if(ptr->child_num == 3){
         tree_node*  Exp_ = ptr->child_node[2];
-        AnalasysForExp(Exp_);
+        Type second_type = AnalasysForExp(Exp_);
+        if(notTYPEbasicEq(fieldList->type,type) ){
+            fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_->line_no,Exp_->node_name,"Type mismatched for assignment");
+            // return nullptr;
+        }
     }
-    //todo ASSIGN
     return fieldList;
 
 }
-
+//---
 void AnalasysForStmt(tree_node* ptr,Type returnType){
 /*
 Stmt : Exp SEMI 
@@ -344,30 +329,33 @@ Stmt : Exp SEMI
 */
     if(ptr==nullptr)
         return;
-    if(ptr->child_node[0]->node_type==ENUM_RETURN){
+    if(ptr->child_node[0]->node_type==ENUM_RETURN){ // RETURN Exp SEMI 
         tree_node* Exp_ = ptr->child_node[1];
-
-        //if(returnType->kind != AnalasysForExp(Exp_)){
-            //todo
-        //    fprintf(stderr,"Error type 8 at Line %d: %s %s.\n",Exp_->line_no,"Type mismatched for return ",Exp_->node_name);
-        //}
+        Type second_type = AnalasysForExp(Exp_);
+        if(TypeEq(returnType, second_type)){
+            fprintf(stderr,"Error type 8 at Line %d: %s %s.\n",Exp_->line_no,"Type mismatched for return ",Exp_->node_name);
+        }
+        return;
     }
-    if (ptr->child_num == 2 ){
+    if (ptr->child_num == 2 ){ // Exp SEMI 
         tree_node*  Exp_ = ptr->child_node[0];
-        tree_node*  SEMI_ = ptr->child_node[1];
         AnalasysForExp(Exp_);
-        AnalasysForSEMI(SEMI_);
-    }else if(ptr->child_num == 1 ){
+    }else if(ptr->child_num == 1 ){ // CompSt
         tree_node*  CompSt_ = ptr->child_node[0];
-        AnalasysForCompSt(CompSt_,nullptr);
-
-    }else if(ptr->child_num == 3 ){
-
-    }else if(ptr->child_num == 5 ){
-        //todo
-
-    }else if(ptr->child_num == 7 ){
-
+        AnalasysForCompSt(CompSt_,returnType);
+    }else {
+        tree_node*  Exp_ = ptr->child_node[2];
+        Type type = AnalasysForExp(Exp_);
+        if(notINT(type)){
+            fprintf(stderr,"Error type 7 at Line %d: %s %s.\n",Exp_->line_no,"Type mismatched for return ",Exp_->node_name);
+            return;
+        }
+        tree_node*  Stmt_ = ptr->child_node[4];
+        AnalasysForStmt(Stmt_,returnType);
+        if(ptr->child_num == 7 ){
+            tree_node*  Stmt_ = ptr->child_node[6];
+            AnalasysForStmt(Stmt_,returnType);
+        }
     }
 
 }
@@ -417,76 +405,71 @@ VarDec : ID
 }
 
 //todo
-void AnalasysForFunDec(tree_node* ptr){
+Function AnalasysForFunDec(tree_node* ptr, Type type ){
     /*
     FunDec : ID LP VarList RP
     | ID LP RP
     */
     if(ptr==nullptr)
-        return;
+        return nullptr;
     //global_type_ptr->kind = global_type_ptr->STRUCTURE;
     //global_type_ptr->u.basic = BASIC_INT;
     tree_node* ID_ = ptr->child_node[0];
-    std::string name = ID_->node_name;
-    Sysmtable_item cur_item;
-    cur_item.kind = cur_item.FUNCTION;
-    cur_item.name = ID_->node_name;
-    cur_item.row = ID_->line_no;
-    cur_item.type = global_type_ptr;
-    if(Sysmtable.find(name)!=Sysmtable.end() ){
-        fprintf(stderr,"Error type 4 at Line %d: %s %s.\n",ID_->line_no,"Redifined variable",name);
+    Function function = new Function_();
+
+    if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
+        fprintf(stderr,"Error type 4 at Line %d: %s %s.\n",ID_->line_no,"Redifined variable",ID_->node_name);
+        return nullptr;
     }else{
-        //Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
+        function->name = ID_->node_name;
+        function->returnType = type;
+        Sysmtable_item cur_item;
+        cur_item.kind = cur_item.FUNCTION;
+        cur_item.name = ID_->node_name;
+        cur_item.row = ID_->line_no;
+        cur_item.type = type; //return type?
+        //todo
+        Sysmtable.insert(std::pair<std::string,Sysmtable_item>(ID_->node_name,cur_item));
     }
     if(ptr->child_num==4){
         tree_node*  VarList_ = ptr->child_node[2];
-        AnalasysForVarList(VarList_);
+        function->parameter = AnalasysForVarList(VarList_);
 
     }else{
-        // ==3
-        // AnalasysForID(); //todo TODO
-
+        function->parameter = nullptr;
     }
+    return function;
 
 }
 
-void AnalasysForSEMI(tree_node* ptr){
-    
-    if(ptr==nullptr)
-        return;
-    if(ptr->child_num)
-        ;
-}
 
-
-
-void AnalasysForVarList(tree_node* ptr){
+FieldList AnalasysForVarList(tree_node* ptr){
     /*
 VarList : ParamDec COMMA VarList 
     | ParamDec 
     */
     if(ptr==nullptr)
-        return;
+        return nullptr;
     tree_node*  ParamDec_ = ptr->child_node[0];
-    AnalasysForParamDec(ParamDec_);
+    FieldList param = AnalasysForParamDec(ParamDec_);
     if (ptr->child_num == 3 ){
         tree_node*  VarList_ = ptr->child_node[2];
-        AnalasysForVarList(VarList_);
-    }else if(ptr->child_num == 1 ){
-        ;
+        param->tail = AnalasysForVarList(VarList_);
     }
+    return param;
 }
 
-void AnalasysForParamDec(tree_node* ptr){
+FieldList AnalasysForParamDec(tree_node* ptr){
 /*
 ParamDec : Specifier VarDec
 */
     if(ptr==nullptr)
-        return;
+        return nullptr;
     tree_node*  Specifier_ = ptr->child_node[0];
     tree_node*  VarDec_ = ptr->child_node[1];
     Type type = AnalasysForSpecifier(Specifier_);
-    AnalasysForVarDec(VarDec_, type);
+    
+    return AnalasysForVarDec(VarDec_, type);
 
 }
 
@@ -648,20 +631,3 @@ Exp : Exp ASSIGNOP Exp
     return res;
 
 }
-/*
-void AnalasysFor(tree_node* ptr){
-    
-    if(ptr==nullptr)
-        return;
-    if (ptr->child_num ==  ){
-        tree_node*  _ = ptr->child_node[0];
-        tree_node*  _ = ptr->child_node[1];
-        AnalasysFor();
-        AnalasysFor();
-    }else if(ptr->child_num ==  ){
-
-    }
-
-}
-
-*/

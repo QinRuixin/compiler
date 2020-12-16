@@ -12,13 +12,16 @@
 
 typedef struct Type_* Type;
 typedef struct FieldList_* FieldList;
+typedef struct Function_* Function;
+typedef struct Structure_* Structure;
 
 struct Type_{
-    enum{ BASIC, ARRAY, STRUCTURE } kind;
+    enum{ BASIC, ARRAY, STRUCTURE,FUNCTION } kind;
     union{
         int basic; // 0 int 1 float
         struct {Type elem; int size; } array;
-        FieldList structure;
+        Structure structure;
+        Function function;
     }u;
     int LR_value;
 };
@@ -29,9 +32,20 @@ struct FieldList_{
     FieldList tail;
 };
 
+struct Function_{
+    char* name;
+    Type returnType;
+    FieldList parameter;
+};
+
+struct Structure_{
+    char* name;
+    FieldList domain;
+};
+
 
 struct Sysmtable_item{
-    enum{VARIABLE, FUNCTION, CONST}kind;
+    enum{VARIABLE, FUNCTION, STRUCTURE,CONST}kind;
     std::string name;
     Type type;
     int row;
@@ -53,9 +67,9 @@ void AnalasysForOptTag(tree_node* ptr);
 void AnalasysForTag(tree_node* ptr);
 
 FieldList AnalasysForVarDec(tree_node* ptr, Type type);
-void AnalasysForFunDec(tree_node* ptr);
-void AnalasysForVarList(tree_node* ptr);
-void AnalasysForParamDec(tree_node* ptr);
+Function AnalasysForFunDec(tree_node* ptr, Type type );
+FieldList AnalasysForVarList(tree_node* ptr);
+FieldList AnalasysForParamDec(tree_node* ptr);
 
 void AnalasysForCompSt(tree_node* ptr,Type returnType);
 void AnalasysForStmtList(tree_node* ptr,Type returnType);
@@ -68,9 +82,4 @@ FieldList AnalasysForDec(tree_node* ptr, Type type);
 
 Type AnalasysForExp(tree_node* ptr);
 void AnalasysForID(tree_node* ptr);
-void AnalasysFor(tree_node* ptr);
-void AnalasysFor(tree_node* ptr);
-void AnalasysFor(tree_node* ptr);
 
-void AnalasysForCOMMA(tree_node* ptr);
-void AnalasysForSEMI(tree_node* ptr);
