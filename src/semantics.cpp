@@ -325,7 +325,7 @@ Dec : VarDec
     if(ptr->child_num == 3){
         tree_node*  Exp_ = ptr->child_node[2];
         Type second_type = AnalasysForExp(Exp_);
-        if(notTYPEbasicEq(fieldList->type,type) ){
+        if(fieldList->type!=nullptr && notTYPEbasicEq(fieldList->type,type) ){
             fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_->line_no,Exp_->node_name,"Type mismatched for assignment");
             // return nullptr;
         }
