@@ -327,13 +327,13 @@ Dec : VarDec
         Type second_type = AnalasysForExp(Exp_);
         if(fieldList->type!=nullptr && notTYPEbasicEq(fieldList->type,type) ){
             fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_->line_no,Exp_->node_name,"Type mismatched for assignment");
-            // return nullptr;
+            return nullptr;
         }
     }
     return fieldList;
 
 }
-//---
+
 void AnalasysForStmt(tree_node* ptr,Type returnType){
 /*
 Stmt : Exp SEMI 
@@ -377,7 +377,6 @@ Stmt : Exp SEMI
 
 }
 
-
 FieldList AnalasysForVarDec(tree_node* ptr, Type type){
 /*
 VarDec : ID 
@@ -386,42 +385,42 @@ VarDec : ID
     if(ptr==nullptr)
         return nullptr;
     FieldList fieldList = new FieldList_();
-    
+    //fieldList->type = type;
     if(ptr->child_num==1){
         tree_node* ID_ = ptr->child_node[0];
-        //AnalasysForID(ID_);
-        //todo
         //std::map<std::string, struct Sysmtable_item> Sysmtable;
-        std::string name = ID_->node_name;
-        Sysmtable_item cur_item;
-        cur_item.kind = cur_item.VARIABLE;
-        cur_item.name = ID_->node_name;
-        cur_item.row = ID_->line_no;
-        cur_item.type = type;
-        if(Sysmtable.find(name)!=Sysmtable.end() ){
+        
+        if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
             fprintf(stderr,"Error type 3 at Line %d: %s %s.\n",ID_->line_no,"Redifined variable",ID_->node_name);
+            return nullptr;
         }else{
-            Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
+            Sysmtable_item cur_item;
+            // todo
+            cur_item.kind = cur_item.VARIABLE;
+            cur_item.name = ID_->node_name;
+            cur_item.row = ID_->line_no;
+            cur_item.type = type;
+            Sysmtable.insert(std::pair<std::string,Sysmtable_item>(ID_->node_name,cur_item));
             fieldList->name = ID_->node_name;
             fieldList->type = type; //todo
+            return fieldList;
         }
         //std::cout << ptr->node_name << std::endl;
         //std::cout << ptr->node_type << std::endl;
     }else{
         tree_node* VarDec_ = ptr->child_node[0];
         tree_node* INT_ = ptr->child_node[2];
-         //todo
-        fieldList= AnalasysForVarDec(VarDec_, type);
-         // change into ARRAY
-         //Type_ temp = global_type_ptr->kind;
-         //global_type_ptr->u.array.elem = global_type_ptr->kind;
-         //global_type_ptr->kind = global_type_ptr->ARRAY;
+        Type child_type = new Type_();
+        child_type->kind = fieldList->type->ARRAY;
+        child_type->u.array.size = INT_->int_val;
+        child_type->u.array.elem = type;
+        fieldList= AnalasysForVarDec(VarDec_, child_type);
     }
     return fieldList;
     
 }
 
-//todo
+//---
 Function AnalasysForFunDec(tree_node* ptr, Type type ){
     /*
     FunDec : ID LP VarList RP
@@ -429,11 +428,14 @@ Function AnalasysForFunDec(tree_node* ptr, Type type ){
     */
     if(ptr==nullptr)
         return nullptr;
-    //global_type_ptr->kind = global_type_ptr->STRUCTURE;
-    //global_type_ptr->u.basic = BASIC_INT;
     tree_node* ID_ = ptr->child_node[0];
     Function function = new Function_();
-
+    if(ptr->child_num==4){
+    tree_node*  VarList_ = ptr->child_node[2];
+    function->parameter = AnalasysForVarList(VarList_);
+    }else{
+        function->parameter = nullptr;
+    }
     if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
         fprintf(stderr,"Error type 4 at Line %d: %s %s.\n",ID_->line_no,"Redifined variable",ID_->node_name);
         return nullptr;
@@ -444,21 +446,20 @@ Function AnalasysForFunDec(tree_node* ptr, Type type ){
         cur_item.kind = cur_item.FUNCTION;
         cur_item.name = ID_->node_name;
         cur_item.row = ID_->line_no;
-        cur_item.type = type; //return type?
+        Type cur_type = new Type_();
+        cur_type->kind = cur_type->FUNCTION;
+        function->returnType = type;
+        cur_type->u.function = function;
+        cur_item.type = cur_type;
         //todo
         Sysmtable.insert(std::pair<std::string,Sysmtable_item>(ID_->node_name,cur_item));
     }
-    if(ptr->child_num==4){
-        tree_node*  VarList_ = ptr->child_node[2];
-        function->parameter = AnalasysForVarList(VarList_);
 
-    }else{
-        function->parameter = nullptr;
-    }
     return function;
 
 }
 
+//---
 
 FieldList AnalasysForVarList(tree_node* ptr){
     /*
