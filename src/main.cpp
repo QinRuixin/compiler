@@ -34,7 +34,8 @@ int main(int argc, char** argv){
     syntax_error_flag = 0;
     global_type_ptr = new Type_();
     if(argc > 1){
-        if(!(yyin = fopen(argv[1],"r"))){
+//        if(!(yyin = fopen(argv[1],"r"))){
+        if(!(yyin = fopen("../tests/lab1/test5.cmm","r"))){
             perror(argv[1]);
             return 1;
         }
@@ -43,7 +44,7 @@ int main(int argc, char** argv){
     // second time. 
     if(error_flag==0){
         second_flag = 1;
-        //yyin = fopen(argv[1],"r");
+//        yyin = fopen(argv[1],"r");
         yyin = fopen("../tests/lab1/test5.cmm","r");
         yylineno = 1;
         //yyrestart(yyin);
