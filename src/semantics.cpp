@@ -255,7 +255,7 @@ DefList : Def DefList
     tree_node*  DefList_ = ptr->child_node[1];
     FieldList res = AnalasysForDef(Def_);
     if(res==nullptr){
-        return nullptr;
+        return AnalasysForDefList(DefList_);
     }
     res->tail =  AnalasysForDefList(DefList_);
     return res;
