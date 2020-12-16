@@ -604,7 +604,6 @@ Exp : Exp ASSIGNOP Exp
         }else if(ptr->child_node[1]->node_type==ENUM_DOT){ // Exp DOT ID 
             tree_node* ID_  = ptr->child_node[2];
             //todo search the struct
-            Type main_type = AnalasysForExp( Exp_0 );
             if(main_type->kind!=main_type->STRUCTURE){
                 fprintf(stderr,"Error type 13 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Ill use of .");
                 return nullptr;
