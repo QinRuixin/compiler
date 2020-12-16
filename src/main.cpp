@@ -43,7 +43,8 @@ int main(int argc, char** argv){
     // second time. 
     if(error_flag==0){
         second_flag = 1;
-        yyin = fopen(argv[1],"r");
+        //yyin = fopen(argv[1],"r");
+        yyin = fopen("../tests/lab1/test5.cmm","r");
         yylineno = 1;
         //yyrestart(yyin);
         yyparse();
