@@ -19,6 +19,11 @@ int notINT(Type child_type){
     return child_type->kind!=child_type->BASIC || (child_type->kind==child_type->BASIC && child_type->u.basic!=BASIC_INT);
 }
 
+int notTYPEbasicEq(Type main_type,Type child_type){
+    return main_type->kind != main_type->BASIC || child_type->kind != main_type->BASIC || (main_type->u.basic != child_type->u.basic );
+}
+
+
 void AnalasysForProgram(tree_node* ptr){
     if(ptr==nullptr){
         return;
@@ -615,7 +620,7 @@ Exp : Exp ASSIGNOP Exp
                     fprintf(stderr,"Error type 6 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"R value in the left");
                     return nullptr;    
                 }
-                if( main_type->kind!=child_type->kind){
+                if( notTYPEbasicEq(main_type,child_type) ){ //todo basic
                     fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for assignment");
                     return nullptr;                    
                 }
@@ -628,7 +633,7 @@ Exp : Exp ASSIGNOP Exp
                 }
             }else{
     //| Exp RELOP Exp | Exp PLUS Exp | Exp MINUS Exp | Exp STAR Exp | Exp DIV Exp 
-                if(main_type->kind != child_type->kind){
+                if( notTYPEbasicEq(main_type,child_type)){
                     fprintf(stderr,"Error type 7 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for Operands");
                     return nullptr;
                 }else{
