@@ -33,7 +33,8 @@ int main(int argc, char** argv){
     second_flag = 0;
     syntax_error_flag = 0;
     global_type_ptr = new Type_();
-    if(argc > 1){
+    if(argc >= 1){
+//    if(argc > 1){
 //        if(!(yyin = fopen(argv[1],"r"))){
         if(!(yyin = fopen("./tests/lab1/test5.cmm","r"))){
             perror(argv[1]);
