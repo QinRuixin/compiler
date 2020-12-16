@@ -3,9 +3,9 @@ int main()
    //int i = 0;
    //j = i + 1;
 
-   int a;
-   a = 3.7;
+   //int a;
+   //a = 3.7;
 
-   //float f;
-   //10.0 = f;
+   float f;
+   10.0 = f;
 }
