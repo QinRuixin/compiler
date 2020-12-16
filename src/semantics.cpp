@@ -500,41 +500,127 @@ Exp : Exp ASSIGNOP Exp
     | ID
     | INT
     | FLOAT 
-*/
+*/  
+    Type res = new Type_();
+    
     if(ptr==nullptr)
         return nullptr;
-    if (ptr->child_num == 1 ){
+    if (ptr->child_num == 1 ){ // | ID| INT| FLOAT 
         if(ptr->child_node[0]->node_type==ENUM_ID){
             tree_node* ID_ = ptr->child_node[0];
             if(Sysmtable.find(ID_->node_name) == Sysmtable.end() ){
                  fprintf(stderr,"Error type 1 at Line %d: %s %s.\n",ID_->line_no,"Undifined variable",ID_->node_name);
+                return nullptr;
             }else{
                 //todo
                 //1 Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
-
+                Sysmtable_item ID_item =  Sysmtable.find(ID_->node_name)->second;
+//debug
+//std::cout << Sysmtable.find(ID_->node_name)->second.type->kind <<std::endl;
+                return ID_item.type;
             }
             
         }else if(ptr->child_node[0]->node_type==ENUM_INT){
+            res->kind = res->BASIC;
+            res->u.basic = BASIC_INT;
+            //todo value meaning?
+            //res->u.
 
         }else if(ptr->child_node[0]->node_type==ENUM_FLOAT){
-
+            res->kind = res->BASIC;
+            res->u.basic = BASIC_FLOAT;
         }
-
-    }else if(ptr->child_node[0]->node_type==ENUM_ID){
+        return res;
+    }else if(ptr->child_node[0]->node_type==ENUM_ID){ // | ID LP Args RP | ID LP RP 
         // function call
         tree_node* ID_ = ptr->child_node[0];
         if(Sysmtable.find(ID_->node_name) == Sysmtable.end() ){
                 fprintf(stderr,"Error type 2 at Line %d: %s %s.\n",ID_->line_no,"Undifined function",ID_->node_name);
+                return nullptr;
         }else{
-            //todo
-            //1 Sysmtable.insert(std::pair<std::string,Sysmtable_item>(name,cur_item));
-
+            //todo args mismatched
         }
+        //todo returnType
+        //res->kind = res->
 
-    }else if(ptr->child_num == 3){
+    }else if(ptr->child_node[0]->node_type==ENUM_LP){ // LP Exp RP 
+        tree_node* Exp_ = ptr->child_node[1];
+        return AnalasysForExp(Exp_);
+
+    }else if(ptr->child_node[1]->node_type==ENUM_Exp){   // | MINUS Exp %prec UMINUS | NOT Exp 
+        tree_node* Exp_  = ptr->child_node[1];
+        
+        Type child_type = AnalasysForExp( Exp_);
+        if(ptr->child_node[0]->node_type==ENUM_MINUS){
+            if(child_type->kind!=child_type->BASIC){
+                fprintf(stderr,"Error type 7 at Line %d: %s %s.\n",Exp_->line_no,"MINUS not BASIC",Exp_->node_name);
+                return nullptr;
+            }else{
+                res->kind=res->BASIC;
+
+            }
+
+        }else{ //ptr->child_node[0]->node_type==ENUM_NOT  
+            // only INT can participate logic calculation 
+            if(child_type->kind!=child_type->BASIC || (child_type->kind==child_type->BASIC && child_type->u.basic!=BASIC_INT)){
+                fprintf(stderr,"Error type 7 at Line %d: %s %s.\n",Exp_->line_no,"NOT not INT",Exp_->node_name);
+                return nullptr;
+
+            }else{
+                res->kind=res->BASIC;
+                res->u.basic!=BASIC_INT;
+            }
+        }
+    }else{ // start with Exp
+        //     | Exp LB Exp RB | Exp DOT ID 
+        tree_node* Exp_0  = ptr->child_node[0];
+        if( AnalasysForExp( Exp_0 ) == nullptr){
+            //todo  qwiuhdasdjhk[1.5]  qwiuhdasdjhk doesn't exist
+
+            return nullptr;
+        }
+        if(ptr->child_node[1]->node_type==ENUM_LB){ // Exp LB Exp RB 
+            tree_node* Exp_2  = ptr->child_node[2];
+            // Exp_0 should be ARRAY
+            Type main_type = AnalasysForExp( Exp_0 );
+            if(main_type->kind!=main_type->ARRAY){
+                fprintf(stderr,"Error type 10 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"is not an array");
+                return nullptr;
+            }
+
+            Type child_type = AnalasysForExp( Exp_2 );
+            if(child_type->kind!=child_type->BASIC || (child_type->kind==child_type->BASIC && child_type->u.basic!=BASIC_INT)){
+                fprintf(stderr,"Error type 12 at Line %d: %s %s.\n",Exp_2->line_no,Exp_2->node_name,"is not INT");
+                return nullptr;
+            }
+            //todo  what's the type of a[1] 
+        }else if(ptr->child_node[1]->node_type==ENUM_DOT){ // Exp DOT ID 
+            tree_node* ID_  = ptr->child_node[2];
+            //todo search the struct
+            Type main_type = AnalasysForExp( Exp_0 );
+            if(main_type->kind!=main_type->STRUCTURE){
+                fprintf(stderr,"Error type 13 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Ill use of .");
+                return nullptr;
+            }
+            //todo  what's the type of a.u
+
+        }else{
+    /*  todo
+    Exp ASSIGNOP Exp 
+    | Exp AND Exp 
+    | Exp OR Exp 
+    | Exp RELOP Exp 
+    | Exp PLUS Exp 
+    | Exp MINUS Exp 
+    | Exp STAR Exp 
+    | Exp DIV Exp 
+    */
+   return nullptr;
+        }
+        
 
     }
-    return nullptr;
+    return res;
 
 }
 /*
