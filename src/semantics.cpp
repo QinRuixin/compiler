@@ -210,7 +210,7 @@ StructSpecifier : STRUCT OptTag LC DefList RC
     }else{
         // STRUCT OptTag LC DefList RC 
     //debug
-    std::cout << ptr->child_num << " "  << std::endl;
+    //std::cout << ptr->child_num << " "  << std::endl;
         tree_node*  OptTag_ = ptr->child_node[1];
         tree_node*  DefList_ = ptr->child_node[3];
         Structure cur_struct = new Structure_();
