@@ -274,6 +274,7 @@ DefList : Def DefList
     tree_node*  DefList_ = ptr->child_node[1];
     FieldList res = AnalasysForDef(Def_, src);
     if(res==nullptr){
+        std::cout << "AnalasysForDefList(DefList_,src); nullptr" << std::endl;
         return AnalasysForDefList(DefList_,src);
     }
     res->tail =  AnalasysForDefList(DefList_, src);
@@ -327,7 +328,7 @@ DecList : Dec
 
     if(ptr->child_num!=1){
             //debug 
-    std::cout <<   " ptr->child_num " << ptr->child_num << std::endl;   
+//    std::cout <<   " ptr->child_num " << ptr->child_num << std::endl;   
         tree_node*  DecList_ = ptr->child_node[2];
         if(fieldList == nullptr){
         //debug 
@@ -697,7 +698,7 @@ Exp : Exp ASSIGNOP Exp
                 return nullptr;
             }
             //debug
-            std::cout << main_type->u.structure->name << "main_type->u.structure->name"  << std::endl;
+//            std::cout << main_type->u.structure->name << "main_type->u.structure->name"  << std::endl;
 
             Structure cur_struct = main_type->u.structure;
             FieldList cur_fieldList = cur_struct->domain;
