@@ -416,7 +416,7 @@ Stmt : Exp SEMI
             ; // todo?
         }
         //debug 
-        std::cout << returnType->kind << " " << second_type->kind <<std::endl;
+//        std::cout << returnType->kind << " " << second_type->kind <<std::endl;
         if( 1 - TypeEq(returnType, second_type)){
             fprintf(stderr,"Error type 8 at Line %d: %s %s.\n",Exp_->line_no,"Type mismatched for return ",Exp_->node_name);
         }
@@ -432,7 +432,7 @@ Stmt : Exp SEMI
         tree_node*  Exp_ = ptr->child_node[2];
         Type type = AnalasysForExp(Exp_);
         if(type==nullptr){
-            return;
+            ;
         }
     //    if(( 1 - isINT(type) )){
     //        fprintf(stderr,"Error type 7 at Line %d: %s %s.\n",Exp_->line_no,"Type mismatched ",Exp_->node_name);
