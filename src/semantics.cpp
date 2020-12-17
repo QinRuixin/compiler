@@ -151,7 +151,8 @@ void AnalasysForExtDecList(tree_node* ptr, Type type){
         tree_node*  ExtDecList_ = ptr->child_node[2];
         FieldList fieldList = AnalasysForVarDec(VarDec_,type);
         if(fieldList == nullptr){
-            return ;
+            ;
+            //return ;
             //quit the 
         }
         AnalasysForExtDecList(ExtDecList_, type);
@@ -367,7 +368,7 @@ Dec : VarDec
             fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_->line_no,Exp_->node_name,"Type mismatched for assignment");
             return nullptr;
         }
-        fieldList->type = type; //todo?
+    //    fieldList->type = type; //todo?
     }
     return fieldList;
 
@@ -437,7 +438,7 @@ VarDec : ID
         tree_node* ID_ = ptr->child_node[0];
         //std::map<std::string, struct Sysmtable_item> Sysmtable;
 //debug
-std::cout << "ID_->node_name" << ID_->node_name << std::endl;
+//std::cout << "ID_->node_name" << ID_->node_name << std::endl;
         if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
             if(src == SRC_STRUCT){
                 fprintf(stderr,"Error type 15 at Line %d: %s %s.\n",ID_->line_no,"Redifined field ",ID_->node_name);
