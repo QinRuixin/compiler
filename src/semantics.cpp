@@ -388,6 +388,8 @@ Stmt : Exp SEMI
         if(second_type==nullptr){
             ; // todo?
         }
+        //debug 
+        std::cout << returnType << " " << second_type <<std::endl;
         if( 1 - TypeEq(returnType, second_type)){
             fprintf(stderr,"Error type 8 at Line %d: %s %s.\n",Exp_->line_no,"Type mismatched for return ",Exp_->node_name);
         }
@@ -694,8 +696,7 @@ Exp : Exp ASSIGNOP Exp
             }
             if(hit_flag){
                 return cur_fieldList->type; // the type of a.u
-            }else
-            {
+            }else{
                 fprintf(stderr,"Error type 14 at Line %d: %s %s.\n",ID_->line_no,"non-existent field ",ID_->node_name);
                 return nullptr;
             }
@@ -721,6 +722,7 @@ Exp : Exp ASSIGNOP Exp
     //todo           //fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for Logic calculation");
                     return nullptr;
                 }
+                return child_type;
             }else{
     //| Exp RELOP Exp | Exp PLUS Exp | Exp MINUS Exp | Exp STAR Exp | Exp DIV Exp 
                 if( 1 - TypeEq(main_type,child_type)){
@@ -730,6 +732,7 @@ Exp : Exp ASSIGNOP Exp
                     res->kind = main_type->kind;
                     res->u = main_type->u;
                 }
+                return child_type;
             }
             
         //return nullptr;
