@@ -358,6 +358,8 @@ Dec : VarDec
         if(second_type==nullptr){
             return nullptr;
         }
+        //debug 
+        std::cout <<  second_type << " " << type << std::endl;
         if( ( 1 - TypeEq(second_type,type) ) ){
             fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_->line_no,Exp_->node_name,"Type mismatched for assignment");
             return nullptr;
