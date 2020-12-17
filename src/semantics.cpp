@@ -388,7 +388,7 @@ Stmt : Exp SEMI
         Type type = AnalasysForExp(Exp_);
         if(( 1 - isINT(type) )){
             fprintf(stderr,"Error type 7 at Line %d: %s %s.\n",Exp_->line_no,"Type mismatched for return ",Exp_->node_name);
-            return;
+        //    return;
         }
         tree_node*  Stmt_ = ptr->child_node[4];
         AnalasysForStmt(Stmt_,returnType);
