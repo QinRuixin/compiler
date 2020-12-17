@@ -607,6 +607,9 @@ Exp : Exp ASSIGNOP Exp
             }else{
                 Sysmtable_item ID_item =  Sysmtable.find(ID_->node_name)->second;
                 res = ID_item.type;
+                if(res->kind == res->FUNCTION){
+                    res->LR_value = R_;
+                }
                 return res;
             }
             
