@@ -228,6 +228,9 @@ StructSpecifier : STRUCT OptTag LC DefList RC
             cur_item.row = ID_->line_no;
             res->u.structure = cur_struct;
             cur_item.type = res;
+            //debug
+            std::cout << "insert " << ID_->node_name <<std::endl;
+            
             Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
         
         }else{
