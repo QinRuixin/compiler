@@ -322,6 +322,8 @@ DecList : Dec
     tree_node*  Dec_ = ptr->child_node[0];
     FieldList fieldList = AnalasysForDec(Dec_, type, src);
     if(fieldList == nullptr){
+        ///debug 
+    std::cout <<   " fieldList == nullptr " << type << std::endl;
         return nullptr; 
         //quit all the declaration??
     }
