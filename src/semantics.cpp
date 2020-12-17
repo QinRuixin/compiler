@@ -279,9 +279,9 @@ DefList : Def DefList
     }
 
 FieldList temp = res;
-while (temp!=nullptr)
+while (temp->tail!=nullptr)
 {
-   std::cout << temp->name << std::endl;
+//   std::cout << temp->name << std::endl;
    temp = temp->tail;
 }
 temp->tail =  AnalasysForDefList(DefList_, src);
