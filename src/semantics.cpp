@@ -274,10 +274,17 @@ DefList : Def DefList
     tree_node*  DefList_ = ptr->child_node[1];
     FieldList res = AnalasysForDef(Def_, src);
     if(res==nullptr){
-        std::cout << "AnalasysForDefList(DefList_,src); nullptr" << std::endl;
+        //std::cout << "AnalasysForDefList(DefList_,src); nullptr" << std::endl;
         return AnalasysForDefList(DefList_,src);
     }
     res->tail =  AnalasysForDefList(DefList_, src);
+    FieldList temp = res;
+while (temp!=nullptr)
+{
+   std::cout << temp->name << std::endl;
+   temp = temp->tail;
+}
+
     return res;
 
 }
