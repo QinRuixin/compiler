@@ -335,12 +335,14 @@ DecList : Dec
             fieldList =  AnalasysForDecList(DecList_,type, src); 
         }else{
         //debug 
-    std::cout <<   " fieldList->tail= AnalasysForDecList(DecList_,type, src) " << type << std::endl;
+//    std::cout <<   " fieldList->tail= AnalasysForDecList(DecList_,type, src) " << type << std::endl;
             fieldList->tail= AnalasysForDecList(DecList_,type, src);
+/*
             while(fieldList!=nullptr){
                 std::cout <<  fieldList->name << std::endl;
                 fieldList = fieldList->tail;
             }
+            */
         }
     }
     return fieldList;
@@ -694,6 +696,9 @@ Exp : Exp ASSIGNOP Exp
                 fprintf(stderr,"Error type 13 at Line %d: %s %s.\n",Exp_0->line_no,"Ill use of ",Exp_0->node_name);
                 return nullptr;
             }
+            //debug
+            std::cout << main_type->u.structure->name << "main_type->u.structure->name"  << std::endl;
+
             Structure cur_struct = main_type->u.structure;
             FieldList cur_fieldList = cur_struct->domain;
             int hit_flag = 0;
