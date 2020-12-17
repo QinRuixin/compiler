@@ -10,6 +10,8 @@
 #define L_ 0
 #define R_ 1
 
+#define SRC_STRUCT 1
+
 typedef struct Type_* Type;
 typedef struct FieldList_* FieldList;
 typedef struct Function_* Function;
@@ -66,7 +68,7 @@ Type AnalasysForStructSpecifier(tree_node* ptr);
 void AnalasysForOptTag(tree_node* ptr);
 void AnalasysForTag(tree_node* ptr);
 
-FieldList AnalasysForVarDec(tree_node* ptr, Type type);
+FieldList AnalasysForVarDec(tree_node* ptr, Type type, int src=0);
 Function AnalasysForFunDec(tree_node* ptr, Type type );
 FieldList AnalasysForVarList(tree_node* ptr);
 FieldList AnalasysForParamDec(tree_node* ptr);
@@ -75,10 +77,10 @@ void AnalasysForCompSt(tree_node* ptr,Type returnType);
 void AnalasysForStmtList(tree_node* ptr,Type returnType);
 void AnalasysForStmt(tree_node* ptr,Type returnType);
 
-FieldList AnalasysForDefList(tree_node* ptr);
-FieldList AnalasysForDef(tree_node* ptr);
-FieldList AnalasysForDecList(tree_node* ptr, Type type);
-FieldList AnalasysForDec(tree_node* ptr, Type type);
+FieldList AnalasysForDefList(tree_node* ptr, int src=0);
+FieldList AnalasysForDef(tree_node* ptr, int src=0);
+FieldList AnalasysForDecList(tree_node* ptr, Type type, int src=0);
+FieldList AnalasysForDec(tree_node* ptr, Type type, int src=0);
 
 Type AnalasysForExp(tree_node* ptr);
 void AnalasysForID(tree_node* ptr);
