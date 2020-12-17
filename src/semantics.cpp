@@ -321,6 +321,8 @@ DecList : Dec
         return nullptr;
 
     tree_node*  Dec_ = ptr->child_node[0];
+            //debug 
+    std::cout <<   " Dec_->node_name " << Dec_->node_name << std::endl;  
     FieldList fieldList = AnalasysForDec(Dec_, type, src);
 
     if(ptr->child_num!=1){
