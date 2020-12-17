@@ -228,15 +228,15 @@ StructSpecifier : STRUCT OptTag LC DefList RC
             cur_item.row = ID_->line_no;
             res->u.structure = cur_struct;
             cur_item.type = res;
-            //debug
-            std::cout << "insert " << cur_item.name <<std::endl;
+            //debug 
+        /*    std::cout << "insert " << cur_item.name <<std::endl;
             FieldList tempField =  cur_struct->domain;
             while ( tempField != nullptr)
             {
                 std::cout << tempField->name << std::endl;
                 tempField = tempField->tail;
             }
-            
+        */
             Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
         
         }else{
@@ -355,10 +355,14 @@ Dec : VarDec
         tree_node*  Exp_ = ptr->child_node[2];
         Type second_type = AnalasysForExp(Exp_);
 // type 6?  impossible
-        if(fieldList!=nullptr && ( 1 - TypeEq(fieldList->type,type) ) ){
+        if(second_type==nullptr){
+            return nullptr;
+        }
+        if( ( 1 - TypeEq(second_type,type) ) ){
             fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_->line_no,Exp_->node_name,"Type mismatched for assignment");
             return nullptr;
         }
+        fieldList->type = type; //todo?
     }
     return fieldList;
 
@@ -679,7 +683,7 @@ Exp : Exp ASSIGNOP Exp
             while ( cur_fieldList != nullptr)
             {
                 //debug
-                std::cout << cur_fieldList->name << "<-cur  to find->" << ID_->node_name << std::endl;
+                //std::cout << cur_fieldList->name << "<-cur  to find->" << ID_->node_name << std::endl;
                 if(strcmp(cur_fieldList->name,ID_->node_name) == 0){  //cur_fieldList->name==ID_->node_name){
                     hit_flag = 1;
                     break;
