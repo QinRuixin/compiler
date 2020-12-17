@@ -1,11 +1,5 @@
 int main() 
 {
-   //int i = 0;
-   //j = i + 1;
-
-   //int a;
-   //a = 3.7;
-
-   float f;
-   10.0 = f;
+   int i = 0;
+   j = i + 1;
 }
