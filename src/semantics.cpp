@@ -337,6 +337,10 @@ DecList : Dec
         //debug 
     std::cout <<   " fieldList->tail= AnalasysForDecList(DecList_,type, src) " << type << std::endl;
             fieldList->tail= AnalasysForDecList(DecList_,type, src);
+            while(fieldList!=nullptr){
+                std::cout <<  fieldList->name << std::endl;
+                fieldList = fieldList->tail;
+            }
         }
     }
     return fieldList;
