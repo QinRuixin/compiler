@@ -678,6 +678,8 @@ Exp : Exp ASSIGNOP Exp
             // node_name can not be null
             while ( cur_fieldList != nullptr)
             {
+                //debug
+                std::cout << cur_fieldList->name << "<-cur  to find->" << ID_->node_name << std::endl;
                 if(cur_fieldList->name==ID_->node_name){
                     hit_flag = 1;
                     break;
