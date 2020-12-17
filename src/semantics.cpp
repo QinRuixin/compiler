@@ -647,16 +647,33 @@ Exp : Exp ASSIGNOP Exp
                 fprintf(stderr,"Error type 12 at Line %d: %s %s.\n",Exp_2->line_no,Exp_2->node_name,"is not INT");
                 return nullptr;
             }
-            //todo  what's the type of a[1] 
+            return main_type->u.array.elem; // todo check out of range
         }else if(ptr->child_node[1]->node_type==ENUM_DOT){ // Exp DOT ID 
             tree_node* ID_  = ptr->child_node[2];
             //todo search the struct
             if(main_type->kind!=main_type->STRUCTURE){
-                fprintf(stderr,"Error type 13 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Ill use of .");
+                fprintf(stderr,"Error type 13 at Line %d: %s %s.\n",Exp_0->line_no,"Ill use of ",Exp_0->node_name);
                 return nullptr;
             }
-            //todo  what's the type of a.u
-
+            Structure cur_struct = main_type->u.structure;
+            FieldList cur_fieldList = cur_struct->domain;
+            int hit_flag = 0;
+            // node_name can not be null
+            while ( cur_fieldList != nullptr)
+            {
+                if(cur_fieldList->name==ID_->node_name){
+                    hit_flag = 1;
+                    break;
+                }
+                cur_fieldList = cur_fieldList->tail;
+            }
+            if(hit_flag){
+                return cur_fieldList->type; // the type of a.u
+            }else
+            {
+                fprintf(stderr,"Error type 14 at Line %d: %s %s.\n",ID_->line_no,"non-existent field ",ID_->node_name);
+                return nullptr;
+            }
         }else{
             tree_node* Exp_2  = ptr->child_node[2];
             Type child_type = AnalasysForExp( Exp_2 );
