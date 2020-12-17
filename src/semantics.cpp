@@ -389,7 +389,7 @@ Stmt : Exp SEMI
             ; // todo?
         }
         //debug 
-        std::cout << returnType->kind << " " << second_type->kind <<std::endl;
+    //    std::cout << returnType->kind << " " << second_type->kind <<std::endl;
         if( 1 - TypeEq(returnType, second_type)){
             fprintf(stderr,"Error type 8 at Line %d: %s %s.\n",Exp_->line_no,"Type mismatched for return ",Exp_->node_name);
         }
@@ -695,6 +695,7 @@ Exp : Exp ASSIGNOP Exp
                 cur_fieldList = cur_fieldList->tail;
             }
             if(hit_flag){
+                std::cout << "cur_fieldList->type " <<cur_fieldList->type <<std::endl;
                 return cur_fieldList->type; // the type of a.u
             }else{
                 fprintf(stderr,"Error type 14 at Line %d: %s %s.\n",ID_->line_no,"non-existent field ",ID_->node_name);
