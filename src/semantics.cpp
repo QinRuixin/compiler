@@ -504,6 +504,7 @@ Function AnalasysForFunDec(tree_node* ptr, Type type ){
     tree_node* ID_ = ptr->child_node[0];
     Function function = new Function_();
     function->returnType = type;
+    function->returnType->LR_value = R_;
     if(ptr->child_num==4){
         tree_node*  VarList_ = ptr->child_node[2];
         function->parameter = AnalasysForVarList(VarList_);
@@ -527,6 +528,7 @@ Function AnalasysForFunDec(tree_node* ptr, Type type ){
         cur_type->u.function = function;
         cur_type->LR_value = R_;
         cur_item.type = cur_type;
+        
         //todo
         Sysmtable.insert(std::pair<std::string,Sysmtable_item>(ID_->node_name,cur_item));
     }
