@@ -25,14 +25,11 @@ int syntax_error_flag;
 int second_flag;
 extern int yylineno;
 
-extern Type global_type_ptr;
-
 
 int main(int argc, char** argv){
     error_flag = 0;
     second_flag = 0;
     syntax_error_flag = 0;
-    global_type_ptr = new Type_();
 //    if(argc >= 1){
     if(argc > 1){
         if(!(yyin = fopen(argv[1],"r"))){
