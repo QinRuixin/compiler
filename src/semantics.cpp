@@ -56,11 +56,12 @@ int TypeEq(Type main_type,Type child_type){
     if(main_type->kind == main_type->BASIC){
         return main_type->u.basic == child_type->u.basic;
     }else if(main_type->kind == main_type->ARRAY){
-        return (main_type->u.array.size == child_type->u.array.size) &&
-            TypeEq(main_type->u.array.elem, child_type->u.array.elem);
+        //return (main_type->u.array.size == child_type->u.array.size) &&
+         return TypeEq(main_type->u.array.elem, child_type->u.array.elem);
     }else if(main_type->kind == main_type->STRUCTURE){
         //todo? struct name equ??
-        return main_type->u.structure->name == child_type->u.structure->name;
+        //return main_type->u.structure->name == child_type->u.structure->name;
+        return FieldListEq(main_type->u.structure->domain, child_type->u.structure->domain);
     }
     return 1;
 }

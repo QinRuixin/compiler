@@ -86,3 +86,8 @@ Type AnalasysForExp(tree_node* ptr);
 void AnalasysForID(tree_node* ptr);
 
 FieldList AnalasysForArgs(tree_node* ptr);
+
+int isINT(Type child_type);
+int TypeEq(Type main_type,Type child_type);
+int FieldListEq(FieldList fieldlist1, FieldList fieldlist2);
+
