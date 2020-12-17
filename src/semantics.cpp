@@ -277,13 +277,14 @@ DefList : Def DefList
         //std::cout << "AnalasysForDefList(DefList_,src); nullptr" << std::endl;
         return AnalasysForDefList(DefList_,src);
     }
-    res->tail =  AnalasysForDefList(DefList_, src);
-    FieldList temp = res;
+
+FieldList temp = res;
 while (temp!=nullptr)
 {
    std::cout << temp->name << std::endl;
    temp = temp->tail;
 }
+temp->tail =  AnalasysForDefList(DefList_, src);
 
     return res;
 
