@@ -695,7 +695,8 @@ Exp : Exp ASSIGNOP Exp
                 cur_fieldList = cur_fieldList->tail;
             }
             if(hit_flag){
-                std::cout << "cur_fieldList->type " <<cur_fieldList->type <<std::endl;
+                //debug  todo
+            //    std::cout << "cur_fieldList->type " <<cur_fieldList->type <<std::endl;
                 return cur_fieldList->type; // the type of a.u
             }else{
                 fprintf(stderr,"Error type 14 at Line %d: %s %s.\n",ID_->line_no,"non-existent field ",ID_->node_name);
