@@ -21,9 +21,7 @@ int isINT(Type child_type){
 int isArgsMatch(FieldList param,tree_node* Args_){
     if(Args_->child_node)
 }
-*/
 
-/*
 int notINT(Type child_type){
     if (child_type==nullptr )
     {
@@ -228,13 +226,13 @@ StructSpecifier : STRUCT OptTag LC DefList RC
             cur_item.kind = cur_item.STRUCTURE;
             cur_item.name = ID_->node_name;
             cur_item.row = ID_->line_no;
+            res->u.structure = cur_struct;
             cur_item.type = res;
             Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
         
         }else{
             cur_struct->domain = AnalasysForDefList(DefList_,  SRC_STRUCT);
         }
-        res->kind = res->STRUCTURE;
         res->u.structure = cur_struct;
         
     }

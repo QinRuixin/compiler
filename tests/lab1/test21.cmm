@@ -8,7 +8,7 @@ struct Temp2
 {
    int x;
    float y;
-}
+};
 
 int main() {
   struct Temp1 t1;
