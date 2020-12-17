@@ -322,7 +322,7 @@ DecList : Dec
 
     tree_node*  Dec_ = ptr->child_node[0];
             //debug 
-    std::cout <<   " Dec_->node_name " << Dec_->node_name << std::endl;  
+ //   std::cout <<   " Dec_->node_name " << Dec_->node_name << std::endl;  
     FieldList fieldList = AnalasysForDec(Dec_, type, src);
 
     if(ptr->child_num!=1){
@@ -330,10 +330,12 @@ DecList : Dec
     std::cout <<   " ptr->child_num " << ptr->child_num << std::endl;   
         tree_node*  DecList_ = ptr->child_node[2];
         if(fieldList == nullptr){
-        ///debug 
+        //debug 
 //    std::cout <<   " fieldList == nullptr " << type << std::endl;
             fieldList =  AnalasysForDecList(DecList_,type, src); 
         }else{
+        //debug 
+    std::cout <<   " fieldList->tail= AnalasysForDecList(DecList_,type, src) " << type << std::endl;
             fieldList->tail= AnalasysForDecList(DecList_,type, src);
         }
     }
