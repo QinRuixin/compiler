@@ -504,7 +504,9 @@ Function AnalasysForFunDec(tree_node* ptr, Type type ){
     tree_node* ID_ = ptr->child_node[0];
     Function function = new Function_();
     function->returnType = type;
-    function->returnType->LR_value = R_;
+    if(type->kind ==type->BASIC){
+        function->returnType->LR_value = R_;
+    }
     if(ptr->child_num==4){
         tree_node*  VarList_ = ptr->child_node[2];
         function->parameter = AnalasysForVarList(VarList_);
