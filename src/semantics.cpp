@@ -525,6 +525,7 @@ Function AnalasysForFunDec(tree_node* ptr, Type type ){
         Type cur_type = new Type_();
         cur_type->kind = cur_type->FUNCTION;
         cur_type->u.function = function;
+        cur_type->LR_value = R_;
         cur_item.type = cur_type;
         //todo
         Sysmtable.insert(std::pair<std::string,Sysmtable_item>(ID_->node_name,cur_item));
@@ -606,6 +607,7 @@ Exp : Exp ASSIGNOP Exp
             }else{
                 Sysmtable_item ID_item =  Sysmtable.find(ID_->node_name)->second;
                 res = ID_item.type;
+                return res;
             }
             
         }else if(ptr->child_node[0]->node_type==ENUM_INT){
