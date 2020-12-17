@@ -359,7 +359,7 @@ Dec : VarDec
             return nullptr;
         }
         //debug 
-        std::cout <<  second_type << " " << type << std::endl;
+    //    std::cout <<  second_type << " " << type << std::endl;
         if( ( 1 - TypeEq(second_type,type) ) ){
             fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_->line_no,Exp_->node_name,"Type mismatched for assignment");
             return nullptr;
@@ -714,7 +714,7 @@ Exp : Exp ASSIGNOP Exp
                     fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for assignment");
                     return nullptr;                    
                 }
-
+                return child_type;
             }else if(Operator->node_type== ENUM_AND || Operator->node_type== ENUM_OR){
     //| Exp AND Exp | Exp OR Exp 
                 if(main_type!=nullptr && ( (1-isINT(main_type)) || (1-isINT(child_type)) ) ){
