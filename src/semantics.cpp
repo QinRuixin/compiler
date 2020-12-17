@@ -389,7 +389,7 @@ Stmt : Exp SEMI
             ; // todo?
         }
         //debug 
-        std::cout << returnType << " " << second_type <<std::endl;
+        std::cout << returnType->kind << " " << second_type->kind <<std::endl;
         if( 1 - TypeEq(returnType, second_type)){
             fprintf(stderr,"Error type 8 at Line %d: %s %s.\n",Exp_->line_no,"Type mismatched for return ",Exp_->node_name);
         }
