@@ -526,7 +526,7 @@ Function AnalasysForFunDec(tree_node* ptr, Type type ){
         Type cur_type = new Type_();
         cur_type->kind = cur_type->FUNCTION;
         cur_type->u.function = function;
-        cur_type->LR_value = R_;
+        //cur_type->LR_value = R_;
         cur_item.type = cur_type;
         
         //todo
@@ -609,9 +609,9 @@ Exp : Exp ASSIGNOP Exp
             }else{
                 Sysmtable_item ID_item =  Sysmtable.find(ID_->node_name)->second;
                 res = ID_item.type;
-                if(res->kind == res->FUNCTION){
-                    res->LR_value = R_;
-                }
+ //               if(res->kind == res->FUNCTION){
+ //                   res->LR_value = R_;
+//              }
                 return res;
             }
             
