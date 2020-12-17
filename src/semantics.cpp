@@ -18,6 +18,12 @@ int isINT(Type child_type){
     return child_type->kind==child_type->BASIC && child_type->u.basic==BASIC_INT;
 }
 /*
+int isArgsMatch(FieldList param,tree_node* Args_){
+    if(Args_->child_node)
+}
+*/
+
+/*
 int notINT(Type child_type){
     if (child_type==nullptr )
     {
@@ -57,6 +63,19 @@ int TypeEq(Type main_type,Type child_type){
         return main_type->u.structure->name == child_type->u.structure->name;
     }
     return 1;
+}
+
+int FieldListEq(FieldList fieldlist1, FieldList fieldlist2){
+    if(fieldlist1 == nullptr && fieldlist2 == nullptr){
+        return 1;
+    }else if(fieldlist1 == nullptr || fieldlist2 == nullptr){
+        return 0;
+    }
+    if(1 - TypeEq(fieldlist1->type,fieldlist2->type)){
+        return 0;
+    }
+    return FieldListEq(fieldlist1->tail, fieldlist2->tail);
+
 }
 
 void AnalasysForProgram(tree_node* ptr){
@@ -557,10 +576,26 @@ Exp : Exp ASSIGNOP Exp
                 fprintf(stderr,"Error type 2 at Line %d: %s %s.\n",ID_->line_no,"Undifined function",ID_->node_name);
                 return nullptr;
         }else{
-            //todo args mismatched
+            if(Sysmtable.find(ID_->node_name)->second.kind!=Sysmtable.find(ID_->node_name)->second.FUNCTION){
+                fprintf(stderr,"Error type 11 at Line %d: %s %s.\n",ID_->line_no,ID_->node_name,"is not a function");
+                return nullptr;
+            }
+            Type cur_type = Sysmtable.find(ID_->node_name)->second.type;
+            if(cur_type->kind!=cur_type->FUNCTION){
+                fprintf(stderr,"Error type 11 at Line %d: %s %s.\n",ID_->line_no,ID_->node_name,"is not a function");
+                return nullptr;                
+            }
+            Function cur_function = cur_type->u.function;
+            tree_node* Args_ = ptr->child_node[2];
+//todo
+            FieldList args = AnalasysForArgs(Args_);
+
+            if( 1 - FieldListEq(cur_function->parameter,args)){
+                fprintf(stderr,"Error type 9 at Line %d: %s %s.\n",ID_->line_no,ID_->node_name,"is not applicable for arguments ");
+                return nullptr;        
+            }
+            return cur_function->returnType;
         }
-        //todo returnType
-        //res->kind = res->
 
     }else if(ptr->child_node[0]->node_type==ENUM_LP){ // LP Exp RP 
         tree_node* Exp_ = ptr->child_node[1];
@@ -660,4 +695,31 @@ Exp : Exp ASSIGNOP Exp
     }
     return res;
 
+}
+
+FieldList AnalasysForArgs(tree_node* ptr){
+/*
+Args : Exp COMMA Args 
+    | Exp 
+*/
+    if(ptr==nullptr){
+        return nullptr;
+    }
+    FieldList res = new FieldList_();
+      
+    tree_node*  Exp_ = ptr->child_node[0];
+    Type temp =  AnalasysForExp(Exp_);
+    if(temp == nullptr){
+        return nullptr;
+    }
+    res->type = temp;
+    if(ptr->child_num == 3){
+        tree_node*  Args_ = ptr->child_node[2];
+        FieldList temp = AnalasysForArgs(Args_);
+        if(temp == nullptr){
+            return nullptr;
+        }
+        res->tail = temp;
+    }
+    return res;
 }

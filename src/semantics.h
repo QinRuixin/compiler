@@ -83,3 +83,4 @@ FieldList AnalasysForDec(tree_node* ptr, Type type);
 Type AnalasysForExp(tree_node* ptr);
 void AnalasysForID(tree_node* ptr);
 
+FieldList AnalasysForArgs(tree_node* ptr);
