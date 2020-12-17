@@ -209,11 +209,13 @@ StructSpecifier : STRUCT OptTag LC DefList RC
 
     }else{
         // STRUCT OptTag LC DefList RC 
+    //debug
+    std::cout << ptr->child_num << " "  << std::endl;
         tree_node*  OptTag_ = ptr->child_node[1];
         tree_node*  DefList_ = ptr->child_node[3];
         Structure cur_struct = new Structure_();
         
-        if(OptTag_->child_node[0]!=nullptr){
+        if(OptTag_!=nullptr && OptTag_->child_node[0]!=nullptr){
             tree_node*  ID_ = OptTag_->child_node[0];
 
             if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
