@@ -680,7 +680,7 @@ Exp : Exp ASSIGNOP Exp
             {
                 //debug
                 std::cout << cur_fieldList->name << "<-cur  to find->" << ID_->node_name << std::endl;
-                if(cur_fieldList->name==ID_->node_name){
+                if(strcmp(cur_fieldList->name,ID_->node_name) == 0){  //cur_fieldList->name==ID_->node_name){
                     hit_flag = 1;
                     break;
                 }
