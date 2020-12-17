@@ -321,15 +321,16 @@ DecList : Dec
 
     tree_node*  Dec_ = ptr->child_node[0];
     FieldList fieldList = AnalasysForDec(Dec_, type, src);
-    if(fieldList == nullptr){
-        ///debug 
-    std::cout <<   " fieldList == nullptr " << type << std::endl;
-        return nullptr; 
-        //quit all the declaration??
-    }
+
     if(ptr->child_num!=1){
         tree_node*  DecList_ = ptr->child_node[2];
-        fieldList->tail= AnalasysForDecList(DecList_,type, src);
+        if(fieldList == nullptr){
+        ///debug 
+//    std::cout <<   " fieldList == nullptr " << type << std::endl;
+            fieldList =  AnalasysForDecList(DecList_,type, src); 
+        }else{
+            fieldList->tail= AnalasysForDecList(DecList_,type, src);
+        }
     }
     return fieldList;
 
@@ -431,11 +432,12 @@ VarDec : ID
     if(ptr==nullptr)
         return nullptr;
     FieldList fieldList = new FieldList_();
-    //fieldList->type = type;
+    fieldList->type = type;
     if(ptr->child_num==1){
         tree_node* ID_ = ptr->child_node[0];
         //std::map<std::string, struct Sysmtable_item> Sysmtable;
-
+//debug
+std::cout << "ID_->node_name" << ID_->node_name << std::endl;
         if(Sysmtable.find(ID_->node_name)!=Sysmtable.end() ){
             if(src == SRC_STRUCT){
                 fprintf(stderr,"Error type 15 at Line %d: %s %s.\n",ID_->line_no,"Redifined field ",ID_->node_name);
@@ -452,7 +454,6 @@ VarDec : ID
             cur_item.type = type;
             Sysmtable.insert(std::pair<std::string,Sysmtable_item>(ID_->node_name,cur_item));
             fieldList->name = ID_->node_name;
-            fieldList->type = type; //todo
             return fieldList;
         }
         //std::cout << ptr->node_name << std::endl;
@@ -689,7 +690,7 @@ Exp : Exp ASSIGNOP Exp
             while ( cur_fieldList != nullptr)
             {
                 //debug
-            std::cout << cur_fieldList->name << "<-cur  to find->" << ID_->node_name << std::endl;
+        //    std::cout << cur_fieldList->name << "<-cur  to find->" << ID_->node_name << std::endl;
                 if(strcmp(cur_fieldList->name,ID_->node_name) == 0){  //cur_fieldList->name==ID_->node_name){
                     hit_flag = 1;
                     break;
