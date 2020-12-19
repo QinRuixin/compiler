@@ -672,6 +672,7 @@ Exp : Exp ASSIGNOP Exp
                 return nullptr;
             }else{
                 res->kind=res->BASIC;
+                return child_type;
 
             }
 
