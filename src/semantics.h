@@ -52,8 +52,6 @@ struct Sysmtable_item{
     Type type;
     int row;
     //todo
-
-
 };
 
 #endif

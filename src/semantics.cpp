@@ -89,8 +89,6 @@ void AnalasysForExtDefList(tree_node* ptr){
 //ExtDefList : ExtDef ExtDefList 
     if(ptr==nullptr)
         return;
-    //assert(1 - strcmp(ptr->name,"ExtDefList") ); //"wrong at AnalasysBegins"
-
     tree_node* extDef_ = ptr->child_node[0];
     tree_node* extDefList_ = ptr->child_node[1];
     
@@ -381,7 +379,6 @@ Dec : VarDec
         }
         tree_node*  Exp_ = ptr->child_node[2];
         Type second_type = AnalasysForExp(Exp_);
-// type 6?  impossible
         if(second_type==nullptr){
             return nullptr;
         }
