@@ -266,9 +266,10 @@ cout << "ok " << ptr->child_num <<endl;
     {   string t1 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
         tree_node* ptr_child1 = ptr->child_node[1]; 
-        cout << ptr->child_num << endl;
+//cout << ptr->child_num << endl; // 3
         TranslateExp(ptr_child1, Sysmtable, operand_t1);
         InterCode* cur_code = new_sinop_code(operand_t1);
+        cur_code->kind = cur_code->RETURN;
         //return t1
         append_code(cur_code);
         break;
