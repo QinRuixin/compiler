@@ -68,11 +68,11 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         //cur_code->code = nullptr;
         //todo
         if(ptr->node_type==ENUM_INT){
-            if(!place.empty())
+            if(!place.size()==0)
                 cur_code->code = place+" := #"+to_string(ptr->int_val);
         }else {
             auto it = Sysmtable.find(ptr->node_name);
-            if(!place.empty())
+            if(!place.size()==0)
                 cur_code->code = place+" := "+ it->second.name;
         }
         InterCodes.push_back(cur_code);
@@ -86,7 +86,8 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         InterCode* cur_code1= new InterCode();
         InterCode* cur_code2= new InterCode();
         cur_code1->code = it->second.name + " := "+ t1;
-        if(!place.empty())
+        
+        if(!place.size()==0)
             cur_code2->code =  place+" := "+ it->second.name;
         InterCodes.push_back(cur_code1);
         InterCodes.push_back(cur_code2);
