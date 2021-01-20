@@ -137,14 +137,12 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
-//cout <<  "place!=nullptr end" <<endl;       
 
                 Operand* r_operand = (Operand*)malloc(sizeof(Operand));
                 r_operand->kind = r_operand->CONSTANT;
                 r_operand->u.val_no = ptr->int_val; //todo float?
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
-//cout <<  "place!=nullptr end" <<endl;       
             }
         }else if(ptr->node_type==ENUM_ID){
 //cout <<  "Sysmtable.find(ptr->node_name);" << ptr->node_name <<endl;       
@@ -152,6 +150,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
+cout << place->u.value << endl;
                 Operand* r_operand = new_var_operand(it->second.name);
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
