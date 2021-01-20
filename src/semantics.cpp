@@ -8,6 +8,7 @@
 #include<iostream>
 
 
+std::map<std::string, struct Sysmtable_item> Sysmtable;
 
 int isINT(Type child_type){
     if (child_type==nullptr )
@@ -76,12 +77,13 @@ int FieldListEq(FieldList fieldlist1, FieldList fieldlist2){
 
 }
 
-void AnalasysForProgram(tree_node* ptr){
+std::map<std::string, struct Sysmtable_item> AnalasysForProgram(tree_node* ptr){
     if(ptr==nullptr){
-        return;
+        return Sysmtable;
     }
     tree_node* ExtDefList_ = ptr->child_node[0];
     AnalasysForExtDefList(ExtDefList_);
+    return Sysmtable;
 }
 
 void AnalasysForExtDefList(tree_node* ptr){
@@ -141,12 +143,12 @@ void AnalasysForExtDecList(tree_node* ptr, Type type){
     if (ptr->child_num == 1 )
     {
         tree_node*  VarDec_ = ptr->child_node[0];
-        AnalasysForVarDec(VarDec_, type);
+        AnalasysForVarDec(VarDec_, type, 0);
     }else if (ptr->child_num == 3 )
     {
         tree_node*  VarDec_ = ptr->child_node[0];
         tree_node*  ExtDecList_ = ptr->child_node[2];
-        FieldList fieldList = AnalasysForVarDec(VarDec_,type);
+        FieldList fieldList = AnalasysForVarDec(VarDec_,type, 0);
         if(fieldList == nullptr){
             ;
             //return ;
@@ -257,11 +259,11 @@ void AnalasysForCompSt(tree_node* ptr,Type returnType){
     tree_node*  DefList_ = ptr->child_node[1];
     tree_node*  StmtList_ = ptr->child_node[2];
     // from {LC  RC}
-    AnalasysForDefList(DefList_);
+    AnalasysForDefList(DefList_, 0);
     AnalasysForStmtList(StmtList_, returnType);
 }
 
-FieldList AnalasysForDefList(tree_node* ptr, int src){
+FieldList AnalasysForDefList(tree_node* ptr, int src=0){
     /*
 DefList : Def DefList 
     | // Epsl
@@ -320,7 +322,7 @@ Def : Specifier DecList SEMI
     return AnalasysForDecList(DecList_,type, src);
 }
 
-FieldList AnalasysForDecList(tree_node* ptr, Type type, int src){
+FieldList AnalasysForDecList(tree_node* ptr, Type type, int src=0){
     /*
 DecList : Dec 
     | Dec COMMA DecList
@@ -357,7 +359,7 @@ DecList : Dec
 
 }
 
-FieldList AnalasysForDec(tree_node* ptr, Type type, int src){
+FieldList AnalasysForDec(tree_node* ptr, Type type, int src=0){
     /*
 Dec : VarDec 
     | VarDec ASSIGNOP Exp 
@@ -444,7 +446,7 @@ Stmt : Exp SEMI
 
 }
 
-FieldList AnalasysForVarDec(tree_node* ptr, Type type, int src){
+FieldList AnalasysForVarDec(tree_node* ptr, Type type, int src=0){
 /*
 VarDec : ID 
     | VarDec LB INT RB
@@ -571,7 +573,7 @@ ParamDec : Specifier VarDec
         return nullptr;
     }
     
-    return AnalasysForVarDec(VarDec_, type);
+    return AnalasysForVarDec(VarDec_, type, 0);
 
 }
 

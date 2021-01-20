@@ -54,11 +54,9 @@ struct Sysmtable_item{
     //todo
 };
 
-std::map<std::string, struct Sysmtable_item> Sysmtable;
-
 #endif
 
-void AnalasysForProgram(tree_node* ptr);
+std::map<std::string, struct Sysmtable_item> AnalasysForProgram(tree_node* ptr);
 void AnalasysForExtDefList(tree_node* ptr);
 void AnalasysForExtDef(tree_node* ptr);
 void AnalasysForExtDecList(tree_node* ptr, Type type);
@@ -68,7 +66,8 @@ Type AnalasysForStructSpecifier(tree_node* ptr);
 void AnalasysForOptTag(tree_node* ptr);
 void AnalasysForTag(tree_node* ptr);
 
-FieldList AnalasysForVarDec(tree_node* ptr, Type type, int src=0);
+FieldList AnalasysForVarDec(tree_node* ptr, Type type, int src);
+//FieldList AnalasysForVarDec(tree_node* ptr, Type type, int src=0);
 Function AnalasysForFunDec(tree_node* ptr, Type type );
 FieldList AnalasysForVarList(tree_node* ptr);
 FieldList AnalasysForParamDec(tree_node* ptr);
@@ -77,10 +76,12 @@ void AnalasysForCompSt(tree_node* ptr,Type returnType);
 void AnalasysForStmtList(tree_node* ptr,Type returnType);
 void AnalasysForStmt(tree_node* ptr,Type returnType);
 
-FieldList AnalasysForDefList(tree_node* ptr, int src=0);
-FieldList AnalasysForDef(tree_node* ptr, int src=0);
-FieldList AnalasysForDecList(tree_node* ptr, Type type, int src=0);
-FieldList AnalasysForDec(tree_node* ptr, Type type, int src=0);
+FieldList AnalasysForDefList(tree_node* ptr, int src);
+//FieldList AnalasysForDefList(tree_node* ptr, int src=0);
+FieldList AnalasysForDef(tree_node* ptr, int src);
+//FieldList AnalasysForDef(tree_node* ptr, int src=0);
+FieldList AnalasysForDecList(tree_node* ptr, Type type, int src);
+FieldList AnalasysForDec(tree_node* ptr, Type type, int src);
 
 Type AnalasysForExp(tree_node* ptr);
 void AnalasysForID(tree_node* ptr);
@@ -90,4 +91,3 @@ FieldList AnalasysForArgs(tree_node* ptr);
 int isINT(Type child_type);
 int TypeEq(Type main_type,Type child_type);
 int FieldListEq(FieldList fieldlist1, FieldList fieldlist2);
-

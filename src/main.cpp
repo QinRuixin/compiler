@@ -11,6 +11,7 @@
 #include "semantics.h"
 //#include"syntax.tab.h"
 //#include "lex.yy.c"
+#include "ir.h"
 extern FILE* yyin;
 
 extern "C" int yylex();
@@ -51,12 +52,12 @@ int main(int argc, char** argv){
     if(syntax_error_flag == 0){
         //todo
         //traverse(root, 0);
-        AnalasysForProgram(root);
-        //TranslateProgram(root);
-        std::ofstream myfile;
-        myfile.open(argv[2]);
-        myfile << "writing whis to a file. \n";
-        myfile.close();
+        std::map<std::string, struct Sysmtable_item> Sysmtable_table = AnalasysForProgram(root);
+        std::ofstream outputfile;
+        outputfile.open(argv[2]);
+        TranslateProgram(root, outputfile);
+        outputfile << "writing whis to a file. \n";
+        outputfile.close();
     }
 
     return 0;
