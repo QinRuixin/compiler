@@ -95,6 +95,10 @@ void TranslateProgram(tree_node* ptr,std::map<std::string, struct Sysmtable_item
     if(ptr==nullptr){
         return;
     }
+    for(auto sysm :Sysmtable){
+        cout << sysm.second.name << endl;
+        cout << sysm.first << endl;
+    }
     int child_nums = ptr->child_num;
     for(int i = 0; i < child_nums; ++i){
         cout << "child_nums i : " << i <<endl;
@@ -171,7 +175,7 @@ cout << "ptr->child_node[0]->node_name " << ptr->child_node[0]->node_name << end
         InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
 cout <<  "ENUM_ASSIGNOP TranslateExp 2 end" <<endl;       
 cout << it->second.name << "_it->second.name" << endl;
-        Operand* operand_var = new_var_operand(it->second.name);
+        Operand* operand_var = new_var_operand(it->second.name); //todo
 
 cout <<  "ENUM_ASSIGNOP InterCodes.push_back(cur_code1);" <<endl;       
         cur_code1->u.assign.left = operand_var;
