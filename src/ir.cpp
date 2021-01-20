@@ -125,8 +125,12 @@ cout <<  "ENUM_INT begin" <<endl;
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
+cout <<  "place!=nullptr end" <<endl;       
+
                 //Operand* r_operand = new Operand();
                 Operand* r_operand = (Operand*)malloc(sizeof(Operand));
+cout <<  "place!=nullptr end" <<endl;       
+
                 r_operand->kind = r_operand->CONSTANT;
                 r_operand->u.val_no = ptr->int_val; //todo float?
                 cur_code->u.assign.right = r_operand;
