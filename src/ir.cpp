@@ -115,7 +115,6 @@ void TranslateProgram(tree_node* ptr,std::map<std::string, struct Sysmtable_item
     } */
     int child_nums = ptr->child_num;
     for(int i = 0; i < child_nums; ++i){
-        cout << "child_nums i : " << i <<endl;
         Translate(ptr->child_node[i], Sysmtable);
     }
     printCode(outputfile);
@@ -165,6 +164,7 @@ cout << place->u.value << endl;
     if(ptr_child0->node_type== ENUM_MINUS){     //MINUS Exp1
         // ptr_child1 Exp1
         string t1 = new_temp();
+cout << "t1 : " << t1 << endl;
         Operand* operand_t1 = new_var_operand(t1);
         TranslateExp(ptr_child1,Sysmtable,operand_t1); //cur_code1
         if(place!=nullptr){
