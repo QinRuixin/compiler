@@ -117,6 +117,7 @@ cout << "InterCode : "  << endl;
 
         //cur_code->code = nullptr;
         //todo
+cout << "ptr->node_type : " << ptr->node_type << endl;
         if(ptr->node_type==ENUM_INT){
 cout <<  "ENUM_ASSIGNOP end" <<endl;       
 
