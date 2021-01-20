@@ -470,7 +470,7 @@ VarDec : ID
         }else{
             Sysmtable_item cur_item;
             // todo
-            std::cout << ID_->node_name << std::endl; 
+            //std::cout << ID_->node_name << std::endl; 
             cur_item.kind = cur_item.VARIABLE;
             cur_item.name = ID_->node_name;
             cur_item.row = ID_->line_no;

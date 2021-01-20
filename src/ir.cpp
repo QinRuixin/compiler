@@ -138,7 +138,7 @@ cout <<  "place!=nullptr end" <<endl;
 cout <<  "place!=nullptr end" <<endl;       
             }
         }else if(ptr->node_type==ENUM_ID){
-cout <<  "Sysmtable.find(ptr->node_name);" <<endl;       
+cout <<  "Sysmtable.find(ptr->node_name);" << ptr->node_name <<endl;       
             auto it = Sysmtable.find(ptr->node_name);
             //if(!place.size()==0)
             //    cur_code->code = place+" := "+ it->second.name;
