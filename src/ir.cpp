@@ -159,6 +159,7 @@ cout <<  "place!=nullptr end" <<endl;
     //Exp1 ASSIGNOP Exp2
     if(ptr->child_node[1]->node_type== ENUM_ASSIGNOP){
 cout <<  "ENUM_ASSIGNOP" <<endl;       
+cout << "ptr->child_num " << ptr->child_num <<endl;
 cout << "ptr->child_node[0]->node_name " << ptr->child_node[0]->node_name << endl;
         auto it = Sysmtable.find(ptr->child_node[0]->node_name); // Exp1 -> ID
         string t1 = new_temp();
