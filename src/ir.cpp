@@ -319,10 +319,11 @@ cout << "ok " << ptr->child_num <<endl;
         if(ptr->child_num == 7){
             string label3 = new_label();
             Operand* operand_lb3 = new_label_operand(label3);
-            InterCode* cur_code_goto_lb3 = new_sinop_code(operand_lb1);
+            InterCode* cur_code_goto_lb3 = new_sinop_code(operand_lb3);
             cur_code_goto_lb3->kind = cur_code_goto_lb3->GOTO;
             append_code(cur_code_goto_lb3);
             append_code(cur_code_lb2);
+cout << ptr->child_node[6]->child_num << endl;
             TranslateStmt(ptr->child_node[6], Sysmtable); // cur_code3
             InterCode* cur_code_lb3 = new_sinop_code(operand_lb1);
             cur_code_lb3->kind = cur_code_lb3->LABEL;

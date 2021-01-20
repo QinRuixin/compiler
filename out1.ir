@@ -7,9 +7,9 @@ t5 := i
 t6 := #1
 t4 := t5 + t6
 j := t4
-LABEL  :
-GOTO 
-LABEL  :
-LABEL  :
+LABEL label1 :
+GOTO label1
+LABEL label2 :
+LABEL label1 :
 t7 := #0
 RETURN t7
