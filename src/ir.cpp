@@ -110,11 +110,14 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         return;
     }
     int child_nums = ptr->child_num;
+cout << "child_nums : " << child_nums << endl;
     if(child_nums == 1){
         InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
         //cur_code->code = nullptr;
         //todo
         if(ptr->node_type==ENUM_INT){
+cout <<  "ENUM_ASSIGNOP end" <<endl;       
+
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
