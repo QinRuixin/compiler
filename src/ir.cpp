@@ -99,7 +99,7 @@ void TranslateProgram(tree_node* ptr,std::map<std::string, struct Sysmtable_item
     for(int i = 0; i < child_nums; ++i){
         Translate(ptr->child_node[i], Sysmtable);
     }
-    printCode(outputfile);
+    //printCode(outputfile);
 
 }
 
