@@ -131,6 +131,7 @@ cout <<  "ENUM_ASSIGNOP end" <<endl;
                 InterCodes.push_back(cur_code);
             }
         }else {
+cout <<  "Sysmtable.find(ptr->node_name);" <<endl;       
             auto it = Sysmtable.find(ptr->node_name);
             //if(!place.size()==0)
             //    cur_code->code = place+" := "+ it->second.name;
