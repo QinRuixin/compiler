@@ -129,12 +129,12 @@ cout <<  "place!=nullptr end" <<endl;
 
                 //Operand* r_operand = new Operand();
                 Operand* r_operand = (Operand*)malloc(sizeof(Operand));
-cout <<  "place!=nullptr end" <<endl;       
 
                 r_operand->kind = r_operand->CONSTANT;
                 r_operand->u.val_no = ptr->int_val; //todo float?
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
+cout <<  "place!=nullptr end" <<endl;       
             }
         }else if(ptr->node_type==ENUM_ID){
 cout <<  "Sysmtable.find(ptr->node_name);" <<endl;       
