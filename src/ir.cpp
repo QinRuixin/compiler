@@ -97,6 +97,7 @@ void TranslateProgram(tree_node* ptr,std::map<std::string, struct Sysmtable_item
     }
     int child_nums = ptr->child_num;
     for(int i = 0; i < child_nums; ++i){
+        cout << "child_nums i : " << i <<endl;
         Translate(ptr->child_node[i], Sysmtable);
     }
     //printCode(outputfile);
