@@ -104,7 +104,7 @@ void TranslateProgram(tree_node* ptr,std::map<std::string, struct Sysmtable_item
         cout << "child_nums i : " << i <<endl;
         Translate(ptr->child_node[i], Sysmtable);
     }
-    //printCode(outputfile);
+    printCode(outputfile);
 
 }
 
