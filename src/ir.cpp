@@ -153,18 +153,14 @@ cout <<  "place!=nullptr end" <<endl;
                 InterCodes.push_back(cur_code);
             }
         }
-        //todo del
-        else{
-            //Exp ? 
-            TranslateExp(ptr->child_node[0], Sysmtable, place);
-        }
         
         return;
     }
     //Exp1 ASSIGNOP Exp2
     if(ptr->child_node[1]->node_type== ENUM_ASSIGNOP){
 cout <<  "ENUM_ASSIGNOP" <<endl;       
-        auto it = Sysmtable.find(ptr->node_name); // Exp1 -> ID
+cout << "ptr->child_node[0]->node_name " << ptr->child_node[0]->node_name << endl;
+        auto it = Sysmtable.find(ptr->child_node[0]->node_name); // Exp1 -> ID
         string t1 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
 //cout <<  "ENUM_ASSIGNOP end" <<endl;       
