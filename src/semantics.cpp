@@ -470,6 +470,7 @@ VarDec : ID
         }else{
             Sysmtable_item cur_item;
             // todo
+            std::cout << ID_->node_name << std::endl; 
             cur_item.kind = cur_item.VARIABLE;
             cur_item.name = ID_->node_name;
             cur_item.row = ID_->line_no;
@@ -611,12 +612,12 @@ Exp : Exp ASSIGNOP Exp
             }else{
                 Sysmtable_item ID_item =  Sysmtable.find(ID_->node_name)->second;
                 res = ID_item.type;
- //               if(res->kind == res->FUNCTION){
+ //             if(res->kind == res->FUNCTION){
  //                   res->LR_value = R_;
 //              }
                 return res;
             }
-            
+
         }else if(ptr->child_node[0]->node_type==ENUM_INT){
             res->kind = res->BASIC;
             res->u.basic = BASIC_INT;
