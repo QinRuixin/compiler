@@ -1,11 +1,16 @@
+#ifndef INTERCODE_H
+#define INTERCODE_H
 #include <string>
 
-typedef struct Operand_* Operand;
-struct Operand_{
+//typedef struct Operand_* Operand;
+
+struct Operand
+{
+
     enum { VARIABLE, CONSTANT, ADDRESS  } kind;
     union{
         int val_no;
-        int value;
+        std::string value;
     } u;
 };
 
@@ -14,14 +19,15 @@ struct InterCode
     enum { ASSIGN, ADD, SUB, MUL } kind;
     union {
         struct{
-            Operand right, left;
+            Operand *right, *left;
         } assign;
         struct
         {
-            Operand result, op1, op2;
+            Operand *result, *op1, *op2;
         } binop;
         
     }u;
     std::string code;
 };
 
+#endif
