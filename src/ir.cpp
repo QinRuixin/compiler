@@ -117,6 +117,7 @@ cout << "InterCode : "  << endl;
 
         //cur_code->code = nullptr;
         //todo
+        ptr = ptr->child_node[0];
 cout << "ptr->node_type : " << ptr->node_type << endl;
         if(ptr->node_type==ENUM_INT){
 cout <<  "ENUM_ASSIGNOP end" <<endl;       
@@ -144,7 +145,9 @@ cout <<  "Sysmtable.find(ptr->node_name);" <<endl;
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
             }
-        }else{
+        }
+        //todo del
+        else{
             //Exp ? 
             TranslateExp(ptr->child_node[0], Sysmtable, place);
         }
