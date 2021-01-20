@@ -131,7 +131,7 @@ cout <<  "ENUM_ASSIGNOP end" <<endl;
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
             }
-        }else {
+        }else if(ptr->node_type==ENUM_ID){
 cout <<  "Sysmtable.find(ptr->node_name);" <<endl;       
             auto it = Sysmtable.find(ptr->node_name);
             //if(!place.size()==0)
@@ -144,6 +144,9 @@ cout <<  "Sysmtable.find(ptr->node_name);" <<endl;
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
             }
+        }else{
+            //Exp ? 
+            TranslateExp(ptr->child_node[0], Sysmtable, place);
         }
         
         return;
