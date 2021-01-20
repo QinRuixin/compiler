@@ -141,6 +141,7 @@ cout <<  "Sysmtable.find(ptr->node_name);" <<endl;
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
                 Operand* r_operand = new_var_operand(it->second.name);
+cout <<  "place!=nullptr end" <<endl;       
     
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
@@ -160,7 +161,7 @@ cout <<  "Sysmtable.find(ptr->node_name);" <<endl;
         auto it = Sysmtable.find(ptr->node_name); // Exp1 -> ID
         string t1 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
-cout <<  "ENUM_ASSIGNOP end" <<endl;       
+//cout <<  "ENUM_ASSIGNOP end" <<endl;       
 
         //Operand operand_t1  = new Operand_();
         //operand_t1->kind = operand_t1->VARIABLE;
