@@ -165,18 +165,13 @@ cout << "ptr->child_node[0]->node_name " << ptr->child_node[0]->node_name << end
         Operand* operand_t1 = new_var_operand(t1);
 //cout <<  "ENUM_ASSIGNOP end" <<endl;       
 
-        //Operand operand_t1  = new Operand_();
-        //operand_t1->kind = operand_t1->VARIABLE;
-        //operand_t1->u.value = t1;
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
         InterCode* cur_code1= (InterCode*) malloc(sizeof(InterCode));
         InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
 cout <<  "ENUM_ASSIGNOP TranslateExp 2 end" <<endl;       
 
         Operand* operand_var = new_var_operand(it->second.name);
-        //Operand operand1 = new Operand_();
-        //operand1->kind = operand1->VARIABLE;
-        //operand1->u.value = it->second.name;
+
         cur_code1->u.assign.left = operand_var;
         cur_code1->u.assign.right = operand_t1;
         InterCodes.push_back(cur_code1);
