@@ -39,6 +39,14 @@ Operand* new_constant_operand(int val_num){
     return res;
 }
 
+Operand* new_label_operand(string _name){
+    Operand* res = (Operand*)malloc(sizeof(Operand));
+    res->kind = res->LABEL;
+    res->u.value = _name;
+    return res;
+}
+
+
 InterCode* new_assign_code(Operand* operand_left,Operand* operand_right){
         InterCode* cur_code = (InterCode*) malloc(sizeof(InterCode));
         cur_code->kind = cur_code->ASSIGN;
@@ -107,12 +115,29 @@ void printCode(std::ofstream& outputfile){
             outputfile << " - " ;
             printOperand(outputfile, stru_binop.op2);
             outputfile << endl;
+            break;
         }
         case interCode->RETURN:{
             auto stru_sinop = interCode->u.sinop;
             outputfile << "RETURN ";
             printOperand(outputfile, stru_sinop.op);
             outputfile << endl;
+            break;
+        }
+        case interCode->LABEL:{
+            auto stru_sinop = interCode->u.sinop;
+            outputfile << "LABEL ";
+            printOperand(outputfile, stru_sinop.op);
+            outputfile << " :";
+            outputfile << endl;
+            break;
+        }
+        case interCode->GOTO:{
+            auto stru_sinop = interCode->u.sinop;
+            outputfile << "GOTO ";
+            printOperand(outputfile, stru_sinop.op);
+            outputfile << endl;
+            break;
         }
         default:
             break;
@@ -275,10 +300,63 @@ cout << "ok " << ptr->child_num <<endl;
         break;
     }    
 //*/
-    case ENUM_IF:{
+    case ENUM_IF:{  // IF LP Exp RP Stmt (ELSE Stmt)
+        tree_node* ptr_child2 = ptr->child_node[2];  // Exp
+        string label1 = new_label();
+        string label2 = new_label();
+        Operand* operand_lb1 = new_label_operand(label1);
+        Operand* operand_lb2 = new_label_operand(label2);
+        TranslateCond(ptr_child2, operand_lb1, operand_lb2, Sysmtable); // cur_code1
+        InterCode* cur_code_lb1 = new_sinop_code(operand_lb1);
+        cur_code_lb1->kind = cur_code_lb1->LABEL;
+        append_code(cur_code_lb1);
+        TranslateStmt(ptr->child_node[4], Sysmtable); // cur_code2
+        InterCode* cur_code_lb2 = new_sinop_code(operand_lb2);
+        cur_code_lb2->kind = cur_code_lb2->LABEL;
+        if(ptr->child_num == 7){
+            string label3 = new_label();
+            Operand* operand_lb3 = new_label_operand(label3);
+            InterCode* cur_code_goto_lb3 = new_sinop_code(operand_lb1);
+            cur_code_goto_lb3->kind = cur_code_goto_lb3->GOTO;
+            append_code(cur_code_goto_lb3);
+            append_code(cur_code_lb2);
+            TranslateStmt(ptr->child_node[6], Sysmtable); // cur_code3
+            InterCode* cur_code_lb3 = new_sinop_code(operand_lb1);
+            cur_code_lb3->kind = cur_code_lb3->LABEL;
+            append_code(cur_code_lb3);
+        }else{
+            append_code(cur_code_lb2);
+        }
         break;
     }
-    case ENUM_WHILE:{
+    case ENUM_WHILE:{   // WHILE LP Exp RP Stmt
+        tree_node* ptr_child2 = ptr->child_node[2];  // Exp
+        string label1 = new_label();
+        string label2 = new_label();
+        string label3 = new_label();
+        Operand* operand_lb1 = new_label_operand(label1);
+        Operand* operand_lb2 = new_label_operand(label2);
+        Operand* operand_lb3 = new_label_operand(label3);
+        
+        InterCode* cur_code_lb1 = new_sinop_code(operand_lb1);
+        cur_code_lb1->kind = cur_code_lb1->LABEL;
+        append_code(cur_code_lb1);
+        TranslateCond(ptr_child2, operand_lb2, operand_lb3, Sysmtable); // cur_code1
+        
+        InterCode* cur_code_lb2 = new_sinop_code(operand_lb2);
+        cur_code_lb2->kind = cur_code_lb2->LABEL;
+        append_code(cur_code_lb2);
+
+        TranslateStmt(ptr->child_node[4], Sysmtable); // cur_code2
+
+        InterCode* cur_code_goto_lb1 = new_sinop_code(operand_lb1);
+        cur_code_goto_lb1->kind = cur_code_goto_lb1->GOTO;
+        append_code(cur_code_goto_lb1);
+
+        InterCode* cur_code_lb3 = new_sinop_code(operand_lb3);
+        cur_code_lb3->kind = cur_code_lb3->LABEL;
+        append_code(cur_code_lb3);
+
         break;
     }
     default:
@@ -288,7 +366,7 @@ cout << "ok " << ptr->child_num <<endl;
 }
 
 
-void TranslateCond(tree_node* ptr, Operand* label1,Operand* label2,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+void TranslateCond(tree_node* ptr, Operand* label_true,Operand* label_false,std::map<std::string, struct Sysmtable_item>& Sysmtable){
 
 }
 

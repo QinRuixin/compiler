@@ -6,7 +6,7 @@
 
 typedef struct Operand
 {
-    enum { VARIABLE, CONSTANT, ADDRESS  } kind;
+    enum { VARIABLE, CONSTANT, ADDRESS, LABEL  } kind;
     union{
         int val_no;
         std::string value;
@@ -15,7 +15,7 @@ typedef struct Operand
 
 typedef struct InterCode
 {
-    enum { ASSIGN, ADD, SUB, MUL,RETURN } kind;
+    enum { ASSIGN, ADD, SUB, MUL, RETURN, LABEL, GOTO } kind;
     union {
         struct{
             Operand *right, *left;
