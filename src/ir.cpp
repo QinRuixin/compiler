@@ -136,30 +136,21 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
     }
     int child_nums = ptr->child_num;
     if(child_nums == 1){
-        InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
+        InterCode* cur_code;
         //todo
         ptr = ptr->child_node[0];
         if(ptr->node_type==ENUM_INT){
-
             if(place!=nullptr){
-                cur_code->kind = cur_code->ASSIGN;
-                cur_code->u.assign.left = place;
-
-                Operand* r_operand = (Operand*)malloc(sizeof(Operand));
-                r_operand->kind = r_operand->CONSTANT;
-                r_operand->u.val_no = ptr->int_val; //todo float?
-                cur_code->u.assign.right = r_operand;
+                Operand* r_operand = new_constant_operand(ptr->int_val);
+                cur_code = new_assign_code(place, r_operand);
                 InterCodes.push_back(cur_code);
             }
         }else if(ptr->node_type==ENUM_ID){
 //cout <<  "Sysmtable.find(ptr->node_name);" << ptr->node_name <<endl;       
             auto it = Sysmtable.find(ptr->node_name);
             if(place!=nullptr){
-                cur_code->kind = cur_code->ASSIGN;
-                cur_code->u.assign.left = place;
-//cout << place->u.value << endl;
                 Operand* r_operand = new_var_operand(it->second.name);
-                cur_code->u.assign.right = r_operand;
+                cur_code = new_assign_code(place, r_operand);
                 InterCodes.push_back(cur_code);
             }
         }
@@ -192,17 +183,13 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         string t1 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
-
-        InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
         Operand* operand_var = new_var_operand(it->second.name); 
         InterCode* cur_code1= new_assign_code(operand_var, operand_t1);
         InterCodes.push_back(cur_code1);
-        
         if(place!=nullptr){
             InterCode* cur_code2= new_assign_code(place, operand_var);
             InterCodes.push_back(cur_code2);
         }
-
         return;
     }
     //for(int i = 0; i < child_nums; ++i){
