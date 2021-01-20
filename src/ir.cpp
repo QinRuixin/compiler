@@ -77,6 +77,7 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     //todo
     default:
         int child_nums = ptr->child_num;
+        cout <<"child_nums : " << child_nums << endl;
         for(int i = 0; i < child_nums; ++i){
                 cout <<"hello" << endl;
     //return;
