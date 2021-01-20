@@ -120,7 +120,7 @@ cout << "InterCode : "  << endl;
         ptr = ptr->child_node[0];
 cout << "ptr->node_type : " << ptr->node_type << endl;
         if(ptr->node_type==ENUM_INT){
-cout <<  "ENUM_ASSIGNOP end" <<endl;       
+cout <<  "ENUM_INT begin" <<endl;       
 
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
@@ -140,6 +140,7 @@ cout <<  "Sysmtable.find(ptr->node_name);" <<endl;
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
+cout <<  "place!=nullptr end" <<endl;       
                 Operand* r_operand = new_var_operand(it->second.name);
 cout <<  "place!=nullptr end" <<endl;       
     
@@ -157,7 +158,7 @@ cout <<  "place!=nullptr end" <<endl;
     }
     //Exp1 ASSIGNOP Exp2
     if(ptr->child_node[1]->node_type== ENUM_ASSIGNOP){
-//cout <<  "ENUM_ASSIGNOP" <<endl;       
+cout <<  "ENUM_ASSIGNOP" <<endl;       
         auto it = Sysmtable.find(ptr->node_name); // Exp1 -> ID
         string t1 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
