@@ -72,7 +72,7 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     switch (cur_type)
     {
     case ENUM_Exp:
-        cout <<"ENUM_Exp : "<<ptr->node_name << ptr->line_no << endl;
+        cout <<"ENUM_Exp : child_num "<<ptr->child_num << " line_no " << ptr->line_no << endl;
         TranslateExp(ptr, Sysmtable, nullptr);
         break;
     //todo
