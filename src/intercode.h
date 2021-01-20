@@ -4,17 +4,16 @@
 
 //typedef struct Operand_* Operand;
 
-struct Operand
+typedef struct Operand
 {
-
     enum { VARIABLE, CONSTANT, ADDRESS  } kind;
     union{
         int val_no;
         std::string value;
     } u;
-};
+}Operand;
 
-struct InterCode
+typedef struct InterCode
 {
     enum { ASSIGN, ADD, SUB, MUL } kind;
     union {
@@ -28,6 +27,6 @@ struct InterCode
         
     }u;
     std::string code;
-};
+}InterCode;
 
 #endif

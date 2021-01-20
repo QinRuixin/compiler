@@ -106,7 +106,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
     }
     int child_nums = ptr->child_num;
     if(child_nums == 1){
-        InterCode* cur_code= new InterCode();
+        InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
         //cur_code->code = nullptr;
         //todo
         if(ptr->node_type==ENUM_INT){
@@ -145,8 +145,8 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         //operand_t1->kind = operand_t1->VARIABLE;
         //operand_t1->u.value = t1;
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
-        InterCode* cur_code1= new InterCode();
-        InterCode* cur_code2= new InterCode();
+        InterCode* cur_code1= (InterCode*) malloc(sizeof(InterCode));
+        InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
 
         Operand* operand_var = new_var_operand(it->second.name);
         //Operand operand1 = new Operand_();
