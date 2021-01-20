@@ -50,8 +50,8 @@ InterCode* new_assign_code(Operand* operand_left,Operand* operand_right){
 InterCode* new_binop_code(Operand* res, Operand* operand1,Operand* operand2){
         InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
         cur_code->u.binop.result = res;
-        cur_code->u.binop.op1 = operand2;
-        cur_code->u.binop.op2 = operand1;
+        cur_code->u.binop.op1 = operand1;
+        cur_code->u.binop.op2 = operand2;
         return cur_code;
 
 }
