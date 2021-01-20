@@ -52,6 +52,7 @@ int main(int argc, char** argv){
         //todo
         //traverse(root, 0);
         AnalasysForProgram(root);
+        //TranslateProgram(root);
         std::ofstream myfile;
         myfile.open(argv[2]);
         myfile << "writing whis to a file. \n";

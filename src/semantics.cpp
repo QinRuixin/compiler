@@ -8,7 +8,6 @@
 #include<iostream>
 
 
-std::map<std::string, struct Sysmtable_item> Sysmtable;
 
 int isINT(Type child_type){
     if (child_type==nullptr )

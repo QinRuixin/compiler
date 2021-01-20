@@ -54,6 +54,8 @@ struct Sysmtable_item{
     //todo
 };
 
+std::map<std::string, struct Sysmtable_item> Sysmtable;
+
 #endif
 
 void AnalasysForProgram(tree_node* ptr);
