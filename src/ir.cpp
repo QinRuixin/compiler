@@ -52,7 +52,8 @@ InterCode* new_binop_code(Operand* res, Operand* operand1,Operand* operand2){
         cur_code->u.binop.result = res;
         cur_code->u.binop.op1 = operand2;
         cur_code->u.binop.op2 = operand1;
-        append_code(cur_code);
+        return cur_code;
+
 }
 
 void printOperand(std::ofstream& outputfile, Operand* operand){
