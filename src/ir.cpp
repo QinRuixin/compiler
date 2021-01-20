@@ -174,7 +174,7 @@ cout <<  "ENUM_ASSIGNOP" <<endl;
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
         InterCode* cur_code1= (InterCode*) malloc(sizeof(InterCode));
         InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
-//cout <<  "ENUM_ASSIGNOP end" <<endl;       
+cout <<  "ENUM_ASSIGNOP TranslateExp 2 end" <<endl;       
 
         Operand* operand_var = new_var_operand(it->second.name);
         //Operand operand1 = new Operand_();
@@ -183,6 +183,7 @@ cout <<  "ENUM_ASSIGNOP" <<endl;
         cur_code1->u.assign.left = operand_var;
         cur_code1->u.assign.right = operand_t1;
         InterCodes.push_back(cur_code1);
+cout <<  "ENUM_ASSIGNOP InterCodes.push_back(cur_code1);" <<endl;       
         
         if(place!=nullptr){
             cur_code2->u.assign.left = place;
