@@ -56,6 +56,12 @@ InterCode* new_binop_code(Operand* res, Operand* operand1,Operand* operand2){
 
 }
 
+InterCode* new_sinop_code(Operand* op){
+        InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
+        cur_code->u.sinop.op = op;
+        return cur_code;
+}
+
 void printOperand(std::ofstream& outputfile, Operand* operand){
     switch (operand->kind)
     {
@@ -91,6 +97,7 @@ void printCode(std::ofstream& outputfile){
             outputfile << " + " ;
             printOperand(outputfile, stru_binop.op2);
             outputfile << endl;
+            break;
         }
         case interCode->SUB:{
             auto stru_binop = interCode->u.binop;
@@ -99,6 +106,12 @@ void printCode(std::ofstream& outputfile){
             printOperand(outputfile, stru_binop.op1);
             outputfile << " - " ;
             printOperand(outputfile, stru_binop.op2);
+            outputfile << endl;
+        }
+        case interCode->RETURN:{
+            auto stru_sinop = interCode->u.sinop;
+            outputfile << "RETURN ";
+            printOperand(outputfile, stru_sinop.op);
             outputfile << endl;
         }
         default:
@@ -119,6 +132,9 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     case ENUM_Exp:
 //cout <<"ENUM_Exp : child_num "<<ptr->child_num << " line_no " << ptr->line_no << endl;
         TranslateExp(ptr, Sysmtable, nullptr);
+        break;
+    case ENUM_Stmt:
+        TranslateStmt(ptr, Sysmtable);
         break;
     //todo
     default:
@@ -222,8 +238,53 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
             append_code(cur_code3);
         }
         return;
+    }else{  //todo logic calculation
+
     }
     //for(int i = 0; i < child_nums; ++i){
     //    Translate(ptr->child_node[i], Sysmtable);
     //}
+
+}
+
+
+void TranslateStmt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+
+    tree_node* ptr_child0 = ptr->child_node[0]; 
+    switch (ptr_child0->node_type)
+    {
+    case ENUM_Exp:
+        TranslateExp(ptr_child0, Sysmtable, nullptr);
+        break;
+    case ENUM_CompSt:
+        TranslateCompSt(ptr_child0, Sysmtable);
+        break;
+    case ENUM_RETURN:{
+        string t1 = new_temp();
+        Operand* operand_t1 = new_var_operand(t1);
+        tree_node* ptr_child1 = ptr->child_node[1]; 
+        TranslateExp(ptr_child1, Sysmtable, operand_t1);
+        InterCode* cur_code = new_sinop_code(operand_t1);
+        //return t1
+        append_code(cur_code);
+    }
+    case ENUM_IF:{
+
+    }
+    case ENUM_WHILE:{
+
+    }
+    default:
+        break;
+    }
+
+}
+
+
+void TranslateCond(tree_node* ptr, Operand* label1,Operand* label2,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+
+}
+
+void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+//todo
 }
