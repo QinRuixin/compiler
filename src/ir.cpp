@@ -35,6 +35,14 @@ Operand* new_constant_operand(int val_num){
     return res;
 }
 
+InterCode* new_assign_code(Operand* operand_left,Operand* operand_right){
+        InterCode* cur_code = (InterCode*) malloc(sizeof(InterCode));
+        cur_code->kind = cur_code->ASSIGN;
+        cur_code->u.assign.left = operand_left;
+        cur_code->u.assign.right = operand_right;
+        return cur_code;
+}
+
 void printOperand(std::ofstream& outputfile, Operand* operand){
     switch (operand->kind)
     {
@@ -184,21 +192,14 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         string t1 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
-        InterCode* cur_code1= (InterCode*) malloc(sizeof(InterCode));
-        InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
 
-//cout << it->second.name << "_it->second.name" << endl;
+        InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
         Operand* operand_var = new_var_operand(it->second.name); 
-  
-        cur_code1->kind = cur_code1->ASSIGN;
-        cur_code1->u.assign.left = operand_var;
-        cur_code1->u.assign.right = operand_t1;
+        InterCode* cur_code1= new_assign_code(operand_var, operand_t1);
         InterCodes.push_back(cur_code1);
         
         if(place!=nullptr){
-            cur_code2->kind = cur_code1->ASSIGN;
-            cur_code2->u.assign.left = place;
-            cur_code2->u.assign.right = operand_var;
+            InterCode* cur_code2= new_assign_code(place, operand_var);
             InterCodes.push_back(cur_code2);
         }
 
