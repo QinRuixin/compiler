@@ -95,10 +95,10 @@ void TranslateProgram(tree_node* ptr,std::map<std::string, struct Sysmtable_item
     if(ptr==nullptr){
         return;
     }
-    for(auto sysm :Sysmtable){
+/*    for(auto sysm :Sysmtable){
         cout << sysm.second.name << endl;
         cout << sysm.first << endl;
-    }
+    } */
     int child_nums = ptr->child_num;
     for(int i = 0; i < child_nums; ++i){
         cout << "child_nums i : " << i <<endl;
@@ -115,22 +115,22 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         return;
     }
     int child_nums = ptr->child_num;
-cout << "child_nums : " << child_nums << endl;
+//cout << "child_nums : " << child_nums << endl;
     if(child_nums == 1){
         InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
-cout << "InterCode : "  << endl;
+//cout << "InterCode : "  << endl;
 
         //cur_code->code = nullptr;
         //todo
         ptr = ptr->child_node[0];
-cout << "ptr->node_type : " << ptr->node_type << endl;
+//cout << "ptr->node_type : " << ptr->node_type << endl;
         if(ptr->node_type==ENUM_INT){
-cout <<  "ENUM_INT begin" <<endl;       
+//cout <<  "ENUM_INT begin" <<endl;       
 
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
-cout <<  "place!=nullptr end" <<endl;       
+//cout <<  "place!=nullptr end" <<endl;       
 
                 //Operand* r_operand = new Operand();
                 Operand* r_operand = (Operand*)malloc(sizeof(Operand));
@@ -139,19 +139,19 @@ cout <<  "place!=nullptr end" <<endl;
                 r_operand->u.val_no = ptr->int_val; //todo float?
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
-cout <<  "place!=nullptr end" <<endl;       
+//cout <<  "place!=nullptr end" <<endl;       
             }
         }else if(ptr->node_type==ENUM_ID){
-cout <<  "Sysmtable.find(ptr->node_name);" << ptr->node_name <<endl;       
+//cout <<  "Sysmtable.find(ptr->node_name);" << ptr->node_name <<endl;       
             auto it = Sysmtable.find(ptr->node_name);
             //if(!place.size()==0)
             //    cur_code->code = place+" := "+ it->second.name;
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
-cout <<  "place!=nullptr end" <<endl;       
+//cout <<  "place!=nullptr end" <<endl;       
                 Operand* r_operand = new_var_operand(it->second.name);
-cout <<  "place!=nullptr end" <<endl;       
+//cout <<  "place!=nullptr end" <<endl;       
     
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
@@ -162,10 +162,11 @@ cout <<  "place!=nullptr end" <<endl;
     }
     //Exp1 ASSIGNOP Exp2
     if(ptr->child_node[1]->node_type== ENUM_ASSIGNOP){
-cout <<  "ENUM_ASSIGNOP" <<endl;       
-cout << "ptr->child_num " << ptr->child_num <<endl;
-cout << "ptr->child_node[0]->node_name " << ptr->child_node[0]->node_name << endl;
-        auto it = Sysmtable.find(ptr->child_node[0]->node_name); // Exp1 -> ID
+//cout <<  "ENUM_ASSIGNOP" <<endl;       
+//cout << "ptr->child_num " << ptr->child_num <<endl;
+        tree_node* ptr_child0 = ptr->child_node[0]; // Exp1
+        auto it = Sysmtable.find(ptr_child0->child_node[0]->node_name); // Exp1 -> ID get ID name
+cout << "ptr_child0->child_node[0]->node_name " << ptr_child0->child_node[0]->node_name << endl;
         string t1 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
 //cout <<  "ENUM_ASSIGNOP end" <<endl;       
@@ -173,7 +174,7 @@ cout << "ptr->child_node[0]->node_name " << ptr->child_node[0]->node_name << end
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
         InterCode* cur_code1= (InterCode*) malloc(sizeof(InterCode));
         InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
-cout <<  "ENUM_ASSIGNOP TranslateExp 2 end" <<endl;       
+//cout <<  "ENUM_ASSIGNOP TranslateExp 2 end" <<endl;       
 cout << it->second.name << "_it->second.name" << endl;
         Operand* operand_var = new_var_operand(it->second.name); //todo
 
