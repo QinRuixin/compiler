@@ -22,10 +22,16 @@ string new_label(){
 }
 
 Operand* new_var_operand(string _name){
-    //Operand* res = new Operand();
     Operand* res = (Operand*)malloc(sizeof(Operand));
     res->kind = res->VARIABLE;
-    res->u.value = _name; //todo float?
+    res->u.value = _name;
+    return res;
+}
+
+Operand* new_constant_operand(int val_num){
+    Operand* res = (Operand*)malloc(sizeof(Operand));
+    res->kind = res->CONSTANT;
+    res->u.val_no = val_num;
     return res;
 }
 
@@ -56,6 +62,15 @@ void printCode(std::ofstream& outputfile){
             //outputfile << stru_assign.left->u.value << " := " << endl;
             break;
         }
+        case interCode->SUB:{
+            auto stru_binop = interCode->u.binop;
+            printOperand(outputfile, stru_binop.result);
+            outputfile << " := " ;
+            printOperand(outputfile, stru_binop.op1);
+            outputfile << " - " ;
+            printOperand(outputfile, stru_binop.op2);
+            outputfile << endl;
+        }
         default:
             break;
         }
@@ -72,7 +87,7 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     switch (cur_type)
     {
     case ENUM_Exp:
-        cout <<"ENUM_Exp : child_num "<<ptr->child_num << " line_no " << ptr->line_no << endl;
+//cout <<"ENUM_Exp : child_num "<<ptr->child_num << " line_no " << ptr->line_no << endl;
         TranslateExp(ptr, Sysmtable, nullptr);
         break;
     //todo
@@ -80,8 +95,6 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
         int child_nums = ptr->child_num;
 //        cout <<"child_nums : " << child_nums << endl;
         for(int i = 0; i < child_nums; ++i){
-//            cout <<"hello" << endl;
-
             Translate(ptr->child_node[i], Sysmtable);
         }
         break;
@@ -95,6 +108,7 @@ void TranslateProgram(tree_node* ptr,std::map<std::string, struct Sysmtable_item
     if(ptr==nullptr){
         return;
     }
+    //todo add read and write function
 /*    for(auto sysm :Sysmtable){
         cout << sysm.second.name << endl;
         cout << sysm.first << endl;
@@ -109,32 +123,23 @@ void TranslateProgram(tree_node* ptr,std::map<std::string, struct Sysmtable_item
 }
 
 void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable,Operand* place){
-    //todo
-    //outputfile << "TranslateProgram\n" ;
+
     if(ptr==nullptr){
         return;
     }
     int child_nums = ptr->child_num;
-//cout << "child_nums : " << child_nums << endl;
     if(child_nums == 1){
         InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
-//cout << "InterCode : "  << endl;
-
-        //cur_code->code = nullptr;
         //todo
         ptr = ptr->child_node[0];
-//cout << "ptr->node_type : " << ptr->node_type << endl;
         if(ptr->node_type==ENUM_INT){
-//cout <<  "ENUM_INT begin" <<endl;       
 
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
 //cout <<  "place!=nullptr end" <<endl;       
 
-                //Operand* r_operand = new Operand();
                 Operand* r_operand = (Operand*)malloc(sizeof(Operand));
-
                 r_operand->kind = r_operand->CONSTANT;
                 r_operand->u.val_no = ptr->int_val; //todo float?
                 cur_code->u.assign.right = r_operand;
@@ -144,15 +149,10 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         }else if(ptr->node_type==ENUM_ID){
 //cout <<  "Sysmtable.find(ptr->node_name);" << ptr->node_name <<endl;       
             auto it = Sysmtable.find(ptr->node_name);
-            //if(!place.size()==0)
-            //    cur_code->code = place+" := "+ it->second.name;
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
-//cout <<  "place!=nullptr end" <<endl;       
                 Operand* r_operand = new_var_operand(it->second.name);
-//cout <<  "place!=nullptr end" <<endl;       
-    
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
             }
@@ -160,30 +160,43 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         
         return;
     }
-    //Exp1 ASSIGNOP Exp2
-    if(ptr->child_node[1]->node_type== ENUM_ASSIGNOP){
-//cout <<  "ENUM_ASSIGNOP" <<endl;       
-//cout << "ptr->child_num " << ptr->child_num <<endl;
-        tree_node* ptr_child0 = ptr->child_node[0]; // Exp1
-        auto it = Sysmtable.find(ptr_child0->child_node[0]->node_name); // Exp1 -> ID get ID name
-cout << "ptr_child0->child_node[0]->node_name " << ptr_child0->child_node[0]->node_name << endl;
+    
+    tree_node* ptr_child0 = ptr->child_node[0]; 
+    tree_node* ptr_child1 = ptr->child_node[1]; 
+    if(ptr_child0->node_type== ENUM_MINUS){     //MINUS Exp1
+        // ptr_child1 Exp1
         string t1 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
-//cout <<  "ENUM_ASSIGNOP end" <<endl;       
-
+        TranslateExp(ptr_child1,Sysmtable,operand_t1); //cur_code1
+        if(place!=nullptr){
+            InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
+            cur_code2->kind = cur_code2->SUB;
+            cur_code2->u.binop.result = place;
+            cur_code2->u.binop.op1 = new_constant_operand(0);
+            cur_code2->u.binop.op2 = operand_t1;
+        }
+        return;
+    }
+    if(ptr_child1->node_type== ENUM_ASSIGNOP){  //Exp1 ASSIGNOP Exp2
+        // ptr_child0 Exp1
+        auto it = Sysmtable.find(ptr_child0->child_node[0]->node_name); // Exp1 -> ID get ID name
+//cout << "ptr_child0->child_node[0]->node_name " << ptr_child0->child_node[0]->node_name << endl;
+        string t1 = new_temp();
+        Operand* operand_t1 = new_var_operand(t1);
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
         InterCode* cur_code1= (InterCode*) malloc(sizeof(InterCode));
         InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
-//cout <<  "ENUM_ASSIGNOP TranslateExp 2 end" <<endl;       
-cout << it->second.name << "_it->second.name" << endl;
-        Operand* operand_var = new_var_operand(it->second.name); //todo
 
-cout <<  "ENUM_ASSIGNOP InterCodes.push_back(cur_code1);" <<endl;       
+//cout << it->second.name << "_it->second.name" << endl;
+        Operand* operand_var = new_var_operand(it->second.name); 
+  
+        cur_code1->kind = cur_code1->ASSIGN;
         cur_code1->u.assign.left = operand_var;
         cur_code1->u.assign.right = operand_t1;
         InterCodes.push_back(cur_code1);
         
         if(place!=nullptr){
+            cur_code2->kind = cur_code1->ASSIGN;
             cur_code2->u.assign.left = place;
             cur_code2->u.assign.right = operand_var;
             InterCodes.push_back(cur_code2);
