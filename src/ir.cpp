@@ -113,6 +113,8 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
 cout << "child_nums : " << child_nums << endl;
     if(child_nums == 1){
         InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
+cout << "InterCode : "  << endl;
+
         //cur_code->code = nullptr;
         //todo
         if(ptr->node_type==ENUM_INT){
