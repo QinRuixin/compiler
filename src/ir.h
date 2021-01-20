@@ -22,4 +22,4 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
 void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 
-void append_code(CODE_TYPE type,...);
+void append_code(InterCode* cur_code);

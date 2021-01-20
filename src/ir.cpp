@@ -11,6 +11,10 @@ list<InterCode*> InterCodes;
 int temp_cnt;
 int label_cnt;
 
+void append_code(InterCode* cur_code){
+    InterCodes.push_back(cur_code);
+}
+
 string new_temp(){
     string temp("t");
     return temp + to_string(++temp_cnt);
@@ -43,6 +47,14 @@ InterCode* new_assign_code(Operand* operand_left,Operand* operand_right){
         return cur_code;
 }
 
+InterCode* new_binop_code(Operand* res, Operand* operand1,Operand* operand2){
+        InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
+        cur_code->u.binop.result = res;
+        cur_code->u.binop.op1 = operand2;
+        cur_code->u.binop.op2 = operand1;
+        append_code(cur_code);
+}
+
 void printOperand(std::ofstream& outputfile, Operand* operand){
     switch (operand->kind)
     {
@@ -69,6 +81,15 @@ void printCode(std::ofstream& outputfile){
             outputfile << endl;
             //outputfile << stru_assign.left->u.value << " := " << endl;
             break;
+        }
+        case interCode->ADD:{
+            auto stru_binop = interCode->u.binop;
+            printOperand(outputfile, stru_binop.result);
+            outputfile << " := " ;
+            printOperand(outputfile, stru_binop.op1);
+            outputfile << " + " ;
+            printOperand(outputfile, stru_binop.op2);
+            outputfile << endl;
         }
         case interCode->SUB:{
             auto stru_binop = interCode->u.binop;
@@ -135,31 +156,29 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         return;
     }
     int child_nums = ptr->child_num;
-    if(child_nums == 1){
+    if(child_nums == 1){ // INT or ID
         InterCode* cur_code;
-        //todo
         ptr = ptr->child_node[0];
         if(ptr->node_type==ENUM_INT){
             if(place!=nullptr){
                 Operand* r_operand = new_constant_operand(ptr->int_val);
                 cur_code = new_assign_code(place, r_operand);
-                InterCodes.push_back(cur_code);
+                append_code(cur_code);
             }
-        }else if(ptr->node_type==ENUM_ID){
-//cout <<  "Sysmtable.find(ptr->node_name);" << ptr->node_name <<endl;       
+        }else if(ptr->node_type==ENUM_ID){     
             auto it = Sysmtable.find(ptr->node_name);
             if(place!=nullptr){
                 Operand* r_operand = new_var_operand(it->second.name);
                 cur_code = new_assign_code(place, r_operand);
-                InterCodes.push_back(cur_code);
+                append_code(cur_code);
             }
         }
-        
         return;
     }
-    
+    // has 2 or 3 child nodes
     tree_node* ptr_child0 = ptr->child_node[0]; 
     tree_node* ptr_child1 = ptr->child_node[1]; 
+
     if(ptr_child0->node_type== ENUM_MINUS){     //MINUS Exp1
         // ptr_child1 Exp1
         string t1 = new_temp();
@@ -167,16 +186,12 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         Operand* operand_t1 = new_var_operand(t1);
         TranslateExp(ptr_child1,Sysmtable,operand_t1); //cur_code1
         if(place!=nullptr){
-            InterCode* cur_code2= (InterCode*) malloc(sizeof(InterCode));
+            InterCode* cur_code2= new_binop_code(place, new_constant_operand(0), operand_t1 );
             cur_code2->kind = cur_code2->SUB;
-            cur_code2->u.binop.result = place;
-            cur_code2->u.binop.op1 = new_constant_operand(0);
-            cur_code2->u.binop.op2 = operand_t1;
-            InterCodes.push_back(cur_code2);
+            append_code(cur_code2);
         }
         return;
-    }
-    if(ptr_child1->node_type== ENUM_ASSIGNOP){  //Exp1 ASSIGNOP Exp2
+    }else if(ptr_child1->node_type== ENUM_ASSIGNOP){  //Exp1 ASSIGNOP Exp2
         // ptr_child0 Exp1
         auto it = Sysmtable.find(ptr_child0->child_node[0]->node_name); // Exp1 -> ID get ID name
 //cout << "ptr_child0->child_node[0]->node_name " << ptr_child0->child_node[0]->node_name << endl;
@@ -185,18 +200,29 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
         Operand* operand_var = new_var_operand(it->second.name); 
         InterCode* cur_code1= new_assign_code(operand_var, operand_t1);
-        InterCodes.push_back(cur_code1);
+        append_code(cur_code1);
         if(place!=nullptr){
             InterCode* cur_code2= new_assign_code(place, operand_var);
-            InterCodes.push_back(cur_code2);
+            append_code(cur_code2);
+        }
+        return;
+    }else if(ptr_child1->node_type== ENUM_PLUS){    //Exp1 PLUS Exp2
+        // ptr_child0 Exp1
+        string t1 = new_temp();
+        string t2 = new_temp();
+        Operand* operand_t1 = new_var_operand(t1);
+        Operand* operand_t2 = new_var_operand(t2);
+        TranslateExp(ptr_child0, Sysmtable, operand_t1);
+        tree_node* ptr_child2 = ptr->child_node[2]; 
+        TranslateExp(ptr_child2, Sysmtable, operand_t2);
+        if(place!=nullptr){
+            InterCode* cur_code3 = new_binop_code(place, operand_t1, operand_t2); 
+            cur_code3->kind = cur_code3->ADD;
+            append_code(cur_code3);
         }
         return;
     }
     //for(int i = 0; i < child_nums; ++i){
     //    Translate(ptr->child_node[i], Sysmtable);
     //}
-}
-
-void append_code(CODE_TYPE type,...){
-    //initializer_list?
 }

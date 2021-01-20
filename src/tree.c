@@ -8,7 +8,7 @@ const static char* type_name[] = {
     "INT", "FLOAT", "ID", "SEMI", "COMMA", 
     "ASSIGNOP", "RELOP", "PLUS", "MINUS", "STAR", "DIV",
     "AND", "OR", "DOT", "NOT", "TYPE",
-    "LP", "RP", "LB", "RB", "LC", "RC",
+    "LP", "RP", "LB", "RB", "LC", "RC", //22
     "STRUCT", "RETURN", "IF", "ELSE", "WHILE",
 
     "Epsilon",
