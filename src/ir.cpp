@@ -79,6 +79,9 @@ void printOperand(std::ofstream& outputfile, Operand* operand){
     case operand->CONSTANT:
         outputfile << "#" << operand->u.val_no; //todo  float?
         break;
+    case operand->LABEL:
+        outputfile << operand->u.value;
+        break;
     default:
         break;
     }
