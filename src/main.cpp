@@ -5,7 +5,7 @@
 #include<map>
 #include <assert.h>
 #include<iostream>
-
+#include<fstream>
 //extern "C" 
 #include "tree.h"
 #include "semantics.h"
@@ -52,6 +52,10 @@ int main(int argc, char** argv){
         //todo
         //traverse(root, 0);
         AnalasysForProgram(root);
+        std::ofstream myfile;
+        myfile.open(argv[2]);
+        myfile << "writing whis to a file. \n";
+        myfile.close();
     }
 
     return 0;
