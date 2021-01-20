@@ -167,6 +167,7 @@ cout <<  "ENUM_ASSIGNOP" <<endl;
             cur_code2->u.assign.right = operand_var;
             InterCodes.push_back(cur_code2);
         }
+cout <<  "ENUM_ASSIGNOP end" <<endl;       
 
         return;
     }
