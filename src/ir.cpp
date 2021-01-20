@@ -67,8 +67,7 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
         return;
     }
 
-    cout <<"hello" << endl;
-    return;
+
     NODE_TYPE cur_type = ptr->node_type;
     switch (cur_type)
     {
@@ -79,6 +78,8 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     default:
         int child_nums = ptr->child_num;
         for(int i = 0; i < child_nums; ++i){
+                cout <<"hello" << endl;
+    //return;
             Translate(ptr->child_node[i], Sysmtable);
         }
         break;
