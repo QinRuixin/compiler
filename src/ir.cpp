@@ -173,10 +173,10 @@ cout <<  "ENUM_ASSIGNOP TranslateExp 2 end" <<endl;
 cout << it->second.name << "_it->second.name" << endl;
         Operand* operand_var = new_var_operand(it->second.name);
 
+cout <<  "ENUM_ASSIGNOP InterCodes.push_back(cur_code1);" <<endl;       
         cur_code1->u.assign.left = operand_var;
         cur_code1->u.assign.right = operand_t1;
         InterCodes.push_back(cur_code1);
-cout <<  "ENUM_ASSIGNOP InterCodes.push_back(cur_code1);" <<endl;       
         
         if(place!=nullptr){
             cur_code2->u.assign.left = place;
