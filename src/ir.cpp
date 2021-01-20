@@ -149,7 +149,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
             if(place!=nullptr){
                 cur_code->kind = cur_code->ASSIGN;
                 cur_code->u.assign.left = place;
-cout << place->u.value << endl;
+//cout << place->u.value << endl;
                 Operand* r_operand = new_var_operand(it->second.name);
                 cur_code->u.assign.right = r_operand;
                 InterCodes.push_back(cur_code);
@@ -164,7 +164,7 @@ cout << place->u.value << endl;
     if(ptr_child0->node_type== ENUM_MINUS){     //MINUS Exp1
         // ptr_child1 Exp1
         string t1 = new_temp();
-cout << "t1 : " << t1 << endl;
+//cout << "t1 : " << t1 << endl;
         Operand* operand_t1 = new_var_operand(t1);
         TranslateExp(ptr_child1,Sysmtable,operand_t1); //cur_code1
         if(place!=nullptr){
@@ -173,6 +173,7 @@ cout << "t1 : " << t1 << endl;
             cur_code2->u.binop.result = place;
             cur_code2->u.binop.op1 = new_constant_operand(0);
             cur_code2->u.binop.op2 = operand_t1;
+            InterCodes.push_back(cur_code2);
         }
         return;
     }
