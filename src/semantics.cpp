@@ -621,6 +621,7 @@ Exp : Exp ASSIGNOP Exp
             res->kind = res->BASIC;
             res->u.basic = BASIC_INT;
             res->LR_value = R_;
+            //res->u.
 
         }else if(ptr->child_node[0]->node_type==ENUM_FLOAT){
             res->kind = res->BASIC;

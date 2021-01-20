@@ -55,8 +55,8 @@ int main(int argc, char** argv){
         std::map<std::string, struct Sysmtable_item> Sysmtable_table = AnalasysForProgram(root);
         std::ofstream outputfile;
         outputfile.open(argv[2]);
-        TranslateProgram(root, outputfile);
-        outputfile << "writing whis to a file. \n";
+        TranslateProgram(root, Sysmtable_table, outputfile);
+        //outputfile << "writing whis to a file. \n";
         outputfile.close();
     }
 
