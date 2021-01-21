@@ -154,6 +154,19 @@ void printCode(std::ofstream& outputfile){
             outputfile << endl;
             break;
         }
+        case interCode->IFGOTO:{
+            auto stru_ifop = interCode->u.ifop;
+            outputfile << "IF ";
+            printOperand(outputfile, stru_ifop.t1);
+            outputfile << " ";
+            outputfile << stru_ifop.op_rel;
+            outputfile << " ";
+            printOperand(outputfile, stru_ifop.t2);
+            outputfile << "GOTO ";
+            printOperand(outputfile, stru_ifop.label);
+            outputfile << endl;
+            break;
+        }
         default:
             break;
         }
