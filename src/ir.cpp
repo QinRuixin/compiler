@@ -369,9 +369,35 @@ cout << "ok " << ptr->child_num <<endl;
 
 }
 
-
 void TranslateCond(tree_node* ptr, Operand* label_true,Operand* label_false,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    tree_node* ptr_child0 = ptr->child_node[0]; 
+    tree_node* ptr_child1 = ptr->child_node[1]; 
+    if(ptr_child0->node_type == ENUM_NOT){ // NOT Exp
+        TranslateCond(ptr_child1, label_false, label_true, Sysmtable);
+        return;
+    }
+    string t1 = new_temp();
+    Operand* operand_t1 = new_var_operand(t1);
+    switch (ptr_child1->node_type)
+    {
+    case ENUM_RELOP:{
+        TranslateExp(ptr_child0, Sysmtable, operand_t1);
+        string t2 = new_temp();
+        Operand* operand_t2 = new_var_operand(t2);
+        tree_node* ptr_child2 = ptr->child_node[2]; 
+        TranslateExp(ptr_child2, Sysmtable, operand_t2);
+cout << ptr_child1->node_name << endl;
 
+        break;
+    }
+
+
+    
+    default:
+        break;
+    }
+
+    
 }
 
 void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){

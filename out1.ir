@@ -10,6 +10,6 @@ j := t4
 LABEL label1 :
 GOTO label3
 LABEL label2 :
-LABEL label1 :
+LABEL label3 :
 t7 := #0
 RETURN t7
