@@ -70,6 +70,18 @@ InterCode* new_sinop_code(Operand* op){
         return cur_code;
 }
 
+
+InterCode* new_ifop_code(Operand* t1, Operand* t2, Operand* label_true,string op_rel){
+        InterCode* cur_code= (InterCode*) malloc(sizeof(InterCode));
+        cur_code->kind = cur_code->IFGOTO;
+        cur_code->u.ifop.t1 = t1;
+        cur_code->u.ifop.t2 = t2;
+        cur_code->u.ifop.label = label_true;
+        cur_code->u.ifop.op_rel = op_rel;
+        return cur_code;
+}
+
+
 void printOperand(std::ofstream& outputfile, Operand* operand){
     switch (operand->kind)
     {
@@ -386,8 +398,14 @@ void TranslateCond(tree_node* ptr, Operand* label_true,Operand* label_false,std:
         Operand* operand_t2 = new_var_operand(t2);
         tree_node* ptr_child2 = ptr->child_node[2]; 
         TranslateExp(ptr_child2, Sysmtable, operand_t2);
-cout << "ptr_child1->node_name" << ptr_child1->node_name << endl;
+        string op_rel = ptr_child1->node_name;
+        InterCode* cur_code3 = new_ifop_code(operand_t1, operand_t2,label_true,op_rel);
+        append_code(cur_code3);
 
+        InterCode* cur_code4 = new_sinop_code(label_false);
+        cur_code4->kind = cur_code4->GOTO;
+        append_code(cur_code4);
+//todo
         break;
     }
 

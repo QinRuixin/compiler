@@ -15,7 +15,7 @@ typedef struct Operand
 
 typedef struct InterCode
 {
-    enum { ASSIGN, ADD, SUB, MUL, RETURN, LABEL, GOTO } kind;
+    enum { ASSIGN, ADD, SUB, MUL, RETURN, LABEL, GOTO, IFGOTO } kind;
     union {
         struct{
             Operand *right, *left;
@@ -27,6 +27,10 @@ typedef struct InterCode
         struct{
             Operand *op;
         } sinop;
+        struct{
+            Operand *t1, *t2, *label;
+            std::string op_rel;
+        } ifop;
     }u;
     std::string code;
 }InterCode;
