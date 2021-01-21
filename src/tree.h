@@ -5,6 +5,7 @@
 # define SELECTOR_FLOAT 2
 # define SELECTOR_TYPE 3
 # define SELECTOR_ID 4
+# define SELECTOR_RELOP 5
 
 typedef enum NT{
     ENUM_INT, ENUM_FLOAT, ENUM_ID, ENUM_SEMI, ENUM_COMMA, 

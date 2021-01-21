@@ -69,6 +69,10 @@ tree_node* create_token_node(NODE_TYPE enum_type, int lineno,int val_selector,..
         va_start(arg_ptr,val_selector);
         strcpy(cur_node->node_name , va_arg(arg_ptr, char*));
         break;
+      case SELECTOR_RELOP:
+        va_start(arg_ptr,val_selector);
+        strcpy(cur_node->node_name , va_arg(arg_ptr, char*));
+        break;
       default:
         break;
     }

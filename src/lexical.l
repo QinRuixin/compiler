@@ -58,7 +58,7 @@ COMMENT_MUL "/"\*([^*]|\*+[^/*])*\*+"/"
 ">"|"<"|">="|"<="|"=="|"!=" {
     if(second_flag==1){
     //fprintf(stderr,"RELOP %s at Line %d.\n",yytext,yylineno);
-    yylval.node = create_token_node(ENUM_RELOP,yylineno,0);
+    yylval.node = create_token_node(ENUM_RELOP,yylineno,SELECTOR_RELOP,yytext);
     return RELOP;
   }
 }
