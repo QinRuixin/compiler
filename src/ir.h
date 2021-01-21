@@ -16,8 +16,8 @@ void TranslateStmt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& 
 void TranslateCond(tree_node* ptr, Operand* label1,Operand* label2,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void TranslateArgs(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
-void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
-void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
+void TranslateDefList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
+void TranslateStmtList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);

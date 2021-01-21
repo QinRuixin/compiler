@@ -162,7 +162,7 @@ void printCode(std::ofstream& outputfile){
             outputfile << stru_ifop.op_rel;
             outputfile << " ";
             printOperand(outputfile, stru_ifop.t2);
-            outputfile << "GOTO ";
+            outputfile << " GOTO ";
             printOperand(outputfile, stru_ifop.label);
             outputfile << endl;
             break;
@@ -433,4 +433,23 @@ void TranslateCond(tree_node* ptr, Operand* label_true,Operand* label_false,std:
 
 void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
 //todo
+    // LC DefList StmtList RC
+    if(ptr==nullptr || ptr->child_num < 4){
+        return;
+    }
+    TranslateDefList(ptr->child_node[1], Sysmtable);
+    TranslateStmtList(ptr->child_node[2], Sysmtable);
+}
+
+void TranslateDefList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+
+}
+
+void TranslateStmtList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    if(ptr==nullptr || ptr->child_num < 2){
+        return;
+    }
+    // Stmt StmtList
+    TranslateStmt(ptr->child_node[0], Sysmtable);
+    TranslateStmtList(ptr->child_node[1], Sysmtable);
 }
