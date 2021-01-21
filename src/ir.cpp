@@ -386,7 +386,7 @@ void TranslateCond(tree_node* ptr, Operand* label_true,Operand* label_false,std:
         Operand* operand_t2 = new_var_operand(t2);
         tree_node* ptr_child2 = ptr->child_node[2]; 
         TranslateExp(ptr_child2, Sysmtable, operand_t2);
-cout << "ptr_child1->node_name" << ptr_child1->node_name << endl;
+cout << "ptr_child1->child_node[0]->node_name" << ptr_child1->child_node[0]->node_name << endl;
 
         break;
     }
