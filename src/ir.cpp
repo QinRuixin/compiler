@@ -311,9 +311,13 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         return;
     }
     // has 2 or 3 child nodes
+
     tree_node* ptr_child0 = ptr->child_node[0]; 
     tree_node* ptr_child1 = ptr->child_node[1]; 
-//cout << "good" << endl;
+    if(ptr_child0->node_type==ENUM_LP){ // LP Exp RP
+        TranslateExp(ptr_child1,Sysmtable,place);
+        return;
+    }
     if (ptr_child0->node_type==ENUM_ID )
     {
         if(ptr->child_num == 3){    // ID LP RP 
