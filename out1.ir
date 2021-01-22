@@ -30,23 +30,27 @@ t14 := i
 t15 := j
 t13 := t14 + t15
 a := t13
+t17 := i
+t18 := j
 ARG t18
 ARG t17
 t16 := CALL add
 sum := t16
+t20 := #1
+t19 := #0 - t20
 WRITE t19
-t20 := i
-t21 := #2
-IF t20 < t21 GOTO label1
+t21 := i
+t22 := #2
+IF t21 < t22 GOTO label1
 GOTO label2
 LABEL label1 :
-t22 := #1
-i := t22
+t23 := #1
+i := t23
 GOTO label3
 LABEL label2 :
-t23 := #3
-i := t23
+t24 := #3
+i := t24
 LABEL label3 :
-t24 := #0
-RETURN t24
+t25 := #0
+RETURN t25
 
