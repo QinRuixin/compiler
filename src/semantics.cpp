@@ -81,7 +81,7 @@ std::map<std::string, struct Sysmtable_item> AnalasysForProgram(tree_node* ptr){
     if(ptr==nullptr){
         return Sysmtable;
     }
-/*
+
     // add function read and write 20210122
     Sysmtable_item cur_item;
     cur_item.kind = cur_item.FUNCTION;
@@ -101,7 +101,7 @@ std::map<std::string, struct Sysmtable_item> AnalasysForProgram(tree_node* ptr){
     cur_item2.type = cur_type2;
     Sysmtable.insert(std::pair<std::string,Sysmtable_item>("write",cur_item2));
 //std::cout << "good" << std::endl;
-*/
+
     tree_node* ExtDefList_ = ptr->child_node[0];
     AnalasysForExtDefList(ExtDefList_);
     return Sysmtable;
