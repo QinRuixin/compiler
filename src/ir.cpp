@@ -148,7 +148,7 @@ void printCode(std::ofstream& outputfile){
             outputfile << "RETURN ";
             printOperand(outputfile, stru_sinop.op);
             outputfile << endl;
-            outputfile << endl;
+            //outputfile << endl;
             break;
         }
         case interCode->LABEL:{
@@ -180,6 +180,7 @@ void printCode(std::ofstream& outputfile){
             break;
         }
         case interCode->FUNCTION:{
+            outputfile << endl;
             auto stru_sinop = interCode->u.sinop;
             outputfile << "FUNCTION ";
             printOperand(outputfile, stru_sinop.op);

@@ -1,2 +1,37 @@
-TranslateProgram
-writing whis to a file. 
+FUNCTION fact :
+PARAM n
+t1 := n
+t2 := #1
+IF t1 == t2 GOTO label1
+GOTO label2
+LABEL label1 :
+t3 := n
+RETURN t3
+
+GOTO label3
+LABEL label2 :
+RETURN t4
+
+LABEL label3 :
+FUNCTION main :
+READ t5
+m := t5
+t6 := m
+t7 := #1
+IF t6 > t7 GOTO label4
+GOTO label5
+LABEL label4 :
+t9 := m
+ARG t9
+t8 := CALL fact
+result := t8
+GOTO label6
+LABEL label5 :
+t10 := #1
+result := t10
+LABEL label6 :
+t11 := result
+WRITE t11
+t12 := #0
+RETURN t12
+

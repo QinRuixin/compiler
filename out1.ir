@@ -1,56 +1,29 @@
-FUNCTION add :
-PARAM c1
-PARAM c2
-t2 := c1
-t3 := c2
-t1 := t2 + t3
-RETURN t1
-
-FUNCTION getInt :
-t4 := #5
-RETURN t4
-
 FUNCTION main :
-PARAM a
-PARAM b
-t5 := CALL getInt
-temp := t5
-READ t6
-i := t6
-t7 := #1
-i := t7
-t9 := i
-t8 := #0 - t9
-j := t8
-t11 := i
-t12 := #1
-t10 := t11 + t12
-j := t10
-t14 := i
-t15 := j
-t13 := t14 + t15
-a := t13
-t17 := i
-t18 := j
-ARG t18
-ARG t17
-t16 := CALL add
-sum := t16
-t20 := #1
-t19 := #0 - t20
-WRITE t19
-t21 := i
-t22 := #2
-IF t21 < t22 GOTO label1
+READ t1
+n := t1
+t2 := n
+t3 := #0
+IF t2 > t3 GOTO label1
 GOTO label2
 LABEL label1 :
-t23 := #1
-i := t23
+t4 := #1
+WRITE t4
 GOTO label3
 LABEL label2 :
-t24 := #3
-i := t24
+t5 := n
+t6 := #0
+IF t5 < t6 GOTO label4
+GOTO label5
+LABEL label4 :
+t8 := #1
+t7 := #0 - t8
+WRITE t7
+GOTO label6
+LABEL label5 :
+t9 := #0
+WRITE t9
+LABEL label6 :
 LABEL label3 :
-t25 := #0
-RETURN t25
+t10 := #0
+RETURN t10
 
