@@ -1,3 +1,4 @@
+
 FUNCTION fact :
 PARAM n
 t1 := n
@@ -7,12 +8,11 @@ GOTO label2
 LABEL label1 :
 t3 := n
 RETURN t3
-
 GOTO label3
 LABEL label2 :
 RETURN t4
-
 LABEL label3 :
+
 FUNCTION main :
 READ t5
 m := t5
@@ -34,4 +34,3 @@ t11 := result
 WRITE t11
 t12 := #0
 RETURN t12
-

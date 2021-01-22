@@ -392,7 +392,11 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
             append_code(cur_code2);
         }
         return;
-    }else if(ptr_child1->node_type== ENUM_PLUS){    //Exp1 PLUS Exp2
+    }else if(ptr_child1->node_type== ENUM_PLUS ||
+        ptr_child1->node_type== ENUM_MINUS ||
+        ptr_child1->node_type== ENUM_DIV ||
+        ptr_child1->node_type== ENUM_STAR
+        ){    //Exp1 PLUS Exp2
         // ptr_child0 Exp1
         string t1 = new_temp();
         string t2 = new_temp();
@@ -403,12 +407,30 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         TranslateExp(ptr_child2, Sysmtable, operand_t2);
         if(place!=nullptr){
             InterCode* cur_code3 = new_binop_code(place, operand_t1, operand_t2); 
-            cur_code3->kind = cur_code3->ADD;
+            switch (ptr_child1->node_type)
+            {
+            case ENUM_PLUS:
+                cur_code3->kind = cur_code3->ADD;
+                break;
+            case ENUM_MINUS:
+                cur_code3->kind = cur_code3->SUB;
+                break;
+            case ENUM_DIV:
+                cur_code3->kind = cur_code3->DIV;
+                break;
+            case ENUM_STAR:
+                cur_code3->kind = cur_code3->MUL;
+                break;      
+            default:
+                break;
+            }
+            
             append_code(cur_code3);
         }
         return;
+    
     }else{  //todo logic calculation
-
+        // TranslateCond(ptr, )
     }
     //for(int i = 0; i < child_nums; ++i){
     //    Translate(ptr->child_node[i], Sysmtable);

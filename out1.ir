@@ -1,3 +1,4 @@
+
 FUNCTION main :
 READ t1
 n := t1
@@ -26,4 +27,3 @@ LABEL label6 :
 LABEL label3 :
 t10 := #0
 RETURN t10
-
