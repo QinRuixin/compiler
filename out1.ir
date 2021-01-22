@@ -8,31 +8,34 @@ n := t2
 t1 := n
 t6 := n
 WRITE t6
-READ t8
-n := t8
-t7 := n
-t9 := n
-t10 := #0
-IF t9 > t10 GOTO label1
+t9 := #0
+t8 := t9 * #4
+t7 := &test + t8
+READ t11
+n := t11
+t10 := n
+t12 := n
+t13 := #0
+IF t12 > t13 GOTO label1
 GOTO label2
 LABEL label1 :
-t12 := #1
-WRITE t12
+t15 := #1
+WRITE t15
 GOTO label3
 LABEL label2 :
-t13 := n
-t14 := #0
-IF t13 < t14 GOTO label4
+t16 := n
+t17 := #0
+IF t16 < t17 GOTO label4
 GOTO label5
 LABEL label4 :
-t17 := #1
-t16 := #0 - t17
-WRITE t16
+t20 := #1
+t19 := #0 - t20
+WRITE t19
 GOTO label6
 LABEL label5 :
-t19 := #0
-WRITE t19
+t22 := #0
+WRITE t22
 LABEL label6 :
 LABEL label3 :
-t20 := #0
-RETURN t20
+t23 := #0
+RETURN t23

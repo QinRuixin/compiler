@@ -6,7 +6,7 @@
 
 typedef struct Operand
 {
-    enum { VARIABLE, CONSTANT, ADDRESS, LABEL  } kind;
+    enum { VARIABLE, CONSTANT, ADDRESS, LABEL, DEADD  } kind;
     union{
         int val_no;
         std::string value;

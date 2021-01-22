@@ -119,6 +119,9 @@ void printOperand(std::ofstream& outputfile, Operand* operand){
     case operand->ADDRESS:
         outputfile << "&" << operand->u.value;
         break;
+    case operand->DEADD:
+        outputfile << "*" << operand->u.value;
+        break;
     default:
         break;
     }
@@ -382,6 +385,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         InterCode* cur_code3 = new_binop_code(place, operand_ID, operand_t1);
         cur_code3->kind = cur_code3->ADD;
         append_code(cur_code3);
+//        place->kind = place->ADDRESS;
 
 //----
         return;
