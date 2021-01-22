@@ -769,6 +769,7 @@ void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
     if(ptr_child0->child_num!=1){
         return; // multiple dimensional
     }
+cout << "22222222" << endl;
     tree_node* ptr_ID = ptr_child0->child_node[0];
     tree_node* ptr_INT = ptr_child0->child_node[2];
     Operand* operand_t1 = new_var_operand(ptr_ID->node_name);
