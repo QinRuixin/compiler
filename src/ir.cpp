@@ -241,6 +241,7 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     switch (cur_type)
     {
     case ENUM_Exp:
+    //todo?
 //cout <<"ENUM_Exp : child_num "<<ptr->child_num << " line_no " << ptr->line_no << endl;
         TranslateExp(ptr, Sysmtable, nullptr);
         break;
@@ -402,6 +403,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         ptr_child1->node_type== ENUM_STAR
         ){    //Exp1 PLUS Exp2
         // ptr_child0 Exp1
+
         string t1 = new_temp();
         string t2 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
@@ -424,7 +426,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
                 break;
             case ENUM_STAR:
                 cur_code3->kind = cur_code3->MUL;
-                break;      
+                break;
             default:
                 break;
             }
@@ -449,9 +451,12 @@ void TranslateStmt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& 
     
     switch (ptr_child0->node_type)
     {
-    case ENUM_Exp:
-        TranslateExp(ptr_child0, Sysmtable, nullptr);
+    case ENUM_Exp:{
+        string t1 = new_temp();
+        Operand* operand_t1 = new_var_operand(t1);
+        TranslateExp(ptr_child0, Sysmtable, operand_t1);
         break;
+    }
     case ENUM_CompSt:
         TranslateCompSt(ptr_child0, Sysmtable);
         break;
