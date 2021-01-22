@@ -407,7 +407,7 @@ Dec : VarDec
         //debug 
     //    std::cout <<  second_type << " " << type << std::endl;
         if( ( 1 - TypeEq(second_type,type) ) ){
-            fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_->line_no,Exp_->node_name,"Type mismatched for assignment");
+//20210122            fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_->line_no,Exp_->node_name,"Type mismatched for assignment");
             return nullptr;
         }
     //    fieldList->type = type; //todo?
@@ -779,7 +779,7 @@ Exp : Exp ASSIGNOP Exp
                     return nullptr;    
                 }
                 if( main_type!=nullptr && ( 1 - TypeEq(main_type,child_type) )){ //todo basic
-                    fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for assignment");
+//20210122                    fprintf(stderr,"Error type 5 at Line %d: %s %s.\n",Exp_0->line_no,Exp_0->node_name,"Type mismatched for assignment");
                     return nullptr;                    
                 }
                 return child_type;
