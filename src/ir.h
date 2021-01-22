@@ -5,7 +5,7 @@
 
 typedef enum CodeType{
     LABEL, FUNCTION, ASSIGN_CODE, BINOP, GETADD, DEADD_R, DEADD_L,
-    GOTO, IF, RETURN, ARG, CALL, PARAM, READ, WRITE, DEC
+    GOTO, IF, RETURN, ARG, CALL, PARAM, READ, WRITE, DEC, ADDRESS
 } CODE_TYPE;
 
 void append_code(InterCode* cur_code);
