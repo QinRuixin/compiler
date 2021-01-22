@@ -85,10 +85,20 @@ std::map<std::string, struct Sysmtable_item> AnalasysForProgram(tree_node* ptr){
     Sysmtable_item cur_item;
     cur_item.kind = cur_item.FUNCTION;
     cur_item.name = "read";
+    Type cur_type = new Type_();
+    cur_type->kind = cur_type->FUNCTION;
+    //cur_type->u.function = function;
+    cur_item.type = cur_type;
     Sysmtable.insert(std::pair<std::string,Sysmtable_item>("read",cur_item));
+    
     Sysmtable_item cur_item2;
     cur_item2.kind = cur_item2.FUNCTION;
     cur_item2.name = "write";
+    Type cur_type2 = new Type_();
+    cur_type2->kind = cur_type2->FUNCTION;
+    //cur_type->u.function = function;
+    cur_item2.type = cur_type2;
+
     Sysmtable.insert(std::pair<std::string,Sysmtable_item>("write",cur_item));
 
     tree_node* ExtDefList_ = ptr->child_node[0];
