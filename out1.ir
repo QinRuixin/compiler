@@ -5,38 +5,41 @@ t2 := c1
 t3 := c2
 t1 := t2 + t3
 RETURN t1
+FUNCTION getInt :
+t4 := #5
+RETURN t4
 FUNCTION main :
 PARAM a
 PARAM b
-READ t4
-temp := t4
-READ t5
-i := t5
-t6 := #1
+t5 := CALL getInt
+temp := t5
+READ t6
 i := t6
-t8 := i
-t7 := #0 - t8
-j := t7
-t10 := i
-t11 := #1
-t9 := t10 + t11
-j := t9
-t13 := i
-t14 := j
-t12 := t13 + t14
-a := t12
-sum := t15
-t16 := i
-t17 := #2
-IF t16 < t17 GOTO label1
+t7 := #1
+i := t7
+t9 := i
+t8 := #0 - t9
+j := t8
+t11 := i
+t12 := #1
+t10 := t11 + t12
+j := t10
+t14 := i
+t15 := j
+t13 := t14 + t15
+a := t13
+sum := t16
+t17 := i
+t18 := #2
+IF t17 < t18 GOTO label1
 GOTO label2
 LABEL label1 :
-t18 := #1
-i := t18
+t19 := #1
+i := t19
 GOTO label3
 LABEL label2 :
-t19 := #3
-i := t19
+t20 := #3
+i := t20
 LABEL label3 :
-t20 := #0
-RETURN t20
+t21 := #0
+RETURN t21

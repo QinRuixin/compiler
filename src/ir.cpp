@@ -5,6 +5,7 @@
 #include <fstream>
 #include <map>
 #include <list>
+
 // ------------ intermediate representation ------------
 
 using namespace std;
@@ -90,6 +91,9 @@ InterCode* new_ifop_code(Operand* t1, Operand* t2, Operand* label_true,string op
 
 
 void printOperand(std::ofstream& outputfile, Operand* operand){
+    if(operand==nullptr){
+        return; //todo?  place is null
+    }
     switch (operand->kind)
     {
     case operand->VARIABLE:
@@ -144,6 +148,7 @@ void printCode(std::ofstream& outputfile){
             outputfile << "RETURN ";
             printOperand(outputfile, stru_sinop.op);
             outputfile << endl;
+            outputfile << endl;
             break;
         }
         case interCode->LABEL:{
@@ -196,11 +201,25 @@ void printCode(std::ofstream& outputfile){
             outputfile << endl;
             break;
         }
+        case interCode->WRITE:{
+            auto stru_sinop = interCode->u.sinop;
+            outputfile << "WRITE ";
+            printOperand(outputfile, stru_sinop.op);
+            outputfile << endl;
+            break;
+        }
         case interCode->CALL:{
             auto stru_assign = interCode->u.assign;
             printOperand(outputfile, stru_assign.left);
             outputfile << " := CALL ";
             printOperand(outputfile, stru_assign.right);
+            outputfile << endl;
+            break;
+        }
+        case interCode->ARG:{
+            auto stru_sinop = interCode->u.sinop;
+            outputfile << "ARG ";
+            printOperand(outputfile, stru_sinop.op);
             outputfile << endl;
             break;
         }
@@ -296,16 +315,14 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
 //cout << "good" << endl;
     if (ptr_child0->node_type==ENUM_ID )
     {
-//cout << "ID" <<endl;
-        // ID LP RP  or  ID LP Args RP
-        if(ptr->child_num == 3){
+        if(ptr->child_num == 3){    // ID LP RP 
             if( strcmp(ptr_child0->node_name,"read")==0 && place!=nullptr){
                 InterCode* cur_code = new_sinop_code(place);
                 cur_code->kind = cur_code->READ;
                 append_code(cur_code);
                 //cout << "read" << endl;
                 return;
-            }else if(place!=nullptr){
+            }else { // if(place!=nullptr)
                 Operand* func = new_var_operand(ptr_child0->node_name);
                 InterCode* cur_code = new_assign_code(place, func);
                 cur_code->kind = cur_code->CALL;
@@ -314,9 +331,32 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
                 return;
 //todo place is nullptr?
             }
-        }else{
-            //if(  )
-        //todo
+        }else{  // ID LP Args RP
+            tree_node* ptr_child2 = ptr->child_node[2]; 
+            list<Operand*> arg_list;
+            TranslateArgs(ptr_child2, Sysmtable, arg_list);
+            auto it = arg_list.begin();
+            if( strcmp(ptr_child0->node_name,"write")==0){
+                InterCode* cur_code = new_sinop_code( *it );
+                cur_code->kind = cur_code->WRITE;
+                append_code(cur_code);
+                return;
+            }else{
+                while (it != arg_list.end())
+                {
+                    InterCode* cur_code = new_sinop_code( *it );
+                    cur_code->kind = cur_code->ARG;
+                    append_code(cur_code);
+                    ++it;
+                }
+                Operand* func = new_var_operand(ptr_child0->node_name);
+                InterCode* cur_code = new_assign_code(place, func);
+                cur_code->kind = cur_code->CALL;
+                append_code(cur_code);
+                //cout << "call" << endl;
+                return;
+
+            }
         }
         
         //Sysmtable_item cur_item = Sysmtable.find(ptr_child0->node_name)->second;
@@ -633,4 +673,16 @@ void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
     // VarDec LB INT RB
 
 
+}
+
+void TranslateArgs(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable,list<Operand*>& arg_list){
+    // Exp   or   Exp COMMA Args
+    string t1 = new_temp();
+    Operand* operand_t1 = new_var_operand(t1);
+    TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
+    arg_list.push_front(operand_t1);
+    if(ptr->child_num==1){
+        return ;
+    }
+    TranslateArgs(ptr->child_node[2],Sysmtable,arg_list);
 }
