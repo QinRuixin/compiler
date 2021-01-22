@@ -320,7 +320,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         }
         
         //Sysmtable_item cur_item = Sysmtable.find(ptr_child0->node_name)->second;
-
+        return;
     }
     
 

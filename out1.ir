@@ -1,31 +1,42 @@
+FUNCTION add :
+PARAM c1
+PARAM c2
+t2 := c1
+t3 := c2
+t1 := t2 + t3
+RETURN t1
 FUNCTION main :
 PARAM a
 PARAM b
-i := t1
-t2 := #1
-i := t2
-t4 := i
-t3 := #0 - t4
-j := t3
-t6 := i
-t7 := #1
-t5 := t6 + t7
-j := t5
-t9 := i
-t10 := j
-t8 := t9 + t10
-a := t8
-t11 := i
-t12 := #2
-IF t11 < t12 GOTO label1
+READ t4
+temp := t4
+READ t5
+i := t5
+t6 := #1
+i := t6
+t8 := i
+t7 := #0 - t8
+j := t7
+t10 := i
+t11 := #1
+t9 := t10 + t11
+j := t9
+t13 := i
+t14 := j
+t12 := t13 + t14
+a := t12
+sum := t15
+t16 := i
+t17 := #2
+IF t16 < t17 GOTO label1
 GOTO label2
 LABEL label1 :
-t13 := #1
-i := t13
+t18 := #1
+i := t18
 GOTO label3
 LABEL label2 :
-t14 := #3
-i := t14
+t19 := #3
+i := t19
 LABEL label3 :
-t15 := #0
-RETURN t15
+t20 := #0
+RETURN t20
