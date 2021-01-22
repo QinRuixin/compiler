@@ -514,7 +514,12 @@ void TranslateStmtList(tree_node* ptr,std::map<std::string, struct Sysmtable_ite
 }
 
 void TranslateDefList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
-
+    if(ptr==nullptr || ptr->child_num < 2){
+        return;
+    }
+    // Def DefList
+    TranslateDef(ptr->child_node[0], Sysmtable);
+    TranslateDefList(ptr->child_node[1], Sysmtable);
 }
 
 void TranslateDef(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
@@ -535,6 +540,7 @@ void TranslateFunDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
     InterCode* cur_code_func = new_sinop_code(operand_func);
     cur_code_func->kind = cur_code_func->FUNCTION;
     append_code(cur_code_func);
+cout << " TranslateFunDec" << endl;
     if(ptr->child_num == 4){
         tree_node* ptr_child2 = ptr->child_node[2]; // VarList
         TranslateVarList(ptr_child2, Sysmtable); //PARAM  todo
@@ -543,6 +549,7 @@ void TranslateFunDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
 
 void TranslateVarList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
     tree_node* ptr_child0 = ptr->child_node[0];
+cout << " TranslateVarList" << endl;
     TranslateParamDec(ptr_child0, Sysmtable);
     if(ptr_child0->child_num>1){
         tree_node* ptr_child2 = ptr->child_node[2];
@@ -554,6 +561,8 @@ void TranslateParamDec(tree_node* ptr,std::map<std::string, struct Sysmtable_ite
     if(ptr==nullptr){
         return;
     }
+cout << " TranslateParamDec" << endl;
+
     //Specifier VarDec
     tree_node* ptr_child0 = ptr->child_node[0];
     tree_node* ptr_child1 = ptr->child_node[1];
@@ -565,7 +574,8 @@ void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
     if(ptr==nullptr){
         return;
     }
-    return ; //todo
+cout << " TranslateVarDec" << endl;
+
     tree_node* ptr_child0 = ptr->child_node[0];
 //    if(ptr->child_num==1){
         Operand* operand_param = new_var_operand(ptr_child0->node_name);
