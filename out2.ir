@@ -16,27 +16,31 @@ t9 := #1
 t7 := t8 - t9
 ARG t7
 t6 := CALL fact
+t4 := t5 * t6
 RETURN t4
 LABEL label3 :
 
 FUNCTION main :
-READ t10
-m := t10
-t11 := m
-t12 := #1
-IF t11 > t12 GOTO label4
+READ t11
+m := t11
+t10 := m
+t12 := m
+t13 := #1
+IF t12 > t13 GOTO label4
 GOTO label5
 LABEL label4 :
-t14 := m
-ARG t14
-t13 := CALL fact
-result := t13
+t16 := m
+ARG t16
+t15 := CALL fact
+result := t15
+t14 := result
 GOTO label6
 LABEL label5 :
-t15 := #1
-result := t15
+t18 := #1
+result := t18
+t17 := result
 LABEL label6 :
-t16 := result
-WRITE t16
-t17 := #0
-RETURN t17
+t20 := result
+WRITE t20
+t21 := #0
+RETURN t21
