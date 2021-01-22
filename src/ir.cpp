@@ -380,7 +380,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         tree_node* ptr_ID = ptr_child0->child_node[0];
         Operand* operand_ID = new_add_operand(ptr_ID->node_name);
         InterCode* cur_code3 = new_binop_code(place, operand_ID, operand_t1);
-        cur_code->kind = cur_code->ADD;
+        cur_code3->kind = cur_code3->ADD;
         append_code(cur_code3);
 
 //----
