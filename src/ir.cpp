@@ -565,6 +565,7 @@ void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
     if(ptr==nullptr){
         return;
     }
+    return ; //todo
     tree_node* ptr_child0 = ptr->child_node[0];
 //    if(ptr->child_num==1){
         Operand* operand_param = new_var_operand(ptr_child0->node_name);
