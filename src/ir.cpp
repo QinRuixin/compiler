@@ -189,6 +189,21 @@ void printCode(std::ofstream& outputfile){
             outputfile << endl;
             break;
         }
+        case interCode->READ:{
+            auto stru_sinop = interCode->u.sinop;
+            outputfile << "READ ";
+            printOperand(outputfile, stru_sinop.op);
+            outputfile << endl;
+            break;
+        }
+        case interCode->CALL:{
+            auto stru_assign = interCode->u.assign;
+            printOperand(outputfile, stru_assign.left);
+            outputfile << " := CALL ";
+            printOperand(outputfile, stru_assign.right);
+            outputfile << endl;
+            break;
+        }
         default:
             break;
         }
@@ -281,10 +296,27 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
 //cout << "good" << endl;
     if (ptr_child0->node_type==ENUM_ID )
     {
-cout << "ID" <<endl;
+//cout << "ID" <<endl;
         // ID LP RP  or  ID LP Args RP
-        if( strcmp(ptr_child0->node_name,"read")==0){
-            cout << "read" << endl;
+        if(ptr->child_num == 3){
+            if( strcmp(ptr_child0->node_name,"read")==0 && place!=nullptr){
+                InterCode* cur_code = new_sinop_code(place);
+                cur_code->kind = cur_code->READ;
+                append_code(cur_code);
+                //cout << "read" << endl;
+                return;
+            }else if(place!=nullptr){
+                Operand* func = new_var_operand(ptr_child0->node_name);
+                InterCode* cur_code = new_assign_code(place, func);
+                cur_code->kind = cur_code->CALL;
+                append_code(cur_code);
+                //cout << "call" << endl;
+                return;
+//todo place is nullptr?
+            }
+        }else{
+            //if(  )
+        //todo
         }
         
         //Sysmtable_item cur_item = Sysmtable.find(ptr_child0->node_name)->second;
