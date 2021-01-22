@@ -2,35 +2,37 @@
 FUNCTION main :
 DEC test 40
 t4 := #1
-t3 := t4 + #4
-&test := t2
+t3 := t4 * #4
+t2 := &test + t3
 n := t2
 t1 := n
-READ t6
-n := t6
-t5 := n
+t6 := n
+WRITE t6
+READ t8
+n := t8
 t7 := n
-t8 := #0
-IF t7 > t8 GOTO label1
+t9 := n
+t10 := #0
+IF t9 > t10 GOTO label1
 GOTO label2
 LABEL label1 :
-t10 := #1
-WRITE t10
+t12 := #1
+WRITE t12
 GOTO label3
 LABEL label2 :
-t11 := n
-t12 := #0
-IF t11 < t12 GOTO label4
+t13 := n
+t14 := #0
+IF t13 < t14 GOTO label4
 GOTO label5
 LABEL label4 :
-t15 := #1
-t14 := #0 - t15
-WRITE t14
+t17 := #1
+t16 := #0 - t17
+WRITE t16
 GOTO label6
 LABEL label5 :
-t17 := #0
-WRITE t17
+t19 := #0
+WRITE t19
 LABEL label6 :
 LABEL label3 :
-t18 := #0
-RETURN t18
+t20 := #0
+RETURN t20
