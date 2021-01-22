@@ -98,9 +98,8 @@ std::map<std::string, struct Sysmtable_item> AnalasysForProgram(tree_node* ptr){
     cur_type2->kind = cur_type2->FUNCTION;
     //cur_type->u.function = function;
     cur_item2.type = cur_type2;
-
     Sysmtable.insert(std::pair<std::string,Sysmtable_item>("write",cur_item));
-
+std::cout << "good" << std::endl;
     tree_node* ExtDefList_ = ptr->child_node[0];
     AnalasysForExtDefList(ExtDefList_);
     return Sysmtable;
