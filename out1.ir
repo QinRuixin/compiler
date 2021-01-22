@@ -9,11 +9,15 @@ t4 := t5 + t6
 j := t4
 t7 := i
 t8 := #2
-IF t7 < t8GOTO label1
+IF t7 < t8 GOTO label1
 GOTO label2
 LABEL label1 :
+t9 := #1
+i := t9
 GOTO label3
 LABEL label2 :
+t10 := #3
+i := t10
 LABEL label3 :
-t9 := #0
-RETURN t9
+t11 := #0
+RETURN t11

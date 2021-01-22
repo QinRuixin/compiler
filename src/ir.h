@@ -7,8 +7,10 @@ typedef enum CodeType{
     GOTO, IF, RETURN, DEC, ARG, CALL, PARAM, READ, WRITE
 } CODE_TYPE;
 
+void append_code(InterCode* cur_code);
 void printOperand(std::ofstream& outputfile, Operand* operand);
 void printCode(std::ofstream& outputfile);
+
 void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void TranslateProgram(tree_node* ptr, std::map<std::string, struct Sysmtable_item>& Sysmtable, std::ofstream& outputfile);
 void TranslateExp(tree_node* ptr, std::map<std::string, struct Sysmtable_item>& Sysmtable, Operand* place);
@@ -18,8 +20,9 @@ void TranslateArgs(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& 
 void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void TranslateDefList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void TranslateStmtList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
-void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
-void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
-void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
+void TranslateDef(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
+void TranslateDecList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
+void TranslateDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 
-void append_code(InterCode* cur_code);
+void TranslateFunDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
+void TranslateVarList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);

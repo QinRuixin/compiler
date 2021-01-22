@@ -167,6 +167,18 @@ void printCode(std::ofstream& outputfile){
             outputfile << endl;
             break;
         }
+        case interCode->FUNCTION:{
+            auto stru_sinop = interCode->u.sinop;
+            outputfile << "FUNCTION ";
+            printOperand(outputfile, stru_sinop.op);
+            outputfile << " :";
+            outputfile << endl;
+            break;
+        }
+        case interCode->PARAM:{
+            //todo
+            break;
+        }
         default:
             break;
         }
@@ -188,6 +200,12 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
         break;
     case ENUM_Stmt:
         TranslateStmt(ptr, Sysmtable);
+        break;
+    case ENUM_CompSt:
+        TranslateCompSt(ptr, Sysmtable);
+        break;
+    case ENUM_FunDec:
+        TranslateFunDec(ptr, Sysmtable);
         break;
     //todo
     default:
@@ -370,6 +388,7 @@ void TranslateStmt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& 
         InterCode* cur_code_lb1 = new_sinop_code(operand_lb1);
         cur_code_lb1->kind = cur_code_lb1->LABEL;
         append_code(cur_code_lb1);
+
         TranslateCond(ptr_child2, operand_lb2, operand_lb3, Sysmtable); // cur_code1
         
         InterCode* cur_code_lb2 = new_sinop_code(operand_lb2);
@@ -418,14 +437,50 @@ void TranslateCond(tree_node* ptr, Operand* label_true,Operand* label_false,std:
         InterCode* cur_code4 = new_sinop_code(label_false);
         cur_code4->kind = cur_code4->GOTO;
         append_code(cur_code4);
-//todo
         break;
     }
-
-
-    
-    default:
+    case ENUM_AND:{
+        string label1 = new_label();
+        Operand* operand_lb1 = new_label_operand(label1);
+        //cur_code1
+        TranslateCond(ptr_child0, operand_lb1, label_false, Sysmtable); //Exp1
+        
+        InterCode* cur_code_lb1 = new_sinop_code(operand_lb1);
+        cur_code_lb1->kind = cur_code_lb1->LABEL;
+        append_code(cur_code_lb1);
+        //cur_code2
+        tree_node* ptr_child2 = ptr->child_node[2]; //Exp2
+        TranslateCond(ptr_child2, label_true, label_false, Sysmtable);
+        
         break;
+    }
+    case ENUM_OR:{
+        string label1 = new_label();
+        Operand* operand_lb1 = new_label_operand(label1);
+        //cur_code1
+        TranslateCond(ptr_child0, label_true, operand_lb1, Sysmtable); //Exp1
+        
+        InterCode* cur_code_lb1 = new_sinop_code(operand_lb1);
+        cur_code_lb1->kind = cur_code_lb1->LABEL;
+        append_code(cur_code_lb1);
+        //cur_code2
+        tree_node* ptr_child2 = ptr->child_node[2]; //Exp2
+        TranslateCond(ptr_child2, label_true, label_false, Sysmtable);
+        
+        break;
+    }
+    default: {// other case
+        //cur_code1
+        TranslateExp(ptr_child0, Sysmtable, operand_t1);
+        //cur_code2
+        InterCode* cur_code2 = new_ifop_code(operand_t1,new_constant_operand(0),label_true, "!=");
+        append_code(cur_code2);
+
+        InterCode* cur_code_goto_false = new_sinop_code(label_false);
+        cur_code_goto_false->kind = cur_code_goto_false->GOTO;
+        append_code(cur_code_goto_false);
+        break;
+        }
     }
 
     
@@ -441,10 +496,6 @@ void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
     TranslateStmtList(ptr->child_node[2], Sysmtable);
 }
 
-void TranslateDefList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
-
-}
-
 void TranslateStmtList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
     if(ptr==nullptr || ptr->child_num < 2){
         return;
@@ -452,4 +503,36 @@ void TranslateStmtList(tree_node* ptr,std::map<std::string, struct Sysmtable_ite
     // Stmt StmtList
     TranslateStmt(ptr->child_node[0], Sysmtable);
     TranslateStmtList(ptr->child_node[1], Sysmtable);
+}
+
+void TranslateDefList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+
+}
+
+void TranslateDef(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    
+}
+
+void TranslateDecList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+
+}
+
+void TranslateDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    
+}
+
+void TranslateFunDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    tree_node* ptr_child0 = ptr->child_node[0];
+    Operand* operand_func = new_var_operand(ptr_child0->node_name);
+    InterCode* cur_code_func = new_sinop_code(operand_func);
+    cur_code_func->kind = cur_code_func->FUNCTION;
+    append_code(cur_code_func);
+    if(ptr->child_num == 4){
+        tree_node* ptr_child2 = ptr->child_node[2]; // VarList
+        TranslateVarList(ptr_child2, Sysmtable); //PARAM  todo
+    }
+}
+
+void TranslateVarList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    
 }
