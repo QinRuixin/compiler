@@ -10,9 +10,15 @@ using namespace std;
 list<InterCode*> InterCodes;
 int temp_cnt;
 int label_cnt;
+int var_cnt;
 
 void append_code(InterCode* cur_code){
     InterCodes.push_back(cur_code);
+}
+
+string new_var(){
+    string temp("v");
+    return temp + to_string(++var_cnt);
 }
 
 string new_temp(){
@@ -176,7 +182,10 @@ void printCode(std::ofstream& outputfile){
             break;
         }
         case interCode->PARAM:{
-            //todo
+            auto stru_sinop = interCode->u.sinop;
+            outputfile << "PARAM ";
+            printOperand(outputfile, stru_sinop.op);
+            outputfile << endl;
             break;
         }
         default:
@@ -222,6 +231,7 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
 void TranslateProgram(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable, std::ofstream& outputfile){
     temp_cnt = 0;
     label_cnt = 0;
+    var_cnt = 0;
     if(ptr==nullptr){
         return;
     }
@@ -482,8 +492,6 @@ void TranslateCond(tree_node* ptr, Operand* label_true,Operand* label_false,std:
         break;
         }
     }
-
-    
 }
 
 void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
@@ -534,5 +542,38 @@ void TranslateFunDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
 }
 
 void TranslateVarList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    tree_node* ptr_child0 = ptr->child_node[0];
+    TranslateParamDec(ptr_child0, Sysmtable);
+    if(ptr_child0->child_num>1){
+        tree_node* ptr_child2 = ptr->child_node[2];
+        TranslateVarList(ptr_child2, Sysmtable);
+    }
+}
+
+void TranslateParamDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    if(ptr==nullptr){
+        return;
+    }
+    //Specifier VarDec
+    tree_node* ptr_child0 = ptr->child_node[0];
+    tree_node* ptr_child1 = ptr->child_node[1];
+    TranslateVarDec(ptr_child1, Sysmtable);
     
+}
+
+void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    if(ptr==nullptr){
+        return;
+    }
+    tree_node* ptr_child0 = ptr->child_node[0];
+//    if(ptr->child_num==1){
+        Operand* operand_param = new_var_operand(ptr_child0->node_name);
+        InterCode* cur_code_param = new_sinop_code(operand_param);
+        cur_code_param->kind = cur_code_param->PARAM;
+        append_code(cur_code_param);
+//    }
+    //todo
+    // VarDec LB INT RB
+
+
 }

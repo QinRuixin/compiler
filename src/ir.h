@@ -26,3 +26,5 @@ void TranslateDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
 
 void TranslateFunDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
 void TranslateVarList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
+void TranslateParamDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
+void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable);
