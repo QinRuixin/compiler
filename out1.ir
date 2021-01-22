@@ -1,30 +1,31 @@
 FUNCTION main :
 PARAM a
 PARAM b
-t1 := #1
 i := t1
-t3 := i
-t2 := #0 - t3
-j := t2
-t5 := i
-t6 := #1
-t4 := t5 + t6
-j := t4
-t8 := i
-t9 := j
-t7 := t8 + t9
-a := t7
-t10 := i
-t11 := #2
-IF t10 < t11 GOTO label1
+t2 := #1
+i := t2
+t4 := i
+t3 := #0 - t4
+j := t3
+t6 := i
+t7 := #1
+t5 := t6 + t7
+j := t5
+t9 := i
+t10 := j
+t8 := t9 + t10
+a := t8
+t11 := i
+t12 := #2
+IF t11 < t12 GOTO label1
 GOTO label2
 LABEL label1 :
-t12 := #1
-i := t12
+t13 := #1
+i := t13
 GOTO label3
 LABEL label2 :
-t13 := #3
-i := t13
+t14 := #3
+i := t14
 LABEL label3 :
-t14 := #0
-RETURN t14
+t15 := #0
+RETURN t15

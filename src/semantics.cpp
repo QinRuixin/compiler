@@ -81,6 +81,16 @@ std::map<std::string, struct Sysmtable_item> AnalasysForProgram(tree_node* ptr){
     if(ptr==nullptr){
         return Sysmtable;
     }
+    // add function read and write 20210122
+    Sysmtable_item cur_item;
+    cur_item.kind = cur_item.FUNCTION;
+    cur_item.name = "read";
+    Sysmtable.insert(std::pair<std::string,Sysmtable_item>("read",cur_item));
+    Sysmtable_item cur_item2;
+    cur_item2.kind = cur_item2.FUNCTION;
+    cur_item2.name = "write";
+    Sysmtable.insert(std::pair<std::string,Sysmtable_item>("write",cur_item));
+
     tree_node* ExtDefList_ = ptr->child_node[0];
     AnalasysForExtDefList(ExtDefList_);
     return Sysmtable;
@@ -230,6 +240,7 @@ StructSpecifier : STRUCT OptTag LC DefList RC
             cur_item.row = ID_->line_no;
             res->u.structure = cur_struct;
             cur_item.type = res;
+            Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
             //debug 
         /*    std::cout << "insert " << cur_item.name <<std::endl;
             FieldList tempField =  cur_struct->domain;
@@ -239,7 +250,6 @@ StructSpecifier : STRUCT OptTag LC DefList RC
                 tempField = tempField->tail;
             }
         */
-            Sysmtable.insert(std::pair<std::string,Sysmtable_item>(cur_item.name,cur_item));
         
         }else{
             cur_struct->domain = AnalasysForDefList(DefList_,  SRC_STRUCT);

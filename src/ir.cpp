@@ -199,7 +199,7 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
         return;
     }
 
-cout << "ptr->node_type : " << ptr->node_type <<endl;
+//cout << "ptr->node_type : " << ptr->node_type <<endl;
 
     NODE_TYPE cur_type = ptr->node_type;
     switch (cur_type)
