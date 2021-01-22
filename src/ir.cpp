@@ -143,6 +143,26 @@ void printCode(std::ofstream& outputfile){
             outputfile << endl;
             break;
         }
+        case interCode->MUL:{
+            auto stru_binop = interCode->u.binop;
+            printOperand(outputfile, stru_binop.result);
+            outputfile << " := " ;
+            printOperand(outputfile, stru_binop.op1);
+            outputfile << " * " ;
+            printOperand(outputfile, stru_binop.op2);
+            outputfile << endl;
+            break;
+        }
+        case interCode->DIV:{
+            auto stru_binop = interCode->u.binop;
+            printOperand(outputfile, stru_binop.result);
+            outputfile << " := " ;
+            printOperand(outputfile, stru_binop.op1);
+            outputfile << " / " ;
+            printOperand(outputfile, stru_binop.op2);
+            outputfile << endl;
+            break;
+        }
         case interCode->RETURN:{
             auto stru_sinop = interCode->u.sinop;
             outputfile << "RETURN ";
