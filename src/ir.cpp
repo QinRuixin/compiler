@@ -199,6 +199,7 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
         return;
     }
 
+cout << "ptr->node_type : " << ptr->node_type <<endl;
 
     NODE_TYPE cur_type = ptr->node_type;
     switch (cur_type)
@@ -333,7 +334,6 @@ void TranslateStmt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& 
 
     tree_node* ptr_child0 = ptr->child_node[0]; 
     
-cout << "ptr_child0->node_type : " << ptr_child0->node_type <<endl;
     switch (ptr_child0->node_type)
     {
     case ENUM_Exp:
