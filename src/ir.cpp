@@ -577,12 +577,12 @@ void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
 cout << " TranslateVarDec" << endl;
 
     tree_node* ptr_child0 = ptr->child_node[0];
-//    if(ptr->child_num==1){
+/*    if(ptr->child_num==1){
         Operand* operand_param = new_var_operand(ptr_child0->node_name);
         InterCode* cur_code_param = new_sinop_code(operand_param);
         cur_code_param->kind = cur_code_param->PARAM;
         append_code(cur_code_param);
-//    }
+    }*/
     //todo
     // VarDec LB INT RB
 
