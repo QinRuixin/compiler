@@ -773,6 +773,7 @@ cout << "22222222" << endl;
     tree_node* ptr_ID = ptr_child0->child_node[0];
     tree_node* ptr_INT = ptr_child0->child_node[2];
     Operand* operand_t1 = new_var_operand(ptr_ID->node_name);
+cout << "ptr_ID->node_name " << ptr_ID->node_name << endl;
     InterCode* cur_code = new_dec_code(operand_t1 , ptr_INT->int_val);
     cur_code->kind = cur_code->DEC;
     append_code(cur_code);
