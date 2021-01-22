@@ -277,6 +277,17 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
     // has 2 or 3 child nodes
     tree_node* ptr_child0 = ptr->child_node[0]; 
     tree_node* ptr_child1 = ptr->child_node[1]; 
+    if (ptr_child0->node_type==ENUM_ID )
+    {
+        // ID LP RP  or  ID LP Args RP
+        if(ptr_child0->node_name=="read"){
+            cout << "read" << endl;
+        }
+        
+        //Sysmtable_item cur_item = Sysmtable.find(ptr_child0->node_name)->second;
+
+    }
+    
 
     if(ptr_child0->node_type== ENUM_MINUS){     //MINUS Exp1
         // ptr_child1 Exp1

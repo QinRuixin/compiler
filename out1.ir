@@ -10,17 +10,21 @@ t5 := i
 t6 := #1
 t4 := t5 + t6
 j := t4
-t7 := i
-t8 := #2
-IF t7 < t8 GOTO label1
+t8 := i
+t9 := j
+t7 := t8 + t9
+a := t7
+t10 := i
+t11 := #2
+IF t10 < t11 GOTO label1
 GOTO label2
 LABEL label1 :
-t9 := #1
-i := t9
+t12 := #1
+i := t12
 GOTO label3
 LABEL label2 :
-t10 := #3
-i := t10
+t13 := #3
+i := t13
 LABEL label3 :
-t11 := #0
-RETURN t11
+t14 := #0
+RETURN t14
