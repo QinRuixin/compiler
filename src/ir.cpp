@@ -527,6 +527,11 @@ void TranslateStmt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& 
         break;
     }
     default:
+        int child_nums = ptr->child_num;
+//        cout <<"child_nums : " << child_nums << endl;
+        for(int i = 0; i < child_nums; ++i){
+            Translate(ptr->child_node[i], Sysmtable);
+        }
         break;
     }
 
