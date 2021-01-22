@@ -1,6 +1,7 @@
 #include "ir.h"
 #include "tree.h"
 #include "intercode.h"
+#include "cstring"
 #include <fstream>
 #include <map>
 #include <list>
@@ -277,11 +278,12 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
     // has 2 or 3 child nodes
     tree_node* ptr_child0 = ptr->child_node[0]; 
     tree_node* ptr_child1 = ptr->child_node[1]; 
-cout << "good" << endl;
+//cout << "good" << endl;
     if (ptr_child0->node_type==ENUM_ID )
     {
+cout << "ID" <<endl;
         // ID LP RP  or  ID LP Args RP
-        if(ptr_child0->node_name=="read"){
+        if( strcmp(ptr_child0->node_name,"read")==0){
             cout << "read" << endl;
         }
         
