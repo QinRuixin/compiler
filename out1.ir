@@ -5,9 +5,11 @@ t2 := c1
 t3 := c2
 t1 := t2 + t3
 RETURN t1
+
 FUNCTION getInt :
 t4 := #5
 RETURN t4
+
 FUNCTION main :
 PARAM a
 PARAM b
@@ -28,18 +30,22 @@ t14 := i
 t15 := j
 t13 := t14 + t15
 a := t13
+ARG t18
+ARG t17
+t16 := CALL add
 sum := t16
-t17 := i
-t18 := #2
-IF t17 < t18 GOTO label1
+t19 := i
+t20 := #2
+IF t19 < t20 GOTO label1
 GOTO label2
 LABEL label1 :
-t19 := #1
-i := t19
+t21 := #1
+i := t21
 GOTO label3
 LABEL label2 :
-t20 := #3
-i := t20
+t22 := #3
+i := t22
 LABEL label3 :
-t21 := #0
-RETURN t21
+t23 := #0
+RETURN t23
+

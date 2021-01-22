@@ -19,6 +19,7 @@ int main(int a,int b)
    j = i + 1;
    a = i + j;
    sum = add(i, j);
+   write(-1);
    if(i < 2){
       i = 1;
    }else{
