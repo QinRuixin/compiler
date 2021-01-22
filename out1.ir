@@ -34,18 +34,19 @@ ARG t18
 ARG t17
 t16 := CALL add
 sum := t16
-t19 := i
-t20 := #2
-IF t19 < t20 GOTO label1
+WRITE t19
+t20 := i
+t21 := #2
+IF t20 < t21 GOTO label1
 GOTO label2
 LABEL label1 :
-t21 := #1
-i := t21
+t22 := #1
+i := t22
 GOTO label3
 LABEL label2 :
-t22 := #3
-i := t22
+t23 := #3
+i := t23
 LABEL label3 :
-t23 := #0
-RETURN t23
+t24 := #0
+RETURN t24
 

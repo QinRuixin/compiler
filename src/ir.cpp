@@ -679,7 +679,7 @@ void TranslateArgs(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& 
     // Exp   or   Exp COMMA Args
     string t1 = new_temp();
     Operand* operand_t1 = new_var_operand(t1);
-    TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
+    TranslateExp(ptr->child_node[0],Sysmtable,operand_t1);
     arg_list.push_front(operand_t1);
     if(ptr->child_num==1){
         return ;
