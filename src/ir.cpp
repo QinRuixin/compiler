@@ -551,7 +551,7 @@ void TranslateVarList(tree_node* ptr,std::map<std::string, struct Sysmtable_item
     tree_node* ptr_child0 = ptr->child_node[0];
 //cout << " TranslateVarList" << endl;
     TranslateParamDec(ptr_child0, Sysmtable);
-    if(ptr_child0->child_num>1){
+    if(ptr->child_num>1){
         tree_node* ptr_child2 = ptr->child_node[2];
         TranslateVarList(ptr_child2, Sysmtable);
     }
