@@ -1,6 +1,7 @@
 
 FUNCTION fact :
 PARAM n
+PARAM re
 t1 := n
 t2 := #1
 IF t1 == t2 GOTO label1
@@ -14,6 +15,8 @@ t5 := n
 t8 := n
 t9 := #1
 t7 := t8 - t9
+t10 := #1
+ARG t10
 ARG t7
 t6 := CALL fact
 t4 := t5 * t6
@@ -21,26 +24,28 @@ RETURN t4
 LABEL label3 :
 
 FUNCTION main :
-READ t11
-m := t11
-t10 := m
-t12 := m
-t13 := #1
-IF t12 > t13 GOTO label4
+READ t12
+m := t12
+t11 := m
+t13 := m
+t14 := #1
+IF t13 > t14 GOTO label4
 GOTO label5
 LABEL label4 :
-t16 := m
-ARG t16
-t15 := CALL fact
-result := t15
-t14 := result
+t17 := m
+t18 := #1
+ARG t18
+ARG t17
+t16 := CALL fact
+result := t16
+t15 := result
 GOTO label6
 LABEL label5 :
-t18 := #1
-result := t18
-t17 := result
+t20 := #1
+result := t20
+t19 := result
 LABEL label6 :
-t20 := result
-WRITE t20
-t21 := #0
-RETURN t21
+t22 := result
+WRITE t22
+t23 := #0
+RETURN t23

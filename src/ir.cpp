@@ -168,7 +168,6 @@ void printCode(std::ofstream& outputfile){
             outputfile << " := " ;
             printOperandDeaddress(outputfile, stru_assign.right);
             outputfile << endl;
-            //outputfile << stru_assign.left->u.value << " := " << endl;
             break;
         }
         case interCode->ASSIGN:{
@@ -177,7 +176,6 @@ void printCode(std::ofstream& outputfile){
             outputfile << " := " ;
             printOperand(outputfile, stru_assign.right);
             outputfile << endl;
-            //outputfile << stru_assign.left->u.value << " := " << endl;
             break;
         }
         case interCode->ADD:{
@@ -323,20 +321,24 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     NODE_TYPE cur_type = ptr->node_type;
     switch (cur_type)
     {
-    case ENUM_Exp:
-        TranslateExp(ptr, Sysmtable, nullptr);
-        break;
     case ENUM_Stmt:
         TranslateStmt(ptr, Sysmtable);
         break;
-    case ENUM_CompSt:
-        TranslateCompSt(ptr, Sysmtable);
+    case ENUM_Dec:
+        TranslateDec(ptr, Sysmtable);
         break;
     case ENUM_FunDec:
         TranslateFunDec(ptr, Sysmtable);
         break;
+
+    case ENUM_CompSt:
+        TranslateCompSt(ptr, Sysmtable);
+        break;
     case ENUM_VarDec:
         TranslateVarDec(ptr, Sysmtable);
+        break;
+    case ENUM_Exp:
+        TranslateExp(ptr, Sysmtable, nullptr);
         break;
     //todo
     default:
@@ -577,7 +579,6 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
     }
 }
 
-
 void TranslateStmt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
 
     tree_node* ptr_child0 = ptr->child_node[0]; 
@@ -585,28 +586,26 @@ void TranslateStmt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& 
     switch (ptr_child0->node_type)
     {
     case ENUM_Exp:{
-        string t1 = new_temp();
-        Operand* operand_t1 = new_var_operand(t1);
-        TranslateExp(ptr_child0, Sysmtable, operand_t1);
+//        string t1 = new_temp();
+//        Operand* operand_t1 = new_var_operand(t1);
+//        TranslateExp(ptr_child0, Sysmtable, operand_t1);
+        TranslateExp(ptr_child0, Sysmtable, nullptr);
         break;
     }
     case ENUM_CompSt:
-        TranslateCompSt(ptr_child0, Sysmtable);
+        Translate(ptr_child0, Sysmtable);
         break;
-    case ENUM_RETURN:
-// /*
-    {   string t1 = new_temp();
-        Operand* operand_t1 = new_var_operand(t1);
+    case ENUM_RETURN:{   
         tree_node* ptr_child1 = ptr->child_node[1]; 
-//cout << ptr->child_num << endl; // 3
+        string t1 = new_temp();
+        Operand* operand_t1 = new_var_operand(t1);
         TranslateExp(ptr_child1, Sysmtable, operand_t1);
         InterCode* cur_code = new_sinop_code(operand_t1);
         cur_code->kind = cur_code->RETURN;
         //return t1
         append_code(cur_code);
         break;
-    }    
-//*/
+    }
     case ENUM_IF:{  // IF LP Exp RP Stmt (ELSE Stmt)
         tree_node* ptr_child2 = ptr->child_node[2];  // Exp
         string label1 = new_label();
@@ -749,7 +748,8 @@ void TranslateCond(tree_node* ptr, Operand* label_true,Operand* label_false,std:
         }
     }
 }
-
+/*
+// Deprecated
 void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
 //todo
     // LC DefList StmtList RC
@@ -798,14 +798,13 @@ void TranslateDecList(tree_node* ptr,std::map<std::string, struct Sysmtable_item
 void TranslateDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
     
 }
-
+*/
 void TranslateFunDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
     tree_node* ptr_child0 = ptr->child_node[0];
     Operand* operand_func = new_var_operand(ptr_child0->node_name);
     InterCode* cur_code_func = new_sinop_code(operand_func);
     cur_code_func->kind = cur_code_func->FUNCTION;
     append_code(cur_code_func);
-//cout << " TranslateFunDec" << endl;
     if(ptr->child_num == 4){
         tree_node* ptr_child2 = ptr->child_node[2]; // VarList
         TranslateVarList(ptr_child2, Sysmtable); //PARAM  todo
@@ -814,7 +813,6 @@ void TranslateFunDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
 
 void TranslateVarList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
     tree_node* ptr_child0 = ptr->child_node[0];
-//cout << " TranslateVarList" << endl;
     TranslateParamDec(ptr_child0, Sysmtable);
     if(ptr->child_num>1){
         tree_node* ptr_child2 = ptr->child_node[2];
@@ -826,29 +824,24 @@ void TranslateParamDec(tree_node* ptr,std::map<std::string, struct Sysmtable_ite
     if(ptr==nullptr){
         return;
     }
-//cout << " TranslateParamDec" << endl;
-
     //Specifier VarDec
     tree_node* ptr_child0 = ptr->child_node[0];
     tree_node* ptr_child1 = ptr->child_node[1];
     TranslateParamVarDec(ptr_child1, Sysmtable);
-    
 }
 
 void TranslateParamVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
     if(ptr==nullptr){
         return;
     }
-
     tree_node* ptr_child0 = ptr->child_node[0];
-//cout << " TranslateVarDec" << endl;
-//  /*  if(ptr->child_num==1){
-        Operand* operand_param = new_var_operand(ptr_child0->node_name);
-        InterCode* cur_code_param = new_sinop_code(operand_param);
-        cur_code_param->kind = cur_code_param->PARAM;
-        append_code(cur_code_param);
-//    }*/
+    Operand* operand_param = new_var_operand(ptr_child0->node_name);
+    InterCode* cur_code_param = new_sinop_code(operand_param);
+    cur_code_param->kind = cur_code_param->PARAM;
+    append_code(cur_code_param);
 }
+
+
 void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
     if(ptr==nullptr){
         return;
@@ -860,7 +853,6 @@ void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
     if(ptr_child0->child_num!=1){
         return; // multiple dimensional
     }
-
     tree_node* ptr_ID = ptr_child0->child_node[0];
     tree_node* ptr_INT = ptr->child_node[2];
     Operand* operand_t1 = new_var_operand(ptr_ID->node_name);
@@ -869,6 +861,19 @@ void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
     append_code(cur_code);
     // 22222222
 }
+
+void TranslateDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
+    tree_node* ptr_child_VarDec = ptr->child_node[0];
+    if(ptr_child_VarDec->child_num == 1 && ptr->child_num==3){
+        // VarDec -> ID
+        Operand* operand_t1 = new_var_operand( ptr_child_VarDec->child_node[0]->node_name);
+        TranslateExp(ptr->child_node[2], Sysmtable, operand_t1);
+    }
+    if(ptr_child_VarDec->child_num != 1){
+        TranslateVarDec(ptr_child_VarDec, Sysmtable);
+    }
+}
+
 void TranslateArgs(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable,list<Operand*>& arg_list){
     // Exp   or   Exp COMMA Args
     string t1 = new_temp();
