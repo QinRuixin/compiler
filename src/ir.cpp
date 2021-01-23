@@ -520,8 +520,12 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
 //------            //operand_t2->kind = operand_t2->ADDRESS;
         }
         TranslateExp(ptr->child_node[2],Sysmtable,operand_temp);
-
-        InterCode* cur_code1= new_assign_code(operand_t2, new_var_operand("*"+ttemp));
+        InterCode* cur_code1;
+        if(operand_temp->kind==operand_temp->ADDRESS){
+            cur_code1 = new_assign_code(operand_t2, new_var_operand("*"+ttemp));
+        }else{
+            cur_code1 = new_assign_code(operand_t2, operand_temp);
+        }
         append_code(cur_code1);
         if(place!=nullptr){
 //                InterCode* cur_code2= new_assign_code(place, operand_var);
