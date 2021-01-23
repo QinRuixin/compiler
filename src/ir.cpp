@@ -387,8 +387,6 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         //todo
 //        place->kind = place->ADDRESS;
         append_code(cur_code3);
-
-//----
         return;
     }
     if (ptr_child0->node_type==ENUM_ID )
@@ -721,8 +719,8 @@ void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
         return;
     }
     // todo ???
-//    TranslateDefList(ptr->child_node[1], Sysmtable);
-Translate(ptr->child_node[1], Sysmtable);
+    TranslateDefList(ptr->child_node[1], Sysmtable);
+//Translate(ptr->child_node[1], Sysmtable);
     TranslateStmtList(ptr->child_node[2], Sysmtable);
 }
 
