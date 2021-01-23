@@ -385,7 +385,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         InterCode* cur_code3 = new_binop_code(place, operand_ID, operand_t1);
         cur_code3->kind = cur_code3->ADD;
         //todo
-//        place->kind = place->ADDRESS;
+        place->kind = place->ADDRESS;
         append_code(cur_code3);
         return;
     }
