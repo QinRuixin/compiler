@@ -757,8 +757,8 @@ void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>
         return;
     }
     // todo ???
-    TranslateDefList(ptr->child_node[1], Sysmtable);
-//Translate(ptr->child_node[1], Sysmtable);
+//    TranslateDefList(ptr->child_node[1], Sysmtable);
+Translate(ptr->child_node[1], Sysmtable);
     TranslateStmtList(ptr->child_node[2], Sysmtable);
 }
 
