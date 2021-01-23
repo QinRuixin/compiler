@@ -455,9 +455,10 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         return;
     }else if(ptr_child1->node_type== ENUM_ASSIGNOP){  //Exp1 ASSIGNOP Exp2
 cout << "ENUM_ASSIGNOP" << endl;
-        // ptr_child0 Exp1
+        // ptr_child0 Exp1   maybe array?
         auto it = Sysmtable.find(ptr_child0->child_node[0]->node_name); // Exp1 -> ID get ID name
 //cout << "ptr_child0->child_node[0]->node_name " << ptr_child0->child_node[0]->node_name << endl;
+cout << "it->second.name " << it->second.name << endl;
         string t1 = new_temp();
         Operand* operand_t1 = new_var_operand(t1);
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
