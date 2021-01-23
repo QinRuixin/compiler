@@ -5,10 +5,12 @@ i := t2
 t1 := i
 t6 := #0
 t5 := t6 * #4
-ADDRESS?t4 := &test + t5
-ADDRESS?t4 := i
-t3 := ADDRESS?t4
-t10 := #0
-t9 := t10 * #4
-ADDRESS?t8 := &test + t9
-WRITE ADDRESS?t8
+t4 := &test + t5
+t7 := i
+t8 := #20
+t4 := t7 + t8
+t3 := t4
+t12 := #0
+t11 := t12 * #4
+t10 := &test + t11
+WRITE t10

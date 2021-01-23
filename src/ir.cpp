@@ -276,7 +276,7 @@ void printCode(std::ofstream& outputfile){
         case interCode->WRITE:{
             auto stru_sinop = interCode->u.sinop;
             outputfile << "WRITE ";
-            printOperand(outputfile, stru_sinop.op);
+            printOperandDeaddress(outputfile, stru_sinop.op);
             outputfile << endl;
             break;
         }
