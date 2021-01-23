@@ -115,13 +115,16 @@ void printOperandDeaddress(std::ofstream& outputfile, Operand* operand){
     case operand->LABEL:
         outputfile << operand->u.value;
         break;
+        /*
     case operand->ADDRESS:
         outputfile << "*" << operand->u.value;
         break;
     case operand->GET_ADDRESS:
         outputfile << "&" << operand->u.value;
         break;
+        */
     default:
+        outputfile << operand->u.value;
         break;
     }
 }
@@ -141,13 +144,16 @@ void printOperand(std::ofstream& outputfile, Operand* operand){
     case operand->LABEL:
         outputfile << operand->u.value;
         break;
+        /*
     case operand->ADDRESS:
         outputfile << operand->u.value;
         break;
     case operand->GET_ADDRESS:
         outputfile << "&" << operand->u.value;
         break;
+        */
     default:
+        outputfile << operand->u.value;
         break;
     }
 }
@@ -314,15 +320,10 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     if(ptr==nullptr){
         return;
     }
-
-//cout << "ptr->node_type : " << ptr->node_type <<endl;
-
     NODE_TYPE cur_type = ptr->node_type;
     switch (cur_type)
     {
     case ENUM_Exp:
-    //todo?
-//cout <<"ENUM_Exp : child_num "<<ptr->child_num << " line_no " << ptr->line_no << endl;
         TranslateExp(ptr, Sysmtable, nullptr);
         break;
     case ENUM_Stmt:
@@ -415,7 +416,8 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         append_code(cur_code);
         // right value   & Exp1->ID->name  + operand_t1
         tree_node* ptr_ID = ptr_child0->child_node[0];
-        Operand* operand_ID = new_getadd_operand(ptr_ID->node_name);
+        string temp("&");
+        Operand* operand_ID = new_var_operand(temp+ ptr_ID->node_name);
         InterCode* cur_code3 = new_binop_code(place, operand_ID, operand_t1);
         cur_code3->kind = cur_code3->ADD;
         //todo
@@ -564,14 +566,9 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
             append_code(cur_code3);
         }
         return;
-    
-    }else{  //todo logic calculation
-        // TranslateCond(ptr, )
+    }else{
+        
     }
-    //for(int i = 0; i < child_nums; ++i){
-    //    Translate(ptr->child_node[i], Sysmtable);
-    //}
-
 }
 
 
@@ -845,10 +842,6 @@ void TranslateParamVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_
         cur_code_param->kind = cur_code_param->PARAM;
         append_code(cur_code_param);
 //    }*/
-    //todo
-    // VarDec LB INT RB
-
-
 }
 void TranslateVarDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
     if(ptr==nullptr){
