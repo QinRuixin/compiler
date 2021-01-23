@@ -117,10 +117,10 @@ void printOperand(std::ofstream& outputfile, Operand* operand){
         outputfile << operand->u.value;
         break;
     case operand->ADDRESS:
-        outputfile << "&" << operand->u.value;
+        outputfile << "ADDRESS?" << operand->u.value;
         break;
-    case operand->DEADD:
-        outputfile << "*" << operand->u.value;
+    case operand->GET_ADDRESS:
+        outputfile << "&" << operand->u.value;
         break;
     default:
         break;

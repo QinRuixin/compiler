@@ -5,10 +5,10 @@ i := t2
 t1 := i
 t6 := #0
 t5 := t6 * #4
-t4 := &test + t5
-*t4 := i
+t4 :=  + t5
+&t4 := i
 t3 := t4
 t10 := #0
 t9 := t10 * #4
-t8 := &test + t9
-WRITE *t8
+t8 :=  + t9
+WRITE t8
