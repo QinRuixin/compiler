@@ -512,8 +512,8 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         TranslateExp(ptr_child0,Sysmtable,operand_t1);
         Operand* operand_t2 = new_var_operand(t1); // the same name but different kind
         if(ptr_child0->child_node[1]->node_type==ENUM_LB ){    //array
-            //operand_t2 = new_var_operand("*"+t1); // the same name but different kind
-            operand_t2->kind = operand_t2->ADDRESS;
+            operand_t2 = new_var_operand("*"+t1); // the same name but different kind
+//------            //operand_t2->kind = operand_t2->ADDRESS;
         }
         TranslateExp(ptr->child_node[2],Sysmtable,operand_t2);
 //            Operand* operand_var = new_var_operand(it->second.name); 
