@@ -330,16 +330,16 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     case ENUM_FunDec:
         TranslateFunDec(ptr, Sysmtable);
         break;
+        /*
     case ENUM_VarDec:
         TranslateVarDec(ptr, Sysmtable);
         break;
     case ENUM_Exp:
         TranslateExp(ptr, Sysmtable, nullptr);
         break;
-    //todo
+*/
     default:
         int child_nums = ptr->child_num;
-//        cout <<"child_nums : " << child_nums << endl;
         for(int i = 0; i < child_nums; ++i){
             Translate(ptr->child_node[i], Sysmtable);
         }
@@ -744,57 +744,7 @@ void TranslateCond(tree_node* ptr, Operand* label_true,Operand* label_false,std:
         }
     }
 }
-/*
-// Deprecated
-void TranslateCompSt(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
-//todo
-    // LC DefList StmtList RC
-    if(ptr==nullptr || ptr->child_num < 4){
-        return;
-    }
-    // todo ???
-//    TranslateDefList(ptr->child_node[1], Sysmtable);
-Translate(ptr->child_node[1], Sysmtable);
-    TranslateStmtList(ptr->child_node[2], Sysmtable);
-}
 
-void TranslateStmtList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
-    if(ptr==nullptr || ptr->child_num < 2){
-        return;
-    }
-    // Stmt StmtList
-    TranslateStmt(ptr->child_node[0], Sysmtable);
-    TranslateStmtList(ptr->child_node[1], Sysmtable);
-}
-
-void TranslateDefList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
-    if(ptr==nullptr || ptr->child_num < 2){
-        return;
-    }
-    // Def DefList
-    TranslateDef(ptr->child_node[0], Sysmtable);
-    TranslateDefList(ptr->child_node[1], Sysmtable);
-}
-
-void TranslateDef(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
-    // Specifier DecList SEMI
-    TranslateDecList(ptr->child_node[1], Sysmtable);
-}
-
-void TranslateDecList(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
-    TranslateDec(ptr->child_node[0], Sysmtable);
-    if(ptr->child_num==1){
-        return;
-    }
-    // Dec COMMA DecList
-    TranslateDecList(ptr->child_node[2], Sysmtable);
-
-}
-
-void TranslateDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
-    
-}
-*/
 void TranslateFunDec(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysmtable){
     tree_node* ptr_child0 = ptr->child_node[0];
     Operand* operand_func = new_var_operand(ptr_child0->node_name);
