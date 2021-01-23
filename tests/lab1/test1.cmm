@@ -4,6 +4,6 @@
  int test[10];
  int i;
  i = 10;
- test[0] = i;
+ test[0] = i + 20;
  write(test[0]);
  }

@@ -100,6 +100,31 @@ InterCode* new_ifop_code(Operand* t1, Operand* t2, Operand* label_true,string op
         return cur_code;
 }
 
+void printOperandDeaddress(std::ofstream& outputfile, Operand* operand){
+    if(operand==nullptr){
+        return; //todo?  place is null
+    }
+    switch (operand->kind)
+    {
+    case operand->VARIABLE:
+        outputfile << operand->u.value;
+        break;
+    case operand->CONSTANT:
+        outputfile << "#" << operand->u.val_no; //todo  float?
+        break;
+    case operand->LABEL:
+        outputfile << operand->u.value;
+        break;
+    case operand->ADDRESS:
+        outputfile << "*" << operand->u.value;
+        break;
+    case operand->GET_ADDRESS:
+        outputfile << "&" << operand->u.value;
+        break;
+    default:
+        break;
+    }
+}
 
 void printOperand(std::ofstream& outputfile, Operand* operand){
     if(operand==nullptr){
@@ -117,7 +142,7 @@ void printOperand(std::ofstream& outputfile, Operand* operand){
         outputfile << operand->u.value;
         break;
     case operand->ADDRESS:
-        outputfile << "ADDRESS?" << operand->u.value;
+        outputfile << operand->u.value;
         break;
     case operand->GET_ADDRESS:
         outputfile << "&" << operand->u.value;
@@ -131,6 +156,15 @@ void printCode(std::ofstream& outputfile){
     for(InterCode* interCode: InterCodes){
         switch (interCode->kind)
         {
+        case interCode->DEADDRESS:{
+            auto stru_assign = interCode->u.assign;
+            printOperandDeaddress(outputfile, stru_assign.left);
+            outputfile << " := " ;
+            printOperandDeaddress(outputfile, stru_assign.right);
+            outputfile << endl;
+            //outputfile << stru_assign.left->u.value << " := " << endl;
+            break;
+        }
         case interCode->ASSIGN:{
             auto stru_assign = interCode->u.assign;
             printOperand(outputfile, stru_assign.left);
