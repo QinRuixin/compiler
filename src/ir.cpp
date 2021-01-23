@@ -330,10 +330,6 @@ void Translate(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& Sysm
     case ENUM_FunDec:
         TranslateFunDec(ptr, Sysmtable);
         break;
-
-    case ENUM_CompSt:
-        TranslateCompSt(ptr, Sysmtable);
-        break;
     case ENUM_VarDec:
         TranslateVarDec(ptr, Sysmtable);
         break;
