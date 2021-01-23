@@ -458,8 +458,9 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
             Operand* operand_t1 = new_var_operand(t1);
             TranslateExp(ptr->child_node[2],Sysmtable,operand_t1);
             Operand* operand_t2 = new_var_operand(t1); // the same name but different kind
-            if(ptr->child_node[2]->child_num==4){
-                operand_t2->kind = operand_t2->DEADD;
+            if(ptr->child_node[2]->child_num==4 && ptr->child_node[2]->child_node[1]->node_type==ENUM_LB){
+                operand_t2 = new_var_operand("*"+t1); // the same name but different kind
+                //operand_t2->kind = operand_t2->DEADD;
             }
             Operand* operand_var = new_var_operand(it->second.name); 
             InterCode* cur_code1= new_assign_code(operand_var, operand_t2);
@@ -472,24 +473,25 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
             return;
         }
         //  Exp1 is array    Exp1 ASSIGNOP Exp2
-        if(ptr_child0->child_num == 4){
-            string t1 = new_temp();
-            Operand* operand_t1 = new_var_operand(t1);
-            TranslateExp(ptr_child0,Sysmtable,operand_t1);
-            Operand* operand_t2 = new_var_operand(t1); // the same name but different kind
-            operand_t2->kind = operand_t2->DEADD;
-            TranslateExp(ptr->child_node[2],Sysmtable,operand_t2);
+//        if(ptr_child0->child_num == 4) {
+        string t1 = new_temp();
+        Operand* operand_t1 = new_var_operand(t1);
+        TranslateExp(ptr_child0,Sysmtable,operand_t1);
+        Operand* operand_t2 = new_var_operand(t1); // the same name but different kind
+        if(ptr_child0->child_node[1]->node_type==ENUM_LB ){    //array
+            operand_t2 = new_var_operand("*"+t1); // the same name but different kind
+            //operand_t2->kind = operand_t2->DEADD;
+        }
+        TranslateExp(ptr->child_node[2],Sysmtable,operand_t2);
 //            Operand* operand_var = new_var_operand(it->second.name); 
 //            InterCode* cur_code1= new_assign_code(operand_var, operand_t1);
 //            append_code(cur_code1);
-            if(place!=nullptr){
+        if(place!=nullptr){
 //                InterCode* cur_code2= new_assign_code(place, operand_var);
-                InterCode* cur_code2= new_assign_code(place, operand_t1);
-                cur_code2->kind = cur_code2->ASSIGN;
-                append_code(cur_code2);
-            }
-            return;
+            InterCode* cur_code2= new_assign_code(place, operand_t1);
+            append_code(cur_code2);
         }
+//        }
 
         return;
     }else if(ptr_child1->node_type== ENUM_PLUS ||
