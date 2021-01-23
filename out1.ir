@@ -1,0 +1,41 @@
+
+FUNCTION main :
+DEC test 40
+t4 := #1
+t3 := t4 * #4
+&t2 := &test + t3
+t1 := &t2
+t6 := n
+WRITE t6
+t10 := #0
+t9 := t10 * #4
+*t8 := &test + t9
+*t8 := n
+t7 := *t8
+READ t12
+t11 := t12
+t13 := n
+t14 := #0
+IF t13 > t14 GOTO label1
+GOTO label2
+LABEL label1 :
+t16 := #1
+WRITE t16
+GOTO label3
+LABEL label2 :
+t17 := n
+t18 := #0
+IF t17 < t18 GOTO label4
+GOTO label5
+LABEL label4 :
+t21 := #1
+t20 := #0 - t21
+WRITE t20
+GOTO label6
+LABEL label5 :
+t23 := #0
+WRITE t23
+LABEL label6 :
+LABEL label3 :
+t24 := #0
+RETURN t24
