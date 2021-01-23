@@ -384,8 +384,9 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         Operand* operand_ID = new_add_operand(ptr_ID->node_name);
         InterCode* cur_code3 = new_binop_code(place, operand_ID, operand_t1);
         cur_code3->kind = cur_code3->ADD;
+        //todo
+        place->kind = place->ADDRESS;
         append_code(cur_code3);
-//        place->kind = place->ADDRESS;
 
 //----
         return;
@@ -453,6 +454,7 @@ void TranslateExp(tree_node* ptr,std::map<std::string, struct Sysmtable_item>& S
         }
         return;
     }else if(ptr_child1->node_type== ENUM_ASSIGNOP){  //Exp1 ASSIGNOP Exp2
+cout << "ENUM_ASSIGNOP" << endl;
         // ptr_child0 Exp1
         auto it = Sysmtable.find(ptr_child0->child_node[0]->node_name); // Exp1 -> ID get ID name
 //cout << "ptr_child0->child_node[0]->node_name " << ptr_child0->child_node[0]->node_name << endl;
