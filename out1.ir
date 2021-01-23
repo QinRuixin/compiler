@@ -13,4 +13,4 @@ t3 := t4
 t12 := #0
 t11 := t12 * #4
 t10 := &test + t11
-WRITE *t10
+WRITE t10
